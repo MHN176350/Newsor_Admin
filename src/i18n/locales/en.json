@@ -95,6 +95,58 @@
     "activityBy": "by",
     "settingsPlaceholder": "System settings coming soon...",
     "settingsDescription": "Here you can configure system-wide settings for your news platform.",
+    "aboutUs": {
+      "title": "About Us Management",
+      "description": "Manage the content and sections of the About Us page",
+      "preview": "Preview",
+      "previewNote": "This preview shows how the About Us page will appear to visitors",
+      "previewPlaceholder": "About Us page preview will be implemented here",
+      "saveSuccess": "About Us content saved successfully",
+      "saveError": "Failed to save About Us content",
+      "updateSuccess": "Section updated successfully",
+      "sections": {
+        "hero": "Hero Section",
+        "about": "About Section",
+        "vision": "Vision & Mission",
+        "products": "Products",
+        "organizationChart": "Organization Chart",
+        "services": "Services",
+        "contact": "Contact Information",
+        "headquarters": "Headquarters",
+        "workingHours": "Working Hours"
+      },
+      "editSection": {
+        "hero": "Edit Hero Section",
+        "about": "Edit About Section",
+        "vision": "Edit Vision & Mission",
+        "products": "Edit Products",
+        "organizationChart": "Edit Organization Chart",
+        "services": "Edit Services",
+        "contact": "Edit Contact Information"
+      },
+      "fields": {
+        "title": "Title",
+        "subtitle": "Subtitle",
+        "description": "Description",
+        "content": "Content",
+        "image": "Image URL",
+        "sectionTitle": "Section Title",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email",
+        "workingHours": "Working Hours"
+      },
+      "validation": {
+        "titleRequired": "Title is required",
+        "subtitleRequired": "Subtitle is required",
+        "descriptionRequired": "Description is required",
+        "contentRequired": "Content is required"
+      },
+      "placeholders": {
+        "separateParagraphs": "Separate paragraphs with double line breaks",
+        "imageUrl": "Enter image URL or path"
+      }
+    },
     "tabs": {
       "systemOverview": "System Overview",
       "userManagement": "User Management",

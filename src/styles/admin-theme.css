@@ -439,30 +439,66 @@ body {
   margin-bottom: 32px;
 }
 
+/* Dashboard Card Styles */
 .stat-card {
-  border: none;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 24px;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  padding: 24px !important;
+  height: 100% !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
 }
 
 .stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
 }
 
 .stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--primary-color);
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 4px !important;
+  background: var(--primary-color) !important;
+}
+
+.analytics-card {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  height: 100% !important;
+  transition: all 0.3s ease !important;
+}
+
+.analytics-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
+}
+
+.analytics-card .ant-card-head {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.analytics-card .ant-card-body {
+  background-color: #ffffff !important;
+}
+
+.activity-card {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.activity-card .ant-card-body {
+  background-color: #ffffff !important;
 }
 
 .stat-card-primary::before {
@@ -518,18 +554,7 @@ body {
   margin-top: 8px;
 }
 
-.analytics-card {
-  border: none;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-  height: 100%;
-  transition: all 0.3s ease;
-}
-
-.analytics-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
+/* Removed - already defined above */
 
 .card-header {
   display: flex;
@@ -617,11 +642,7 @@ body {
   gap: 4px;
 }
 
-.activity-card {
-  border: none;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-}
+/* Removed - already defined above */
 
 .activity-list {
   display: flex;
@@ -968,11 +989,68 @@ body {
   }
 }
 
-/* Ant Design Overrides */
+/* Ant Design Card Overrides */
 .ant-card {
-  border-radius: var(--border-radius-lg) !important;
-  box-shadow: var(--shadow-md) !important;
-  border: 1px solid var(--border-color) !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  transition: all 0.3s ease !important;
+}
+
+.ant-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-2px) !important;
+}
+
+.ant-card-head {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+  border-radius: 12px 12px 0 0 !important;
+  padding: 16px 24px !important;
+}
+
+.ant-card-head-title {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.ant-card-body {
+  background-color: #ffffff !important;
+  padding: 20px 24px !important;
+  color: #374151 !important;
+}
+
+.ant-card-extra {
+  color: #6b7280 !important;
+}
+
+.ant-card-meta-title {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+}
+
+.ant-card-meta-description {
+  color: #6b7280 !important;
+}
+
+.ant-card-cover {
+  border-radius: 12px 12px 0 0 !important;
+}
+
+.ant-card-actions {
+  background-color: #ffffff !important;
+  border-top: 1px solid #f0f0f0 !important;
+  border-radius: 0 0 12px 12px !important;
+}
+
+.ant-card-actions > li {
+  color: #6b7280 !important;
+}
+
+.ant-card-actions > li:hover {
+  color: #3A9285 !important;
 }
 
 .ant-btn-primary {
@@ -1064,15 +1142,27 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* Article Management Styles */
+/* Article Management Card Styles */
+.article-search-card {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
 .article-search-card .ant-card-head {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  border-bottom: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  border-radius: 12px 12px 0 0 !important;
 }
 
 .article-search-card .ant-card-head-title {
-  color: var(--text-primary);
-  font-weight: 600;
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.article-search-card .ant-card-body {
+  background-color: #ffffff !important;
 }
 
 .article-tree-node {
@@ -1116,4 +1206,550 @@ body {
 
 .ant-tree .ant-tree-node-content-wrapper:hover {
   background: rgba(58, 146, 133, 0.08);
+}
+
+/* About Us Settings Card Styles */
+.about-us-settings .ant-card {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  transition: all 0.3s ease !important;
+  margin-bottom: 16px !important;
+}
+
+.about-us-settings .ant-card:hover:not(.disabled-section) {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-2px) !important;
+  border-color: #3A9285 !important;
+}
+
+.about-us-settings .ant-card-head {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+  border-radius: 12px 12px 0 0 !important;
+  padding: 16px 24px !important;
+}
+
+.about-us-settings .ant-card-head-title {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.about-us-settings .ant-card-body {
+  background-color: #ffffff !important;
+  padding: 20px 24px !important;
+  color: #374151 !important;
+  border-radius: 0 0 12px 12px !important;
+}
+
+.about-us-settings .ant-card-extra {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  color: #6b7280 !important;
+}
+
+.about-us-settings .disabled-section {
+  opacity: 0.6 !important;
+  background-color: #f9fafb !important;
+}
+
+.about-us-settings .disabled-section .ant-card-head {
+  background-color: #f9fafb !important;
+  color: #9ca3af !important;
+}
+
+.about-us-settings .disabled-section .ant-card-body {
+  background-color: #f9fafb !important;
+  color: #9ca3af !important;
+}
+
+.about-us-settings .ant-image {
+  border-radius: 4px;
+  border: 1px solid #f0f0f0;
+}
+
+/* About Us Modal Card Styles */
+.about-us-settings .ant-modal .ant-card {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+.about-us-settings .ant-modal .ant-card-head {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.about-us-settings .ant-modal .ant-card-body {
+  background-color: #ffffff !important;
+  color: #374151 !important;
+}
+
+/* Login Card Styles */
+.login-card {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  padding: 48px !important;
+  backdrop-filter: blur(10px) !important;
+  transform: translateY(0) !important;
+  transition: all 0.3s ease !important;
+  min-width: 450px !important;
+}
+
+.login-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Dashboard Tab Cards */
+.dashboard-tabs {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  overflow: hidden !important;
+}
+
+.dashboard-tabs .ant-tabs-nav {
+  margin: 0 !important;
+  padding: 0 24px !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.dashboard-tabs .ant-tabs-content-holder {
+  padding: 32px !important;
+  background: #ffffff !important;
+}
+
+.about-us-settings .ant-modal-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border-bottom: none;
+  padding: 20px 24px;
+}
+
+.about-us-settings .ant-modal-title {
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.about-us-settings .ant-modal-close {
+  color: white;
+  opacity: 0.8;
+}
+
+.about-us-settings .ant-modal-close:hover {
+  color: white;
+  opacity: 1;
+}
+
+.about-us-settings .ant-modal-body {
+  padding: 24px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+/* Form Styles */
+.about-us-settings .ant-form-item-label > label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.about-us-settings .ant-input,
+.about-us-settings .ant-input-number,
+.about-us-settings .ant-select-selector {
+  border-radius: 6px;
+  border: 1.5px solid #d9d9d9;
+  transition: all 0.3s ease;
+}
+
+.about-us-settings .ant-input:focus,
+.about-us-settings .ant-input-number:focus,
+.about-us-settings .ant-select-focused .ant-select-selector {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(64, 169, 255, 0.2);
+}
+
+.about-us-settings .ant-input:hover,
+.about-us-settings .ant-input-number:hover,
+.about-us-settings .ant-select:hover .ant-select-selector {
+  border-color: var(--primary-color);
+}
+
+/* Quill Editor Styles */
+.about-us-settings .ql-editor {
+  min-height: 120px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.about-us-settings .ql-toolbar {
+  border-top: 1.5px solid #d9d9d9;
+  border-left: 1.5px solid #d9d9d9;
+  border-right: 1.5px solid #d9d9d9;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  background: #fafafa;
+}
+
+.about-us-settings .ql-container {
+  border-bottom: 1.5px solid #d9d9d9;
+  border-left: 1.5px solid #d9d9d9;
+  border-right: 1.5px solid #d9d9d9;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.about-us-settings .ql-toolbar:hover + .ql-container,
+.about-us-settings .ql-container:hover {
+  border-color: var(--primary-color);
+}
+
+.about-us-settings .ql-editor:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(64, 169, 255, 0.2);
+}
+
+/* Button Styles */
+.about-us-settings .ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.about-us-settings .ant-btn-primary {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border: none;
+  box-shadow: 0 2px 4px rgba(64, 169, 255, 0.3);
+}
+
+.about-us-settings .ant-btn-primary:hover {
+  box-shadow: 0 4px 8px rgba(64, 169, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Switch Styles */
+.about-us-settings .ant-switch {
+  background-color: #bfbfbf;
+}
+
+.about-us-settings .ant-switch-checked {
+  background-color: var(--primary-color);
+}
+
+/* Divider Styles */
+.about-us-settings .ant-divider {
+  border-top: 1px solid #f0f0f0;
+  margin: 16px 0;
+}
+
+.about-us-settings .ant-divider-horizontal.ant-divider-with-text {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Image Preview */
+.about-us-settings .ant-image-preview-mask {
+  border-radius: 4px;
+}
+
+/* Loading States */
+.about-us-settings .ant-spin-container {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.about-us-settings .ant-spin-dot {
+  color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-us-settings .ant-card-head {
+    padding: 12px 16px;
+  }
+  
+  .about-us-settings .ant-card-body {
+    padding: 16px;
+  }
+  
+  .about-us-settings .ant-modal-body {
+    padding: 16px;
+  }
+  
+  .about-us-settings .ant-card-extra {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .about-us-settings .ant-btn {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}
+
+/* Dark mode card support - Override for light theme */
+@media (prefers-color-scheme: dark) {
+  .about-us-settings .ant-card,
+  .ant-card {
+    background-color: #ffffff !important;
+    border-color: #e5e7eb !important;
+    color: #1f2937 !important;
+  }
+  
+  .about-us-settings .ant-card-head,
+  .ant-card-head {
+    background-color: #ffffff !important;
+    color: #1f2937 !important;
+  }
+  
+  .about-us-settings .ant-card-body,
+  .ant-card-body {
+    background-color: #ffffff !important;
+    color: #374151 !important;
+  }
+  
+  .about-us-settings .disabled-section {
+    background-color: #f9fafb !important;
+  }
+  
+  .about-us-settings .disabled-section .ant-card-head {
+    background-color: #f9fafb !important;
+    color: #9ca3af !important;
+  }
+  
+  .about-us-settings .disabled-section .ant-card-body {
+    background-color: #f9fafb !important;
+    color: #9ca3af !important;
+  }
+}
+  
+  .about-us-settings .ql-toolbar {
+    background: #262626;
+    border-color: #434343;
+  }
+  
+  .about-us-settings .ql-container {
+    border-color: #434343;
+  }
+
+
+/* QuillJS Editor Fixes - Force Light Theme */
+.about-us-settings .ql-editor,
+.about-us-settings .ql-container .ql-editor,
+.ant-modal .ql-editor,
+.ant-modal .ql-container .ql-editor {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+.about-us-settings .ql-toolbar,
+.about-us-settings .ql-container .ql-toolbar,
+.ant-modal .ql-toolbar,
+.ant-modal .ql-container .ql-toolbar {
+  background-color: #f8f9fa !important;
+  border-color: #e5e7eb !important;
+}
+
+.about-us-settings .ql-container,
+.ant-modal .ql-container {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.about-us-settings .ql-snow,
+.ant-modal .ql-snow {
+  background-color: #ffffff !important;
+}
+
+.about-us-settings .ql-snow .ql-tooltip,
+.ant-modal .ql-snow .ql-tooltip {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.about-us-settings .ql-snow .ql-tooltip input,
+.ant-modal .ql-snow .ql-tooltip input {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+/* Force light theme even in system dark mode */
+.about-us-settings,
+.ant-modal-body .about-us-settings {
+  color-scheme: light !important;
+}
+
+.about-us-settings *,
+.ant-modal-body .about-us-settings * {
+  color-scheme: light !important;
+}
+
+/* Specific fixes for modal QuillJS editors */
+.ant-modal .quill {
+  background-color: #ffffff !important;
+}
+
+.ant-modal .quill .ql-editor {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.ant-modal .quill .ql-toolbar {
+  background-color: #f8f9fa !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+/* Override any dark theme CSS variables in Quill editor context */
+.about-us-settings .ql-editor,
+.ant-modal .ql-editor {
+  --bs-body-bg: #ffffff !important;
+  --bs-body-color: #000000 !important;
+}
+
+/* MDEditor Styles - Fix for React 19 compatibility */
+.about-us-settings .w-md-editor,
+.ant-modal .w-md-editor {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 6px !important;
+  color: #000000 !important;
+}
+
+.about-us-settings .w-md-editor-text-container,
+.ant-modal .w-md-editor-text-container {
+  background-color: #ffffff !important;
+  border: none !important;
+  color: #000000 !important;
+}
+
+.about-us-settings .w-md-editor-text,
+.ant-modal .w-md-editor-text {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: none !important;
+}
+
+.about-us-settings .w-md-editor-text-input,
+.ant-modal .w-md-editor-text-input {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: none !important;
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif !important;
+}
+
+.about-us-settings .w-md-editor-text-area,
+.ant-modal .w-md-editor-text-area {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: none !important;
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif !important;
+}
+
+.about-us-settings .w-md-editor-text-pre,
+.ant-modal .w-md-editor-text-pre {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: none !important;
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif !important;
+}
+
+.about-us-settings .w-md-editor-bar,
+.ant-modal .w-md-editor-bar {
+  background-color: #f8f9fa !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  border-top: none !important;
+}
+
+.about-us-settings .w-md-editor-toolbar,
+.ant-modal .w-md-editor-toolbar {
+  background-color: #f8f9fa !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.about-us-settings .w-md-editor-toolbar ul,
+.ant-modal .w-md-editor-toolbar ul {
+  background-color: transparent !important;
+}
+
+.about-us-settings .w-md-editor-toolbar button,
+.ant-modal .w-md-editor-toolbar button {
+  background-color: transparent !important;
+  color: #374151 !important;
+  border: none !important;
+}
+
+.about-us-settings .w-md-editor-toolbar button:hover,
+.ant-modal .w-md-editor-toolbar button:hover {
+  background-color: #e5e7eb !important;
+  color: #000000 !important;
+}
+
+.about-us-settings .w-md-editor-preview,
+.ant-modal .w-md-editor-preview {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-left: 1px solid #e5e7eb !important;
+}
+
+/* Force black text for all editor children */
+.about-us-settings .w-md-editor *,
+.ant-modal .w-md-editor * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Override any inherited text color */
+.about-us-settings .w-md-editor input,
+.about-us-settings .w-md-editor textarea,
+.about-us-settings .w-md-editor div[contenteditable],
+.ant-modal .w-md-editor input,
+.ant-modal .w-md-editor textarea,
+.ant-modal .w-md-editor div[contenteditable] {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+/* Fix for any shadow DOM or deep styling */
+.about-us-settings .w-md-editor-text::placeholder,
+.ant-modal .w-md-editor-text::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+/* Additional MDEditor text color fixes */
+.about-us-settings .w-md-editor .w-md-editor-text,
+.about-us-settings .w-md-editor .w-md-editor-text-input,
+.about-us-settings .w-md-editor .w-md-editor-text-area,
+.about-us-settings .w-md-editor .w-md-editor-text-pre,
+.about-us-settings .w-md-editor textarea,
+.about-us-settings .w-md-editor .CodeMirror,
+.about-us-settings .w-md-editor .CodeMirror-line,
+.ant-modal .w-md-editor .w-md-editor-text,
+.ant-modal .w-md-editor .w-md-editor-text-input,
+.ant-modal .w-md-editor .w-md-editor-text-area,
+.ant-modal .w-md-editor .w-md-editor-text-pre,
+.ant-modal .w-md-editor textarea,
+.ant-modal .w-md-editor .CodeMirror,
+.ant-modal .w-md-editor .CodeMirror-line {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif !important;
+  font-size: 14px !important;
 }

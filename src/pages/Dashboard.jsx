@@ -419,6 +419,32 @@ const Dashboard = () => {
         <div className="tab-content">
           <Title level={4}>{t('admin.tabs.systemSettings')}</Title>
           <Text type="secondary">{t('admin.settingsDescription')}</Text>
+          
+          <Divider style={{ margin: '24px 0' }} />
+          
+          {/* About Us Management Section */}
+          <div style={{ 
+            backgroundColor: '#f0f9ff', 
+            padding: '20px', 
+            borderRadius: '8px', 
+            border: '2px solid #1890ff',
+            marginBottom: '20px'
+          }}>
+            <Card>
+              <Title level={4} style={{ margin: 0, color: '#1890ff' }}>
+                🌟 About Us Management
+              </Title>
+              <Text type="secondary" style={{ display: 'block', marginTop: '8px' }}>
+                Manage the content and sections of the About Us page
+              </Text>
+              <Button type="primary" href="/settings" style={{ marginTop: '16px' }}>
+                Configure About Us Settings
+              </Button>
+            </Card>
+          </div>
+          
+          <Divider style={{ margin: '24px 0' }} />
+          
           <div style={{ marginTop: '32px' }}>
             <Button type="primary" href="/settings">
               {t('navigation.settings')}

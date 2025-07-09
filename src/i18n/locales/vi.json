@@ -95,6 +95,58 @@
     "activityBy": "bởi",
     "settingsPlaceholder": "Cài đặt hệ thống sắp ra mắt...",
     "settingsDescription": "Tại đây bạn có thể cấu hình cài đặt toàn hệ thống cho nền tảng tin tức của mình.",
+    "aboutUs": {
+      "title": "Quản lý Giới thiệu",
+      "description": "Quản lý nội dung và các phần của trang Giới thiệu",
+      "preview": "Xem trước",
+      "previewNote": "Bản xem trước này hiển thị cách trang Giới thiệu sẽ xuất hiện với khách truy cập",
+      "previewPlaceholder": "Bản xem trước trang Giới thiệu sẽ được triển khai tại đây",
+      "saveSuccess": "Lưu nội dung Giới thiệu thành công",
+      "saveError": "Không thể lưu nội dung Giới thiệu",
+      "updateSuccess": "Cập nhật phần thành công",
+      "sections": {
+        "hero": "Phần Tiêu đề chính",
+        "about": "Phần Giới thiệu",
+        "vision": "Tầm nhìn & Sứ mệnh",
+        "products": "Sản phẩm",
+        "organizationChart": "Sơ đồ Tổ chức",
+        "services": "Dịch vụ",
+        "contact": "Thông tin Liên hệ",
+        "headquarters": "Trụ sở chính",
+        "workingHours": "Giờ làm việc"
+      },
+      "editSection": {
+        "hero": "Chỉnh sửa Phần Tiêu đề chính",
+        "about": "Chỉnh sửa Phần Giới thiệu",
+        "vision": "Chỉnh sửa Tầm nhìn & Sứ mệnh",
+        "products": "Chỉnh sửa Sản phẩm",
+        "organizationChart": "Chỉnh sửa Sơ đồ Tổ chức",
+        "services": "Chỉnh sửa Dịch vụ",
+        "contact": "Chỉnh sửa Thông tin Liên hệ"
+      },
+      "fields": {
+        "title": "Tiêu đề",
+        "subtitle": "Phụ đề",
+        "description": "Mô tả",
+        "content": "Nội dung",
+        "image": "URL Hình ảnh",
+        "sectionTitle": "Tiêu đề Phần",
+        "address": "Địa chỉ",
+        "phone": "Điện thoại",
+        "email": "Email",
+        "workingHours": "Giờ làm việc"
+      },
+      "validation": {
+        "titleRequired": "Tiêu đề là bắt buộc",
+        "subtitleRequired": "Phụ đề là bắt buộc",
+        "descriptionRequired": "Mô tả là bắt buộc",
+        "contentRequired": "Nội dung là bắt buộc"
+      },
+      "placeholders": {
+        "separateParagraphs": "Tách các đoạn văn bằng dấu xuống dòng đôi",
+        "imageUrl": "Nhập URL hoặc đường dẫn hình ảnh"
+      }
+    },
     "tabs": {
       "systemOverview": "Tổng quan Hệ thống",
       "userManagement": "Quản lý Người dùng",

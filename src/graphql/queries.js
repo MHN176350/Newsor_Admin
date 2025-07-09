@@ -300,3 +300,286 @@ export const DELETE_NEWS = gql`
     }
   }
 `;
+
+// Page Section Management Queries
+export const GET_PAGE_TEMPLATES = gql`
+  query GetPageTemplates {
+    pageTemplates {
+      id
+      name
+      slug
+      description
+      isActive
+      isDefault
+      sectionsCount
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const GET_SECTION_TYPES = gql`
+  query GetSectionTypes {
+    sectionTypes {
+      id
+      name
+      slug
+      description
+      iconClass
+      isSystem
+      supportsRichText
+      supportsMedia
+      supportsItems
+      maxInstances
+    }
+  }
+`;
+
+export const GET_PAGE_SECTIONS = gql`
+  query GetPageSections($templateId: ID, $sectionTypeSlug: String, $isEnabled: Boolean, $isPublished: Boolean) {
+    pageSections(templateId: $templateId, sectionTypeSlug: $sectionTypeSlug, isEnabled: $isEnabled, isPublished: $isPublished) {
+      id
+      title
+      subtitle
+      slug
+      content
+      excerpt
+      isEnabled
+      isRequired
+      isPublished
+      order
+      template {
+        id
+        name
+        slug
+      }
+      sectionType {
+        id
+        name
+        slug
+        iconClass
+        supportsRichText
+        supportsMedia
+        supportsItems
+      }
+      mediaFiles {
+        id
+        title
+        altText
+        mediaType
+        fileUrl
+        isFeatured
+        order
+      }
+      items {
+        id
+        title
+        subtitle
+        description
+        content
+        iconUrl
+        imageUrl
+        linkUrl
+        linkText
+        order
+        isActive
+        isFeatured
+      }
+      createdAt
+      updatedAt
+      createdBy {
+        id
+        username
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const GET_HOMEPAGE_SECTIONS = gql`
+  query GetHomepageSections {
+    homepageSections {
+      id
+      title
+      subtitle
+      slug
+      content
+      excerpt
+      isEnabled
+      isRequired
+      order
+      sectionType {
+        id
+        name
+        slug
+        iconClass
+        supportsRichText
+        supportsMedia
+        supportsItems
+      }
+      mediaFiles {
+        id
+        title
+        altText
+        mediaType
+        fileUrl
+        isFeatured
+        order
+      }
+      items {
+        id
+        title
+        subtitle
+        description
+        content
+        iconUrl
+        imageUrl
+        linkUrl
+        linkText
+        order
+        isActive
+      }
+    }
+  }
+`;
+
+export const GET_CONTACT_INFO = gql`
+  query GetContactInfo($contactType: String) {
+    contactInfo(contactType: $contactType) {
+      id
+      contactType
+      title
+      content
+      subtitle
+      description
+      iconClass
+      iconImageUrl
+      linkUrl
+      isClickable
+      order
+      isActive
+      isFeatured
+    }
+  }
+`;
+
+// Page Section Management Mutations
+export const CREATE_PAGE_SECTION = gql`
+  mutation CreatePageSection(
+    $templateId: ID!
+    $sectionTypeId: ID!
+    $title: String!
+    $subtitle: String
+    $content: String
+    $excerpt: String
+    $isEnabled: Boolean
+    $order: Int
+  ) {
+    createPageSection(
+      templateId: $templateId
+      sectionTypeId: $sectionTypeId
+      title: $title
+      subtitle: $subtitle
+      content: $content
+      excerpt: $excerpt
+      isEnabled: $isEnabled
+      order: $order
+    ) {
+      section {
+        id
+        title
+        subtitle
+        content
+        excerpt
+        isEnabled
+        order
+        sectionType {
+          id
+          name
+          slug
+        }
+      }
+      success
+      message
+    }
+  }
+`;
+
+export const UPDATE_PAGE_SECTION = gql`
+  mutation UpdatePageSection(
+    $id: ID!
+    $title: String
+    $subtitle: String
+    $content: String
+    $excerpt: String
+    $isEnabled: Boolean
+    $order: Int
+  ) {
+    updatePageSection(
+      id: $id
+      title: $title
+      subtitle: $subtitle
+      content: $content
+      excerpt: $excerpt
+      isEnabled: $isEnabled
+      order: $order
+    ) {
+      section {
+        id
+        title
+        subtitle
+        content
+        excerpt
+        isEnabled
+        order
+      }
+      success
+      message
+    }
+  }
+`;
+
+export const DELETE_PAGE_SECTION = gql`
+  mutation DeletePageSection($id: ID!) {
+    deletePageSection(id: $id) {
+      success
+      message
+    }
+  }
+`;
+
+export const UPLOAD_SECTION_MEDIA = gql`
+  mutation UploadSectionMedia(
+    $sectionId: ID!
+    $base64Data: String!
+    $title: String
+    $altText: String
+    $mediaType: String
+    $isFeatured: Boolean
+    $maxWidth: Int
+    $maxHeight: Int
+  ) {
+    uploadSectionMedia(
+      sectionId: $sectionId
+      base64Data: $base64Data
+      title: $title
+      altText: $altText
+      mediaType: $mediaType
+      isFeatured: $isFeatured
+      maxWidth: $maxWidth
+      maxHeight: $maxHeight
+    ) {
+      media {
+        id
+        title
+        altText
+        mediaType
+        fileUrl
+        isFeatured
+      }
+      success
+      message
+    }
+  }
+`;

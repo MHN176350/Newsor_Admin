@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Card, 
   Table, 
@@ -30,6 +31,7 @@ import {
 import { formatDate } from '../utils/helpers';
 
 const Tags = () => {
+  const { t } = useTranslation();
   const [selectedTag, setSelectedTag] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalType, setModalType] = useState('create'); // 'create' or 'edit'
@@ -42,16 +44,16 @@ const Tags = () => {
   const [createTag, { loading: creating }] = useMutation(CREATE_TAG, {
     onCompleted: (data) => {
       if (data.createTag.success) {
-        message.success('Tag created successfully!');
+        message.success(t('pages.tags.createSuccess'));
         setIsModalVisible(false);
         form.resetFields();
         refetch();
       } else {
-        message.error(data.createTag.errors?.join(', ') || 'Failed to create tag');
+        message.error(data.createTag.errors?.join(', ') || t('pages.tags.createFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error creating tag: ' + error.message);
+      message.error(t('pages.tags.createError', { error: error.message }));
     }
   });
 
@@ -59,17 +61,17 @@ const Tags = () => {
   const [updateTag, { loading: updating }] = useMutation(UPDATE_TAG, {
     onCompleted: (data) => {
       if (data.updateTag.success) {
-        message.success('Tag updated successfully!');
+        message.success(t('pages.tags.updateSuccess'));
         setIsModalVisible(false);
         setSelectedTag(null);
         form.resetFields();
         refetch();
       } else {
-        message.error(data.updateTag.errors?.join(', ') || 'Failed to update tag');
+        message.error(data.updateTag.errors?.join(', ') || t('pages.tags.updateFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error updating tag: ' + error.message);
+      message.error(t('pages.tags.updateError', { error: error.message }));
     }
   });
 
@@ -77,14 +79,14 @@ const Tags = () => {
   const [deleteTag, { loading: deleting }] = useMutation(DELETE_TAG, {
     onCompleted: (data) => {
       if (data.deleteTag.success) {
-        message.success('Tag deleted successfully!');
+        message.success(t('pages.tags.deleteSuccess'));
         refetch();
       } else {
-        message.error(data.deleteTag.errors?.join(', ') || 'Failed to delete tag');
+        message.error(data.deleteTag.errors?.join(', ') || t('pages.tags.deleteFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error deleting tag: ' + error.message);
+      message.error(t('pages.tags.deleteError', { error: error.message }));
     }
   });
 
@@ -92,14 +94,14 @@ const Tags = () => {
   const [toggleTag, { loading: toggling }] = useMutation(TOGGLE_TAG, {
     onCompleted: (data) => {
       if (data.toggleTag.success) {
-        message.success('Tag status updated successfully!');
+        message.success(t('pages.tags.toggleSuccess'));
         refetch();
       } else {
-        message.error(data.toggleTag.errors?.join(', ') || 'Failed to update tag status');
+        message.error(data.toggleTag.errors?.join(', ') || t('pages.tags.toggleFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error updating tag status: ' + error.message);
+      message.error(t('pages.tags.toggleError', { error: error.message }));
     }
   });
 
@@ -152,7 +154,7 @@ const Tags = () => {
 
   const columns = [
     {
-      title: 'Name',
+      title: t('pages.tags.table.name'),
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => (
@@ -165,7 +167,7 @@ const Tags = () => {
       )
     },
     {
-      title: 'Status',
+      title: t('pages.tags.table.status'),
       dataIndex: 'isActive',
       key: 'isActive',
       render: (isActive, record) => (
@@ -173,25 +175,25 @@ const Tags = () => {
           checked={isActive}
           onChange={() => handleToggle(record.id)}
           loading={toggling}
-          checkedChildren="Active"
-          unCheckedChildren="Inactive"
+          checkedChildren={t('pages.tags.table.active')}
+          unCheckedChildren={t('pages.tags.table.inactive')}
         />
       )
     },
     {
-      title: 'Articles',
+      title: t('pages.tags.table.articles'),
       dataIndex: 'articleCount',
       key: 'articleCount',
-      render: (count) => `${count || 0} articles`
+      render: (count) => t('pages.tags.table.articleCount', { count: count || 0 })
     },
     {
-      title: 'Created',
+      title: t('pages.tags.table.created'),
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (date) => formatDate(date)
     },
     {
-      title: 'Actions',
+      title: t('pages.tags.table.actions'),
       key: 'actions',
       render: (_, record) => (
         <Space>
@@ -201,14 +203,14 @@ const Tags = () => {
             icon={<EditOutlined />}
             onClick={() => handleEdit(record)}
           >
-            Edit
+            {t('pages.tags.table.edit')}
           </Button>
           <Popconfirm
-            title="Are you sure you want to delete this tag?"
-            description="This action cannot be undone."
+            title={t('pages.tags.table.deleteConfirmTitle')}
+            description={t('pages.tags.table.deleteConfirmDescription')}
             onConfirm={() => handleDelete(record.id)}
-            okText="Yes"
-            cancelText="No"
+            okText={t('common.yes')}
+            cancelText={t('common.no')}
           >
             <Button
               type="default"
@@ -217,7 +219,7 @@ const Tags = () => {
               icon={<DeleteOutlined />}
               loading={deleting}
             >
-              Delete
+              {t('pages.tags.table.delete')}
             </Button>
           </Popconfirm>
         </Space>
@@ -228,7 +230,7 @@ const Tags = () => {
   if (error) {
     return (
       <Alert
-        message="Error loading tags"
+        message={t('pages.tags.errorLoading')}
         description={error.message}
         type="error"
         showIcon
@@ -240,15 +242,15 @@ const Tags = () => {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <div>
-          <h1>Tag Management</h1>
-          <p>Manage article tags</p>
+          <h1>{t('pages.tags.title')}</h1>
+          <p>{t('pages.tags.subtitle')}</p>
         </div>
         <Button
           type="primary"
           icon={<PlusOutlined />}
           onClick={handleCreate}
         >
-          Create Tag
+          {t('pages.tags.createButton')}
         </Button>
       </div>
 
@@ -263,14 +265,14 @@ const Tags = () => {
             showSizeChanger: true,
             showQuickJumper: true,
             showTotal: (total, range) => 
-              `${range[0]}-${range[1]} of ${total} tags`
+              t('pages.tags.table.pagination', { start: range[0], end: range[1], total })
           }}
         />
       </Card>
 
       {/* Create/Edit Modal */}
       <Modal
-        title={modalType === 'create' ? 'Create Tag' : 'Edit Tag'}
+        title={modalType === 'create' ? t('pages.tags.modal.createTitle') : t('pages.tags.modal.editTitle')}
         open={isModalVisible}
         onCancel={() => {
           setIsModalVisible(false);
@@ -285,16 +287,16 @@ const Tags = () => {
           onFinish={handleSubmit}
         >
           <Form.Item
-            label="Name"
+            label={t('pages.tags.form.nameLabel')}
             name="name"
             rules={[
-              { required: true, message: 'Please enter tag name' },
-              { min: 2, message: 'Name must be at least 2 characters' },
-              { max: 30, message: 'Name must be less than 30 characters' },
-              { pattern: /^[a-zA-Z0-9\s-]+$/, message: 'Tag name can only contain letters, numbers, spaces, and hyphens' }
+              { required: true, message: t('pages.tags.form.nameRequired') },
+              { min: 2, message: t('pages.tags.form.nameMinLength') },
+              { max: 30, message: t('pages.tags.form.nameMaxLength') },
+              { pattern: /^[a-zA-Z0-9\s-]+$/, message: t('pages.tags.form.namePattern') }
             ]}
           >
-            <Input placeholder="Enter tag name" />
+            <Input placeholder={t('pages.tags.form.namePlaceholder')} />
           </Form.Item>
 
           <Form.Item>
@@ -304,10 +306,10 @@ const Tags = () => {
                 htmlType="submit" 
                 loading={creating || updating}
               >
-                {modalType === 'create' ? 'Create' : 'Update'}
+                {modalType === 'create' ? t('pages.tags.form.createButton') : t('pages.tags.form.updateButton')}
               </Button>
               <Button onClick={() => setIsModalVisible(false)}>
-                Cancel
+                {t('common.cancel')}
               </Button>
             </Space>
           </Form.Item>

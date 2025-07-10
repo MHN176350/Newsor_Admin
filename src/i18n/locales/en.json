@@ -192,6 +192,78 @@
       "archiveSuccess": "Article archived successfully!"
     }
   },
+  "createArticle": {
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter article title",
+    "excerptLabel": "Excerpt",
+    "excerptPlaceholder": "Enter article excerpt",
+    "excerptRequired": "Please enter article excerpt",
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Select a category",
+    "categoryRequired": "Please select a category",
+    "tagsLabel": "Tags",
+    "tagsPlaceholder": "Select or create tags",
+    "featuredImageLabel": "Featured Image",
+    "uploadThumbnail": "Upload Thumbnail",
+    "removeThumbnail": "Remove Thumbnail",
+    "contentLabel": "Content",
+    "contentPlaceholder": "Start writing your article...",
+    "contentRequired": "Please enter article content",
+    "seoTitle": "SEO Settings",
+    "metaDescriptionLabel": "Meta Description",
+    "metaDescriptionPlaceholder": "Enter meta description for SEO",
+    "metaKeywordsLabel": "Meta Keywords",
+    "metaKeywordsPlaceholder": "Enter meta keywords separated by commas",
+    "createButton": "Create Article",
+    "creating": "Creating..."
+  },
+  "validation": {
+    "required": "This field is required"
+  },
+  "richTextEditor": {
+    "insertImage": "Insert Image",
+    "insertLink": "Insert Link",
+    "imageUrl": "Image URL",
+    "altText": "Alt Text",
+    "altTextPlaceholder": "Alt text (optional)",
+    "linkUrl": "Link URL",
+    "enterUrl": "Enter URL:",
+    "articleImage": "Article Image",
+    "defaultAltText": "Article Image",
+    "uploadImageError": "Please select an image file",
+    "imageSizeError": "Image size must be less than 5MB",
+    "uploadFailedError": "Failed to upload image"
+  },
+  "tagAutocomplete": {
+    "createTag": "Create tag: {{name}}",
+    "noTagsFound": "No tags found",
+    "loading": "Loading tags..."
+  },
+  "imageUpload": {
+    "uploading": "Uploading...",
+    "uploadSuccess": "Image uploaded successfully",
+    "uploadFailed": "Failed to upload image",
+    "invalidFileType": "Please select an image file",
+    "fileTooLarge": "File size must be less than {{maxSize}}MB",
+    "selectImage": "Select Image",
+    "removeImage": "Remove Image",
+    "dragDropText": "Click or drag image to upload",
+    "supportedFormats": "Supports: JPG, PNG, GIF, WebP"
+  },
+  "articleForm": {
+    "imageUpload": {
+      "uploading": "Uploading...",
+      "uploadSuccess": "Image uploaded successfully",
+      "uploadFailed": "Failed to upload image",
+      "invalidFileType": "Please select an image file",
+      "fileTooLarge": "File size must be less than 5MB"
+    },
+    "richTextEditor": {
+      "insertImage": "Insert Image",
+      "defaultAltText": "Article Image",
+      "altTextPlaceholder": "Alt text (optional)"
+    }
+  },
   "categories": {
     "title": "Category Management",
     "subtitle": "Organize your content with categories",
@@ -309,6 +381,151 @@
       "user": "User",
       "comment": "Comment",
       "system": "System"
+    }
+  },
+  "pages": {
+    "categories": {
+      "title": "Category Management",
+      "subtitle": "Manage article categories",
+      "createCategory": "Create Category",
+      "editCategory": "Edit Category",
+      "deleteCategory": "Delete Category",
+      "createSuccess": "Category created successfully!",
+      "createFailed": "Failed to create category",
+      "createError": "Error creating category",
+      "updateSuccess": "Category updated successfully!",
+      "updateFailed": "Failed to update category",
+      "updateError": "Error updating category",
+      "deleteSuccess": "Category deleted successfully!",
+      "deleteFailed": "Failed to delete category",
+      "deleteError": "Error deleting category",
+      "deleteConfirmTitle": "Are you sure you want to delete this category?",
+      "deleteConfirmDescription": "This action cannot be undone.",
+      "errorLoading": "Error loading categories",
+      "table": {
+        "name": "Name",
+        "description": "Description",
+        "articles": "Articles",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "form": {
+        "nameLabel": "Name",
+        "namePlaceholder": "Enter category name",
+        "nameRequired": "Please enter category name",
+        "nameMinLength": "Name must be at least 2 characters",
+        "nameMaxLength": "Name must be less than 50 characters",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Enter category description (optional)",
+        "descriptionMaxLength": "Description must be less than 200 characters",
+        "create": "Create",
+        "update": "Update",
+        "cancel": "Cancel"
+      },
+      "pagination": {
+        "showTotal": "{{range0}}-{{range1}} of {{total}} categories"
+      },
+      "articleCount": "{{count}} articles"
+    },
+    "articles": {
+      "title": "Article Management",
+      "subtitle": "Manage news articles",
+      "createArticle": "Create Article",
+      "editArticle": "Edit Article",
+      "deleteArticle": "Delete Article",
+      "updateStatusSuccess": "Article status updated successfully!",
+      "updateStatusFailed": "Failed to update article status",
+      "updateStatusError": "Error updating article status",
+      "deleteSuccess": "Article deleted successfully!",
+      "deleteFailed": "Failed to delete article",
+      "deleteError": "Error deleting article",
+      "uncategorized": "Uncategorized",
+      "unknown": "Unknown",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "duplicate": "Duplicate",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "deleteConfirmTitle": "Are you sure you want to delete this article?",
+      "deleteConfirmDescription": "This action cannot be undone.",
+      "yes": "Yes",
+      "no": "No",
+      "articleCount": "{{count}} articles"
+    },
+    "tags": {
+      "title": "Tag Management",
+      "subtitle": "Manage article tags",
+      "createButton": "Create Tag",
+      "createSuccess": "Tag created successfully!",
+      "createFailed": "Failed to create tag",
+      "createError": "Error creating tag: {{error}}",
+      "updateSuccess": "Tag updated successfully!",
+      "updateFailed": "Failed to update tag",
+      "updateError": "Error updating tag: {{error}}",
+      "deleteSuccess": "Tag deleted successfully!",
+      "deleteFailed": "Failed to delete tag",
+      "deleteError": "Error deleting tag: {{error}}",
+      "toggleSuccess": "Tag status updated successfully!",
+      "toggleFailed": "Failed to update tag status",
+      "toggleError": "Error updating tag status: {{error}}",
+      "errorLoading": "Error loading tags",
+      "table": {
+        "name": "Name",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "articles": "Articles",
+        "articleCount": "{{count}} articles",
+        "created": "Created",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "deleteConfirmTitle": "Are you sure you want to delete this tag?",
+        "deleteConfirmDescription": "This action cannot be undone.",
+        "pagination": "{{start}}-{{end}} of {{total}} tags"
+      },
+      "modal": {
+        "createTitle": "Create Tag",
+        "editTitle": "Edit Tag"
+      },
+      "form": {
+        "nameLabel": "Name",
+        "namePlaceholder": "Enter tag name",
+        "nameRequired": "Please enter tag name",
+        "nameMinLength": "Name must be at least 2 characters",
+        "nameMaxLength": "Name must be less than 30 characters",
+        "namePattern": "Tag name can only contain letters, numbers, spaces, and hyphens",
+        "createButton": "Create",
+        "updateButton": "Update"
+      }
+    },
+    "users": {
+      "title": "User Management",
+      "subtitle": "Manage system users",
+      "createUser": "Create User",
+      "editUser": "Edit User",
+      "deleteUser": "Delete User",
+      "changeRoleSuccess": "User role updated successfully!",
+      "changeRoleFailed": "Failed to update user role",
+      "changeRoleError": "Error updating user role",
+      "table": {
+        "user": "User",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "joinDate": "Join Date",
+        "actions": "Actions"
+      }
+    },
+    "media": {
+      "title": "Media Management",
+      "subtitle": "Manage images and videos",
+      "uploadMedia": "Upload Media"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "System configuration and preferences"
     }
   },
   "news": {

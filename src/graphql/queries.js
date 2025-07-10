@@ -83,6 +83,57 @@ export const GET_RECENT_ACTIVITY = gql`
   }
 `;
 
+export const GET_TAGS = gql`
+  query GetTags {
+    tags {
+      id
+      name
+      slug
+      createdAt
+      isActive
+      articleCount
+    }
+  }
+`;
+export const GET_NEWS = gql`
+  query GetNews($id: Int, $slug: String) {
+    newsArticle(id: $id, slug: $slug) {
+      id
+      title
+      content
+      excerpt
+      featuredImageUrl
+      status
+      publishedAt
+      createdAt
+      updatedAt
+      slug
+      metaDescription
+      metaKeywords
+      viewCount
+      likeCount
+      author {
+        id
+        username
+        firstName
+        lastName
+        profile {
+          avatarUrl
+        }
+      }
+      category {
+        id
+        name
+        slug
+      }
+      tags {
+        id
+        name
+        slug
+      }
+    }
+  }
+`;
 // User management queries
 export const GET_USERS = gql`
   query GetUsers {
@@ -135,6 +186,7 @@ export const CREATE_CATEGORY = gql`
       category {
         id
         name
+        slug
         description
         createdAt
         updatedAt
@@ -145,12 +197,13 @@ export const CREATE_CATEGORY = gql`
 `;
 
 export const UPDATE_CATEGORY = gql`
-  mutation UpdateCategory($id: Int!, $name: String!, $description: String) {
+  mutation UpdateCategory($id: Int!, $name: String, $description: String) {
     updateCategory(id: $id, name: $name, description: $description) {
       success
       category {
         id
         name
+        slug
         description
         createdAt
         updatedAt
@@ -190,6 +243,7 @@ export const CREATE_TAG = gql`
       tag {
         id
         name
+        slug
         isActive
         createdAt
       }
@@ -205,6 +259,7 @@ export const UPDATE_TAG = gql`
       tag {
         id
         name
+        slug
         isActive
         createdAt
       }
@@ -229,6 +284,7 @@ export const TOGGLE_TAG = gql`
       tag {
         id
         name
+        slug
         isActive
         createdAt
       }
@@ -297,6 +353,151 @@ export const DELETE_NEWS = gql`
     deleteNews(id: $id) {
       success
       errors
+    }
+  }
+`;
+
+// Homepage Section Management queries (Simple version)
+export const GET_HOMEPAGE_SECTIONS = gql`
+  query GetHomepageSections {
+    homepageSections {
+      id
+      title
+      subtitle
+      content
+      excerpt
+      isEnabled
+      isPublished
+      order
+      createdAt
+      updatedAt
+      sectionType {
+        id
+        name
+        slug
+      }
+      template {
+        id
+        name
+        slug
+      }
+    }
+  }
+`;
+
+export const CREATE_HOMEPAGE_SECTION = gql`
+  mutation CreateHomepageSection(
+    $templateId: ID!
+    $sectionTypeId: ID!
+    $title: String!
+    $subtitle: String
+    $content: String
+    $excerpt: String
+    $order: Int
+    $isEnabled: Boolean
+    $isPublished: Boolean
+  ) {
+    createPageSection(
+      templateId: $templateId
+      sectionTypeId: $sectionTypeId
+      title: $title
+      subtitle: $subtitle
+      content: $content
+      excerpt: $excerpt
+      order: $order
+      isEnabled: $isEnabled
+      isPublished: $isPublished
+    ) {
+      success
+      message
+      section {
+        id
+        title
+        subtitle
+        content
+        excerpt
+        isEnabled
+        isPublished
+        order
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const UPDATE_HOMEPAGE_SECTION = gql`
+  mutation UpdateHomepageSection(
+    $id: ID!
+    $title: String
+    $subtitle: String
+    $content: String
+    $excerpt: String
+    $isEnabled: Boolean
+    $isPublished: Boolean
+    $order: Int
+  ) {
+    updatePageSection(
+      id: $id
+      title: $title
+      subtitle: $subtitle
+      content: $content
+      excerpt: $excerpt
+      isEnabled: $isEnabled
+      isPublished: $isPublished
+      order: $order
+    ) {
+      success
+      message
+      section {
+        id
+        title
+        subtitle
+        content
+        excerpt
+        isEnabled
+        isPublished
+        order
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const DELETE_HOMEPAGE_SECTION = gql`
+  mutation DeleteHomepageSection($id: ID!) {
+    deletePageSection(id: $id) {
+      success
+      message
+    }
+  }
+`;
+
+export const GET_PAGE_TEMPLATES = gql`
+  query GetPageTemplates {
+    pageTemplates {
+      id
+      name
+      slug
+      description
+      isActive
+      isDefault
+    }
+  }
+`;
+
+export const GET_SECTION_TYPES = gql`
+  query GetSectionTypes {
+    sectionTypes {
+      id
+      name
+      slug
+      description
+      iconClass
+      supportsRichText
+      supportsMedia
+      supportsItems
+      maxInstances
     }
   }
 `;

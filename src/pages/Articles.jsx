@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Card, 
   Table, 
@@ -32,17 +33,21 @@ import {
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_NEWS_LIST, UPDATE_NEWS_STATUS, DELETE_NEWS, GET_CATEGORIES } from '../graphql/queries';
 import { getStatusColor, formatDate, NEWS_STATUS, truncateText } from '../utils/helpers';
+import { useTranslation } from 'react-i18next';
 
 const { TabPane } = Tabs;
 const { Title, Text } = Typography;
 
 const Articles = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [viewMode, setViewMode] = useState('tree'); // 'tree' or 'table'
   const [expandedKeys, setExpandedKeys] = useState([]);
+  const [deletingId, setDeletingId] = useState(null); // Track which article is being deleted
   const [form] = Form.useForm();
 
   // Fetch articles
@@ -63,32 +68,34 @@ const Articles = () => {
   const [updateNewsStatus, { loading: updating }] = useMutation(UPDATE_NEWS_STATUS, {
     onCompleted: (data) => {
       if (data.updateNewsStatus.success) {
-        message.success('Article status updated successfully!');
+        message.success(t('pages.articles.updateStatusSuccess'));
         setIsModalVisible(false);
         setSelectedArticle(null);
         form.resetFields();
         refetch();
       } else {
-        message.error(data.updateNewsStatus.errors?.join(', ') || 'Failed to update article status');
+        message.error(data.updateNewsStatus.errors?.join(', ') || t('pages.articles.updateStatusFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error updating article status: ' + error.message);
+      message.error(t('pages.articles.updateStatusError') + ': ' + error.message);
     }
   });
 
-  // Delete article mutation
-  const [deleteNews, { loading: deleting }] = useMutation(DELETE_NEWS, {
+ 
+  const [deleteNews] = useMutation(DELETE_NEWS, {
     onCompleted: (data) => {
+      setDeletingId(null);
       if (data.deleteNews.success) {
-        message.success('Article deleted successfully!');
+        message.success(t('pages.articles.deleteSuccess'));
         refetch();
       } else {
-        message.error(data.deleteNews.errors?.join(', ') || 'Failed to delete article');
+        message.error(data.deleteNews.errors?.join(', ') || t('pages.articles.deleteFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error deleting article: ' + error.message);
+      setDeletingId(null);
+      message.error(t('pages.articles.deleteError') + ': ' + error.message);
     }
   });
 
@@ -108,7 +115,7 @@ const Articles = () => {
     // Group articles by category
     filteredArticles.forEach(article => {
       const categoryId = article.category?.id || 'uncategorized';
-      const categoryName = article.category?.name || 'Uncategorized';
+      const categoryName = article.category?.name || t('pages.articles.uncategorized');
       
       if (!categoryMap.has(categoryId)) {
         categoryMap.set(categoryId, {
@@ -117,7 +124,7 @@ const Articles = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <FolderOutlined />
               <span>{categoryName}</span>
-              <Tag color="blue">{categoryMap.get(categoryId)?.children?.length || 0} articles</Tag>
+              <Tag color="blue">{t('pages.articles.articleCount', { count: categoryMap.get(categoryId)?.children?.length || 0 })}</Tag>
             </div>
           ),
           children: []
@@ -166,28 +173,49 @@ const Articles = () => {
               >
                 Edit
               </Button>
-              {(article.status === NEWS_STATUS.ARCHIVED || article.status === NEWS_STATUS.DRAFT) && (
-                <Popconfirm
-                  title="Are you sure you want to delete this article?"
-                  onConfirm={(e) => {
-                    e.stopPropagation();
-                    handleDelete(article.id);
-                  }}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <Button
-                    type="link"
-                    danger
-                    size="small"
-                    icon={<DeleteOutlined />}
-                    loading={deleting}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Delete
-                  </Button>
-                </Popconfirm>
-              )}
+              {(() => {
+                const status = article.status?.toString().toLowerCase();
+                const canDelete = status === NEWS_STATUS.DRAFT.toLowerCase() || status === NEWS_STATUS.ARCHIVED.toLowerCase();
+                if (canDelete) {
+                  return (
+                    <Popconfirm
+                      title="Are you sure you want to delete this article?"
+                      onConfirm={(e) => {
+                        e.stopPropagation();
+                        handleDelete(article.id);
+                      }}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Button
+                        type="link"
+                        danger
+                        size="small"
+                        icon={<DeleteOutlined />}
+                        loading={deletingId === article.id}
+                        disabled={!!deletingId && deletingId !== article.id}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Delete
+                      </Button>
+                    </Popconfirm>
+                  );
+                } else {
+                  return (
+                    <Button
+                      type="link"
+                      danger
+                      size="small"
+                      icon={<DeleteOutlined />}
+                      disabled
+                      title={`Only draft or archived articles can be deleted. Current status: ${article.status}`}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Delete
+                    </Button>
+                  );
+                }
+              })()}
             </Space>
           </div>
         ),
@@ -202,14 +230,14 @@ const Articles = () => {
       category.title = (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <FolderOutlined />
-          <span>{categoryId === 'uncategorized' ? 'Uncategorized' : categories.find(c => c.id === categoryId)?.name || 'Unknown'}</span>
-          <Tag color="blue">{articleCount} articles</Tag>
+          <span>{categoryId === 'uncategorized' ? t('pages.articles.uncategorized') : categories.find(c => c.id === categoryId)?.name || t('pages.articles.unknown')}</span>
+          <Tag color="blue">{t('pages.articles.articleCount', { count: articleCount })}</Tag>
         </div>
       );
     });
     
     return Array.from(categoryMap.values());
-  }, [filteredArticles, categories, deleting]);
+  }, [filteredArticles, categories, deletingId]);
 
   const handleArchive = (article) => {
     updateNewsStatus({
@@ -240,12 +268,21 @@ const Articles = () => {
   };
 
   const handleDelete = (id) => {
-    const article = articles.find(a => a.id === id);
-    if (article && article.status === NEWS_STATUS.PUBLISHED) {
-      message.error('Cannot delete published articles. Please archive them first.');
+    if (deletingId) {
+      // Prevent double deletion
       return;
     }
-    
+    const article = articles.find(a => a.id === id);
+    if (!article) {
+      message.error('Article not found.');
+      return;
+    }
+    const status = article.status?.toString().toLowerCase();
+    if (status !== NEWS_STATUS.DRAFT.toLowerCase() && status !== NEWS_STATUS.ARCHIVED.toLowerCase()) {
+      message.error(`Only draft or archived articles can be deleted. Current status: ${article.status}`);
+      return;
+    }
+    setDeletingId(id);
     deleteNews({
       variables: { id: parseInt(id) }
     });
@@ -289,7 +326,7 @@ const Articles = () => {
       dataIndex: 'category',
       key: 'category',
       render: (category) => (
-        <Tag color="blue">{category?.name || 'Uncategorized'}</Tag>
+        <Tag color="blue">{category?.name || t('pages.articles.uncategorized')}</Tag>
       )
     },
     {
@@ -342,45 +379,55 @@ const Articles = () => {
           >
             Change Status
           </Button>
-          {(record.status === NEWS_STATUS.ARCHIVED || record.status === NEWS_STATUS.DRAFT) ? (
-            <Popconfirm
-              title="Are you sure you want to delete this article?"
-              onConfirm={() => handleDelete(record.id)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button
-                type="default"
-                danger
-                size="small"
-                icon={<DeleteOutlined />}
-                loading={deleting}
-              >
-                Delete
-              </Button>
-            </Popconfirm>
-          ) : (
-            <Button
-              type="default"
-              danger
-              size="small"
-              icon={<DeleteOutlined />}
-              disabled
-              title="Only archived or draft articles can be deleted"
-            >
-              Delete
-            </Button>
-          )}
+          {(() => {
+            const status = record.status?.toString().toLowerCase();
+            const canDelete = status === NEWS_STATUS.DRAFT.toLowerCase() || status === NEWS_STATUS.ARCHIVED.toLowerCase();
+            if (canDelete) {
+              return (
+                <Popconfirm
+                  title="Are you sure you want to delete this article?"
+                  onConfirm={() => handleDelete(record.id)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button
+                    type="default"
+                    danger
+                    size="small"
+                    icon={<DeleteOutlined />}
+                    loading={deletingId === record.id}
+                    disabled={!!deletingId && deletingId !== record.id}
+                    title={deletingId === record.id ? 'Deleting in progress...' : 'Delete this article'}
+                  >
+                    Delete
+                  </Button>
+                </Popconfirm>
+              );
+            } else {
+              return (
+                <Button
+                  type="default"
+                  danger
+                  size="small"
+                  icon={<DeleteOutlined />}
+                  disabled
+                  title={`Only draft or archived articles can be deleted. Current status: ${record.status}`}
+                >
+                  Delete
+                </Button>
+              );
+            }
+          })()}
         </Space>
       )
     }
   ];
 
   const statusOptions = [
-    { value: NEWS_STATUS.DRAFT, label: 'Draft' },
-    { value: NEWS_STATUS.PENDING, label: 'Pending Review' },
-    { value: NEWS_STATUS.PUBLISHED, label: 'Published' },
-    { value: NEWS_STATUS.ARCHIVED, label: 'Archived' }
+    { value: NEWS_STATUS.DRAFT, label: 'DRAFT' },
+    { value: NEWS_STATUS.PENDING, label: 'PENDING' },
+    { value: NEWS_STATUS.PUBLISHED, label: 'PUBLISHED' },
+    { value: NEWS_STATUS.ARCHIVED, label: 'ARCHIVED' }
   ];
 
   if (error) {
@@ -396,13 +443,22 @@ const Articles = () => {
 
   return (
     <div style={{ padding: '0', maxWidth: '100%' }}>
-      <div style={{ marginBottom: '24px' }}>
-        <Title level={2} style={{ margin: 0, color: '#1a1a1a' }}>
-          Article Management
-        </Title>
-        <Text type="secondary" style={{ fontSize: '16px', marginTop: '8px', display: 'block' }}>
-          Manage articles and their publication status across categories
-        </Text>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <div>
+          <Title level={2} style={{ margin: 0, color: '#1a1a1a' }}>
+            Article Management
+          </Title>
+          <Text type="secondary" style={{ fontSize: '16px', marginTop: '8px', display: 'block' }}>
+            Manage articles and their publication status across categories
+          </Text>
+        </div>
+        <Button
+          type="primary"
+          style={{ borderRadius: '8px', fontWeight: 600, minWidth: 160 }}
+          onClick={() => navigate('/create-article')}
+        >
+          + New Article
+        </Button>
       </div>
 
       {/* Filters */}
@@ -612,7 +668,7 @@ const Articles = () => {
           <div style={{ marginBottom: '16px' }}>
             <p><strong>Current Status:</strong> {selectedArticle?.status}</p>
             <p><strong>Author:</strong> {selectedArticle?.author?.firstName || selectedArticle?.author?.username}</p>
-            <p><strong>Category:</strong> {selectedArticle?.category?.name || 'Uncategorized'}</p>
+            <p><strong>Category:</strong> {selectedArticle?.category?.name || t('pages.articles.uncategorized')}</p>
           </div>
 
           <Form.Item

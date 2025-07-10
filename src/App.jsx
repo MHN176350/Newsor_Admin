@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, App as AntApp } from 'antd';
 import { ApolloProvider } from '@apollo/client';
 import { Toaster } from 'react-hot-toast';
 import apolloClient from './graphql/client';
@@ -14,9 +14,11 @@ import Tags from './pages/Tags';
 import Users from './pages/Users';
 import Media from './pages/Media';
 import Settings from './pages/Settings';
+import CreateArticle from './pages/CreateArticle';
 import './i18n';
 import './App.css';
 import './styles/admin-theme.css';
+
 
 const theme = {
   token: {
@@ -36,26 +38,29 @@ function App() {
   return (
     <ApolloProvider client={apolloClient}>
       <ConfigProvider theme={theme}>
-        <AuthProvider>
-          <Router>
-            <div className="App">
-              <Toaster position="top-right" />
-              <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<Navigate to="/dashboard" replace />} />
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="articles" element={<Articles />} />
-                  <Route path="categories" element={<Categories />} />
-                  <Route path="tags" element={<Tags />} />
-                  <Route path="users" element={<Users />} />
-                  <Route path="media" element={<Media />} />
-                  <Route path="settings" element={<Settings />} />
-                </Route>
-              </Routes>
-            </div>
-          </Router>
-        </AuthProvider>
+        <AntApp>
+          <AuthProvider>
+            <Router>
+              <div className="App">
+                <Toaster position="top-right" />
+                <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<Navigate to="/dashboard" replace />} />
+                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="articles" element={<Articles />} />
+                    <Route path="categories" element={<Categories />} />
+                    <Route path="tags" element={<Tags />} />
+                    <Route path="users" element={<Users />} />
+                    <Route path="media" element={<Media />} />
+                    <Route path="settings" element={<Settings />} />
+                   <Route path="create-article" element={<CreateArticle />} />
+                  </Route>
+                </Routes>
+              </div>
+            </Router>
+          </AuthProvider>
+        </AntApp>
       </ConfigProvider>
     </ApolloProvider>
   );

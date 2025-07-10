@@ -25,8 +25,10 @@ import {
   DELETE_CATEGORY 
 } from '../graphql/queries';
 import { formatDate } from '../utils/helpers';
+import { useTranslation } from 'react-i18next';
 
 const Categories = () => {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalType, setModalType] = useState('create'); // 'create' or 'edit'
@@ -39,16 +41,16 @@ const Categories = () => {
   const [createCategory, { loading: creating }] = useMutation(CREATE_CATEGORY, {
     onCompleted: (data) => {
       if (data.createCategory.success) {
-        message.success('Category created successfully!');
+        message.success(t('pages.categories.createSuccess'));
         setIsModalVisible(false);
         form.resetFields();
         refetch();
       } else {
-        message.error(data.createCategory.errors?.join(', ') || 'Failed to create category');
+        message.error(data.createCategory.errors?.join(', ') || t('pages.categories.createFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error creating category: ' + error.message);
+      message.error(t('pages.categories.createError') + ': ' + error.message);
     }
   });
 
@@ -56,17 +58,17 @@ const Categories = () => {
   const [updateCategory, { loading: updating }] = useMutation(UPDATE_CATEGORY, {
     onCompleted: (data) => {
       if (data.updateCategory.success) {
-        message.success('Category updated successfully!');
+        message.success(t('pages.categories.updateSuccess'));
         setIsModalVisible(false);
         setSelectedCategory(null);
         form.resetFields();
         refetch();
       } else {
-        message.error(data.updateCategory.errors?.join(', ') || 'Failed to update category');
+        message.error(data.updateCategory.errors?.join(', ') || t('pages.categories.updateFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error updating category: ' + error.message);
+      message.error(t('pages.categories.updateError') + ': ' + error.message);
     }
   });
 
@@ -74,14 +76,14 @@ const Categories = () => {
   const [deleteCategory, { loading: deleting }] = useMutation(DELETE_CATEGORY, {
     onCompleted: (data) => {
       if (data.deleteCategory.success) {
-        message.success('Category deleted successfully!');
+        message.success(t('pages.categories.deleteSuccess'));
         refetch();
       } else {
-        message.error(data.deleteCategory.errors?.join(', ') || 'Failed to delete category');
+        message.error(data.deleteCategory.errors?.join(', ') || t('pages.categories.deleteFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error deleting category: ' + error.message);
+      message.error(t('pages.categories.deleteError') + ': ' + error.message);
     }
   });
 
@@ -131,7 +133,7 @@ const Categories = () => {
 
   const columns = [
     {
-      title: 'Name',
+      title: t('pages.categories.table.name'),
       dataIndex: 'name',
       key: 'name',
       render: (text) => (
@@ -142,25 +144,25 @@ const Categories = () => {
       )
     },
     {
-      title: 'Description',
+      title: t('pages.categories.table.description'),
       dataIndex: 'description',
       key: 'description',
       render: (text) => text || '-'
     },
     {
-      title: 'Articles',
+      title: t('pages.categories.table.articles'),
       dataIndex: 'articleCount',
       key: 'articleCount',
-      render: (count) => `${count || 0} articles`
+      render: (count) => t('pages.categories.articleCount', { count: count || 0 })
     },
     {
-      title: 'Created',
+      title: t('pages.categories.table.created'),
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (date) => formatDate(date)
     },
     {
-      title: 'Actions',
+      title: t('pages.categories.table.actions'),
       key: 'actions',
       render: (_, record) => (
         <Space>
@@ -170,14 +172,14 @@ const Categories = () => {
             icon={<EditOutlined />}
             onClick={() => handleEdit(record)}
           >
-            Edit
+            {t('common.edit')}
           </Button>
           <Popconfirm
-            title="Are you sure you want to delete this category?"
-            description="This action cannot be undone."
+            title={t('pages.categories.deleteConfirmTitle')}
+            description={t('pages.categories.deleteConfirmDescription')}
             onConfirm={() => handleDelete(record.id)}
-            okText="Yes"
-            cancelText="No"
+            okText={t('common.yes')}
+            cancelText={t('common.no')}
           >
             <Button
               type="default"
@@ -186,7 +188,7 @@ const Categories = () => {
               icon={<DeleteOutlined />}
               loading={deleting}
             >
-              Delete
+              {t('common.delete')}
             </Button>
           </Popconfirm>
         </Space>
@@ -197,7 +199,7 @@ const Categories = () => {
   if (error) {
     return (
       <Alert
-        message="Error loading categories"
+        message={t('pages.categories.errorLoading')}
         description={error.message}
         type="error"
         showIcon
@@ -209,15 +211,15 @@ const Categories = () => {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <div>
-          <h1>Category Management</h1>
-          <p>Manage article categories</p>
+          <h1>{t('pages.categories.title')}</h1>
+          <p>{t('pages.categories.subtitle')}</p>
         </div>
         <Button
           type="primary"
           icon={<PlusOutlined />}
           onClick={handleCreate}
         >
-          Create Category
+          {t('pages.categories.createCategory')}
         </Button>
       </div>
 
@@ -232,14 +234,18 @@ const Categories = () => {
             showSizeChanger: true,
             showQuickJumper: true,
             showTotal: (total, range) => 
-              `${range[0]}-${range[1]} of ${total} categories`
+              t('pages.categories.pagination.showTotal', { 
+                range0: range[0], 
+                range1: range[1], 
+                total 
+              })
           }}
         />
       </Card>
 
       {/* Create/Edit Modal */}
       <Modal
-        title={modalType === 'create' ? 'Create Category' : 'Edit Category'}
+        title={modalType === 'create' ? t('pages.categories.createCategory') : t('pages.categories.editCategory')}
         open={isModalVisible}
         onCancel={() => {
           setIsModalVisible(false);
@@ -254,26 +260,26 @@ const Categories = () => {
           onFinish={handleSubmit}
         >
           <Form.Item
-            label="Name"
+            label={t('pages.categories.form.nameLabel')}
             name="name"
             rules={[
-              { required: true, message: 'Please enter category name' },
-              { min: 2, message: 'Name must be at least 2 characters' },
-              { max: 50, message: 'Name must be less than 50 characters' }
+              { required: true, message: t('pages.categories.form.nameRequired') },
+              { min: 2, message: t('pages.categories.form.nameMinLength') },
+              { max: 50, message: t('pages.categories.form.nameMaxLength') }
             ]}
           >
-            <Input placeholder="Enter category name" />
+            <Input placeholder={t('pages.categories.form.namePlaceholder')} />
           </Form.Item>
 
           <Form.Item
-            label="Description"
+            label={t('pages.categories.form.descriptionLabel')}
             name="description"
             rules={[
-              { max: 200, message: 'Description must be less than 200 characters' }
+              { max: 200, message: t('pages.categories.form.descriptionMaxLength') }
             ]}
           >
             <Input.TextArea 
-              placeholder="Enter category description (optional)"
+              placeholder={t('pages.categories.form.descriptionPlaceholder')}
               rows={3}
             />
           </Form.Item>
@@ -285,10 +291,10 @@ const Categories = () => {
                 htmlType="submit" 
                 loading={creating || updating}
               >
-                {modalType === 'create' ? 'Create' : 'Update'}
+                {modalType === 'create' ? t('pages.categories.form.create') : t('pages.categories.form.update')}
               </Button>
               <Button onClick={() => setIsModalVisible(false)}>
-                Cancel
+                {t('pages.categories.form.cancel')}
               </Button>
             </Space>
           </Form.Item>

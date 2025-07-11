@@ -12,7 +12,7 @@ import Articles from './pages/Articles';
 import Categories from './pages/Categories';
 import Tags from './pages/Tags';
 import Users from './pages/Users';
-import Media from './pages/Media';
+import Contact from './pages/Contact';
 import Settings from './pages/Settings';
 import CreateArticle from './pages/CreateArticle';
 import './i18n';
@@ -52,7 +52,8 @@ function App() {
                     <Route path="categories" element={<Categories />} />
                     <Route path="tags" element={<Tags />} />
                     <Route path="users" element={<Users />} />
-                    <Route path="media" element={<Media />} />
+                    <Route path="contact" element={<Contact />} />
+                    <Route path="media" element={<Contact />} />
                     <Route path="settings" element={<Settings />} />
                    <Route path="create-article" element={<CreateArticle />} />
                   </Route>

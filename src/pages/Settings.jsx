@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Form, Input, Button, Tabs, Space, Typography, Divider, Badge, App } from 'antd';
 import { SaveOutlined, ReloadOutlined, ApiOutlined } from '@ant-design/icons';
-import { textConfigService } from '../services/textConfigServiceApi';
+import { useTranslation } from 'react-i18next';
+import { textConfigService } from '../api/textConfigServiceApi';
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
 
 const Settings = () => {
   const { message } = App.useApp();
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [texts, setTexts] = useState({});
@@ -41,12 +43,12 @@ const Settings = () => {
       if (success) {
         setTexts(values);
         
-        message.success('Text content updated successfully!');
+        message.success(t('settings.messages.textUpdateSuccess'));
       } else {
-        throw new Error('Failed to save configuration');
+        throw new Error(t('settings.messages.configSaveError'));
       }
     } catch (error) {
-      message.error('Failed to save changes. Please try again.');
+      message.error(t('settings.messages.textUpdateError'));
     } finally {
       setLoading(false);
     }
@@ -59,46 +61,59 @@ const Settings = () => {
         const defaultTexts = textConfigService.defaultTexts;
         form.setFieldsValue(defaultTexts);
         setTexts(defaultTexts);
-        message.success('Text content reset to defaults!');
+        message.success(t('settings.messages.textResetSuccess'));
       } else {
-        throw new Error('Failed to reset configuration');
+        throw new Error(t('settings.messages.configResetError'));
       }
     } catch (error) {
-      message.error('Failed to reset. Please try again.');
+      message.error(t('settings.messages.textResetError'));
+    }
+  };
+
+  const getApiStatusText = () => {
+    switch (apiStatus) {
+      case 'connected':
+        return t('settings.evolusoft.apiStatus.connected');
+      case 'disconnected':
+        return t('settings.evolusoft.apiStatus.disconnected');
+      case 'error':
+        return t('settings.evolusoft.apiStatus.error');
+      default:
+        return t('settings.evolusoft.apiStatus.checking');
     }
   };
 
   const tabItems = [
     {
       key: '1',
-      label: 'Company Info',
+      label: t('settings.evolusoft.tabs.companyInfo'),
       children: (
         <Space direction="vertical" style={{ width: '100%' }} size="large">
           <div>
-            <Title level={4}>Hero Section</Title>
-            <Form.Item label="Page Slogan" name="pageSlogan">
-              <Input placeholder="Main headline on the homepage" />
+            <Title level={4}>{t('settings.evolusoft.sections.heroSection')}</Title>
+            <Form.Item label={t('settings.evolusoft.fields.pageSlogan')} name="pageSlogan">
+              <Input placeholder={t('settings.evolusoft.fields.pageSloganPlaceholder')} />
             </Form.Item>
-            <Form.Item label="Page Description" name="pageShortDescription">
-              <TextArea rows={3} placeholder="Short description under the main headline" />
+            <Form.Item label={t('settings.evolusoft.fields.pageDescription')} name="pageShortDescription">
+              <TextArea rows={3} placeholder={t('settings.evolusoft.fields.pageDescriptionPlaceholder')} />
             </Form.Item>
           </div>
 
           <Divider />
 
           <div>
-            <Title level={4}>About Section</Title>
-            <Form.Item label="Company Name" name="companyName">
-              <Input placeholder="Company name" />
+            <Title level={4}>{t('settings.evolusoft.sections.aboutSection')}</Title>
+            <Form.Item label={t('settings.evolusoft.fields.companyName')} name="companyName">
+              <Input placeholder={t('settings.evolusoft.fields.companyNamePlaceholder')} />
             </Form.Item>
-            <Form.Item label="Description 1" name="companyShortDescription1">
-              <TextArea rows={2} placeholder="First company description paragraph" />
+            <Form.Item label={t('settings.evolusoft.fields.description1')} name="companyShortDescription1">
+              <TextArea rows={2} placeholder={t('settings.evolusoft.fields.description1Placeholder')} />
             </Form.Item>
-            <Form.Item label="Description 2" name="companyShortDescription2">
-              <TextArea rows={3} placeholder="Second company description paragraph" />
+            <Form.Item label={t('settings.evolusoft.fields.description2')} name="companyShortDescription2">
+              <TextArea rows={3} placeholder={t('settings.evolusoft.fields.description2Placeholder')} />
             </Form.Item>
-            <Form.Item label="Slogan Description" name="companySloganDescription">
-              <TextArea rows={4} placeholder="Company slogan and partnership description" />
+            <Form.Item label={t('settings.evolusoft.fields.sloganDescription')} name="companySloganDescription">
+              <TextArea rows={4} placeholder={t('settings.evolusoft.fields.sloganDescriptionPlaceholder')} />
             </Form.Item>
           </div>
         </Space>
@@ -106,28 +121,28 @@ const Settings = () => {
     },
     {
       key: '2',
-      label: 'Vision & Mission',
+      label: t('settings.evolusoft.tabs.visionMission'),
       children: (
         <Space direction="vertical" style={{ width: '100%' }} size="large">
           <div>
-            <Title level={4}>Vision</Title>
-            <Form.Item label="Vision Statement 1" name="companyVision1">
-              <TextArea rows={2} placeholder="First vision statement" />
+            <Title level={4}>{t('settings.evolusoft.sections.vision')}</Title>
+            <Form.Item label={t('settings.evolusoft.fields.visionStatement1')} name="companyVision1">
+              <TextArea rows={2} placeholder={t('settings.evolusoft.fields.visionStatement1Placeholder')} />
             </Form.Item>
-            <Form.Item label="Vision Statement 2" name="companyVision2">
-              <TextArea rows={2} placeholder="Second vision statement" />
+            <Form.Item label={t('settings.evolusoft.fields.visionStatement2')} name="companyVision2">
+              <TextArea rows={2} placeholder={t('settings.evolusoft.fields.visionStatement2Placeholder')} />
             </Form.Item>
           </div>
 
           <Divider />
 
           <div>
-            <Title level={4}>Mission</Title>
-            <Form.Item label="Mission Statement 1" name="companyMission1">
-              <TextArea rows={2} placeholder="First mission statement" />
+            <Title level={4}>{t('settings.evolusoft.sections.mission')}</Title>
+            <Form.Item label={t('settings.evolusoft.fields.missionStatement1')} name="companyMission1">
+              <TextArea rows={2} placeholder={t('settings.evolusoft.fields.missionStatement1Placeholder')} />
             </Form.Item>
-            <Form.Item label="Mission Statement 2" name="companyMission2">
-              <TextArea rows={2} placeholder="Second mission statement" />
+            <Form.Item label={t('settings.evolusoft.fields.missionStatement2')} name="companyMission2">
+              <TextArea rows={2} placeholder={t('settings.evolusoft.fields.missionStatement2Placeholder')} />
             </Form.Item>
           </div>
         </Space>
@@ -135,53 +150,53 @@ const Settings = () => {
     },
     {
       key: '3',
-      label: 'Company Values',
+      label: t('settings.evolusoft.tabs.companyValues'),
       children: (
         <Space direction="vertical" style={{ width: '100%' }} size="medium">
-          <Title level={4}>Core Values</Title>
-          <Form.Item label="Value 1 (Collaboration)" name="companyValue1">
-            <TextArea rows={2} placeholder="Collaboration value description" />
+          <Title level={4}>{t('settings.evolusoft.sections.coreValues')}</Title>
+          <Form.Item label={t('settings.evolusoft.fields.value1')} name="companyValue1">
+            <TextArea rows={2} placeholder={t('settings.evolusoft.fields.value1Placeholder')} />
           </Form.Item>
-          <Form.Item label="Value 2 (Innovation)" name="companyValue2">
-            <TextArea rows={2} placeholder="Innovation value description" />
+          <Form.Item label={t('settings.evolusoft.fields.value2')} name="companyValue2">
+            <TextArea rows={2} placeholder={t('settings.evolusoft.fields.value2Placeholder')} />
           </Form.Item>
-          <Form.Item label="Value 3 (Excellence)" name="companyValue3">
-            <TextArea rows={2} placeholder="Excellence value description" />
+          <Form.Item label={t('settings.evolusoft.fields.value3')} name="companyValue3">
+            <TextArea rows={2} placeholder={t('settings.evolusoft.fields.value3Placeholder')} />
           </Form.Item>
-          <Form.Item label="Value 4 (Integrity)" name="companyValue4">
-            <TextArea rows={2} placeholder="Integrity value description" />
+          <Form.Item label={t('settings.evolusoft.fields.value4')} name="companyValue4">
+            <TextArea rows={2} placeholder={t('settings.evolusoft.fields.value4Placeholder')} />
           </Form.Item>
-          <Form.Item label="Value 5 (Customer Success)" name="companyValue5">
-            <TextArea rows={2} placeholder="Customer Success value description" />
+          <Form.Item label={t('settings.evolusoft.fields.value5')} name="companyValue5">
+            <TextArea rows={2} placeholder={t('settings.evolusoft.fields.value5Placeholder')} />
           </Form.Item>
         </Space>
       ),
     },
     {
       key: '4',
-      label: 'Services',
+      label: t('settings.evolusoft.tabs.services'),
       children: (
         <Space direction="vertical" style={{ width: '100%' }} size="large">
           <div>
-            <Title level={4}>Service Names</Title>
-            <Form.Item label="Service 1 Name" name="serviceName1">
-              <Input placeholder="Database Services" />
+            <Title level={4}>{t('settings.evolusoft.sections.serviceNames')}</Title>
+            <Form.Item label={t('settings.evolusoft.fields.serviceName1')} name="serviceName1">
+              <Input placeholder={t('settings.evolusoft.fields.serviceName1Placeholder')} />
             </Form.Item>
-            <Form.Item label="Service 2 Name" name="serviceName2">
-              <Input placeholder="Application Development" />
+            <Form.Item label={t('settings.evolusoft.fields.serviceName2')} name="serviceName2">
+              <Input placeholder={t('settings.evolusoft.fields.serviceName2Placeholder')} />
             </Form.Item>
-            <Form.Item label="Service 3 Name" name="serviceName3">
-              <Input placeholder="System Integration" />
+            <Form.Item label={t('settings.evolusoft.fields.serviceName3')} name="serviceName3">
+              <Input placeholder={t('settings.evolusoft.fields.serviceName3Placeholder')} />
             </Form.Item>
           </div>
 
           <Divider />
 
           <div>
-            <Title level={4}>Database Services (Service 1)</Title>
+            <Title level={4}>{t('settings.evolusoft.sections.databaseServices')}</Title>
             {Array.from({ length: 12 }, (_, i) => (
-              <Form.Item key={i} label={`Description ${i + 1}`} name={`service1Desc${i + 1}`}>
-                <Input placeholder={`Database service description ${i + 1}`} />
+              <Form.Item key={i} label={t('settings.evolusoft.fields.serviceDescription', { number: i + 1 })} name={`service1Desc${i + 1}`}>
+                <Input placeholder={t('settings.evolusoft.fields.databaseServicePlaceholder', { number: i + 1 })} />
               </Form.Item>
             ))}
           </div>
@@ -189,10 +204,10 @@ const Settings = () => {
           <Divider />
 
           <div>
-            <Title level={4}>Application Development (Service 2)</Title>
+            <Title level={4}>{t('settings.evolusoft.sections.applicationDevelopment')}</Title>
             {Array.from({ length: 13 }, (_, i) => (
-              <Form.Item key={i} label={`Description ${i + 1}`} name={`service2Desc${i + 1}`}>
-                <Input placeholder={`Application development description ${i + 1}`} />
+              <Form.Item key={i} label={t('settings.evolusoft.fields.serviceDescription', { number: i + 1 })} name={`service2Desc${i + 1}`}>
+                <Input placeholder={t('settings.evolusoft.fields.applicationDevPlaceholder', { number: i + 1 })} />
               </Form.Item>
             ))}
           </div>
@@ -200,10 +215,10 @@ const Settings = () => {
           <Divider />
 
           <div>
-            <Title level={4}>System Integration (Service 3)</Title>
+            <Title level={4}>{t('settings.evolusoft.sections.systemIntegration')}</Title>
             {Array.from({ length: 13 }, (_, i) => (
-              <Form.Item key={i} label={`Description ${i + 1}`} name={`service3Desc${i + 1}`}>
-                <Input placeholder={`System integration description ${i + 1}`} />
+              <Form.Item key={i} label={t('settings.evolusoft.fields.serviceDescription', { number: i + 1 })} name={`service3Desc${i + 1}`}>
+                <Input placeholder={t('settings.evolusoft.fields.systemIntegrationPlaceholder', { number: i + 1 })} />
               </Form.Item>
             ))}
           </div>
@@ -212,24 +227,24 @@ const Settings = () => {
     },
     {
       key: '5',
-      label: 'Contact Info',
+      label: t('settings.evolusoft.tabs.contactInfo'),
       children: (
         <Space direction="vertical" style={{ width: '100%' }} size="large">
-          <Title level={4}>Contact Information</Title>
-          <Form.Item label="Headquarters Address" name="headquartersAddress">
-            <TextArea rows={2} placeholder="Company headquarters address" />
+          <Title level={4}>{t('settings.evolusoft.sections.contactInformation')}</Title>
+          <Form.Item label={t('settings.evolusoft.fields.contactAddress')} name="contactAddress">
+            <TextArea rows={2} placeholder={t('settings.evolusoft.fields.contactAddressPlaceholder')} />
           </Form.Item>
-          <Form.Item label="Hotline Number" name="hotlineNumber">
-            <Input placeholder="Company hotline phone number" />
+          <Form.Item label={t('settings.evolusoft.fields.contactPhone')} name="contactPhone">
+            <Input placeholder={t('settings.evolusoft.fields.contactPhonePlaceholder')} />
           </Form.Item>
-          <Form.Item label="Support Email" name="supportEmail">
-            <Input placeholder="Company support email address" />
+          <Form.Item label={t('settings.evolusoft.fields.contactEmail')} name="contactEmail">
+            <Input placeholder={t('settings.evolusoft.fields.contactEmailPlaceholder')} />
           </Form.Item>
-          <Form.Item label="Working Hours (Monday-Friday)" name="workingHoursAM">
-            <Input placeholder="Monday - Friday working hours" />
+          <Form.Item label={t('settings.evolusoft.fields.workingHoursWeekday')} name="workingHoursWeekday">
+            <Input placeholder={t('settings.evolusoft.fields.workingHoursWeekdayPlaceholder')} />
           </Form.Item>
-          <Form.Item label="Working Hours (Saturday)" name="workingHoursPM">
-            <Input placeholder="Saturday working hours" />
+          <Form.Item label={t('settings.evolusoft.fields.workingHoursWeekend')} name="workingHoursWeekend">
+            <Input placeholder={t('settings.evolusoft.fields.workingHoursWeekendPlaceholder')} />
           </Form.Item>
         </Space>
       ),
@@ -239,22 +254,20 @@ const Settings = () => {
   return (
     <div>
       <Title level={2}>
-        EvoluSoft Homepage Text Management
+        {t('settings.evolusoft.title')}
         <Badge 
           style={{ marginLeft: 16 }}
           status={apiStatus === 'connected' ? 'success' : apiStatus === 'disconnected' ? 'warning' : 'error'}
           text={
             <span style={{ fontSize: '14px' }}>
               <ApiOutlined style={{ marginRight: 4 }} />
-              {apiStatus === 'connected' ? 'API Connected' : 
-               apiStatus === 'disconnected' ? 'API Offline (Using localStorage)' : 
-               'API Error'}
+              {getApiStatusText()}
             </span>
           }
         />
       </Title>
       <Text type="secondary">
-        Configure and customize all text content displayed on the EvoluSoft homepage
+        {t('settings.evolusoft.subtitle')}
       </Text>
       
       <Card style={{ marginTop: 16 }}>
@@ -281,14 +294,14 @@ const Settings = () => {
               loading={loading}
               size="large"
             >
-              Save Changes
+              {t('settings.evolusoft.actions.saveChanges')}
             </Button>
             <Button 
               onClick={handleReset}
               icon={<ReloadOutlined />}
               size="large"
             >
-              Reset to Defaults
+              {t('settings.evolusoft.actions.resetToDefaults')}
             </Button>
           </Space>
         </Form>

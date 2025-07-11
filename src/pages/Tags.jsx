@@ -12,33 +12,54 @@ import {
   Alert,
   Popconfirm,
   Tag,
-  Switch
+  Switch,
+  Collapse,
+  List,
+  Avatar,
+  Typography
 } from 'antd';
 import { 
   EditOutlined, 
   DeleteOutlined, 
   PlusOutlined,
-  TagOutlined 
+  TagOutlined,
+  CaretRightOutlined,
+  EyeOutlined,
+  CalendarOutlined,
+  UserOutlined
 } from '@ant-design/icons';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import { 
   GET_ADMIN_TAGS, 
   CREATE_TAG, 
   UPDATE_TAG, 
   DELETE_TAG,
-  TOGGLE_TAG 
+  TOGGLE_TAG,
+  GET_ARTICLES_BY_TAG
 } from '../graphql/queries';
 import { formatDate } from '../utils/helpers';
+
+const { Panel } = Collapse;
+const { Text } = Typography;
 
 const Tags = () => {
   const { t } = useTranslation();
   const [selectedTag, setSelectedTag] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalType, setModalType] = useState('create'); // 'create' or 'edit'
+  const [expandedRows, setExpandedRows] = useState(new Set());
   const [form] = Form.useForm();
 
   // Fetch tags
   const { data, loading, error, refetch } = useQuery(GET_ADMIN_TAGS);
+
+  // Fetch articles for a specific tag when expanded
+  const [getArticlesByTag, { data: articlesData, loading: articlesLoading }] = useLazyQuery(
+    GET_ARTICLES_BY_TAG,
+    {
+      fetchPolicy: 'cache-and-network'
+    }
+  );
 
   // Create tag mutation
   const [createTag, { loading: creating }] = useMutation(CREATE_TAG, {
@@ -152,7 +173,150 @@ const Tags = () => {
     });
   };
 
+  const handleExpandRow = async (record) => {
+    const tagId = record.id;
+    const newExpandedRows = new Set(expandedRows);
+    
+    if (expandedRows.has(tagId)) {
+      // Collapse row
+      newExpandedRows.delete(tagId);
+    } else {
+      // Expand row and fetch articles
+      if (record.articleCount > 0) {
+        newExpandedRows.add(tagId);
+        // Fetch articles for this tag
+        try {
+          await getArticlesByTag({
+            variables: { tagId: parseInt(tagId) }
+          });
+        } catch (error) {
+          message.error(t('pages.tags.fetchArticlesError', { error: error.message }));
+        }
+      }
+    }
+    
+    setExpandedRows(newExpandedRows);
+  };
+
+  const renderArticlesList = (tagId) => {
+    const articles = articlesData?.articles_by_tag || [];
+    
+    if (articlesLoading) {
+      return <div style={{ padding: '16px', textAlign: 'center' }}>Loading articles...</div>;
+    }
+    
+    if (articles.length === 0) {
+      return <div style={{ padding: '16px', textAlign: 'center' }}>No articles found</div>;
+    }
+    
+    return (
+      <div style={{ padding: '16px', backgroundColor: '#fafafa' }}>
+        <Text strong style={{ marginBottom: '12px', display: 'block' }}>
+          {t('pages.tags.articlesInTag', { defaultValue: 'Articles in this tag' })} ({articles.length})
+        </Text>
+        <List
+          size="small"
+          dataSource={articles}
+          renderItem={(article) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={
+                  article.featuredImage ? (
+                    <Avatar 
+                      src={article.featuredImage} 
+                      shape="square" 
+                      size={40}
+                    />
+                  ) : (
+                    <Avatar 
+                      icon={<EyeOutlined />} 
+                      shape="square" 
+                      size={40}
+                      style={{ backgroundColor: '#f0f0f0', color: '#999' }}
+                    />
+                  )
+                }
+                title={
+                  <Space>
+                    <Text strong style={{ fontSize: '14px' }}>
+                      {article.title}
+                    </Text>
+                    {article.status && (
+                      <Tag color={article.status === 'PUBLISHED' ? 'green' : 'orange'}>
+                        {article.status}
+                      </Tag>
+                    )}
+                  </Space>
+                }
+                description={
+                  <Space direction="vertical" size={2}>
+                    <Space size={16}>
+                      <Space size={4}>
+                        <UserOutlined style={{ color: '#999' }} />
+                        <Text type="secondary" style={{ fontSize: '12px' }}>
+                          {article.author?.firstName && article.author?.lastName 
+                            ? `${article.author.firstName} ${article.author.lastName}` 
+                            : article.author?.username || 'Unknown'}
+                        </Text>
+                      </Space>
+                      <Space size={4}>
+                        <CalendarOutlined style={{ color: '#999' }} />
+                        <Text type="secondary" style={{ fontSize: '12px' }}>
+                          {formatDate(article.publishedAt || article.createdAt)}
+                        </Text>
+                      </Space>
+                      <Space size={4}>
+                        <EyeOutlined style={{ color: '#999' }} />
+                        <Text type="secondary" style={{ fontSize: '12px' }}>
+                          {article.viewCount || 0} views
+                        </Text>
+                      </Space>
+                    </Space>
+                    {article.excerpt && (
+                      <Text type="secondary" style={{ fontSize: '12px' }}>
+                        {article.excerpt.length > 100 
+                          ? article.excerpt.substring(0, 100) + '...' 
+                          : article.excerpt}
+                      </Text>
+                    )}
+                  </Space>
+                }
+              />
+            </List.Item>
+          )}
+        />
+      </div>
+    );
+  };
+
   const columns = [
+    {
+      title: '',
+      key: 'expand',
+      width: 50,
+      render: (_, record) => {
+        const hasArticles = record.articleCount > 0;
+        const isExpanded = expandedRows.has(record.id);
+        
+        return (
+          <Button
+            type="text"
+            size="small"
+            disabled={!hasArticles}
+            icon={
+              <CaretRightOutlined 
+                style={{ 
+                  transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s',
+                  color: hasArticles ? '#1890ff' : '#d9d9d9'
+                }} 
+              />
+            }
+            onClick={() => handleExpandRow(record)}
+          />
+        );
+      }
+    },
     {
       title: t('pages.tags.table.name'),
       dataIndex: 'name',
@@ -266,6 +430,15 @@ const Tags = () => {
             showQuickJumper: true,
             showTotal: (total, range) => 
               t('pages.tags.table.pagination', { start: range[0], end: range[1], total })
+          }}
+          expandable={{
+            expandedRowRender: (record) => renderArticlesList(record.id),
+            expandedRowKeys: Array.from(expandedRows),
+            onExpand: (expanded, record) => {
+              // This is handled by our custom expand button
+            },
+            showExpandColumn: false, // We have our own expand column
+            expandRowByClick: false
           }}
         />
       </Card>

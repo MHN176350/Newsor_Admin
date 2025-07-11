@@ -14,10 +14,12 @@ import {
 } from 'antd';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import { useQuery, useMutation } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 import { GET_USERS, CHANGE_USER_ROLE } from '../graphql/queries';
 import { getRoleColor, formatDate, USER_ROLES } from '../utils/helpers';
 
 const Users = () => {
+  const { t } = useTranslation();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
@@ -29,17 +31,17 @@ const Users = () => {
   const [changeUserRole, { loading: changing }] = useMutation(CHANGE_USER_ROLE, {
     onCompleted: (data) => {
       if (data.changeUserRole.success) {
-        message.success('User role updated successfully!');
+        message.success(t('users.messages.roleUpdateSuccess'));
         setIsModalVisible(false);
         setSelectedUser(null);
         form.resetFields();
         refetch();
       } else {
-        message.error(data.changeUserRole.errors?.join(', ') || 'Failed to update user role');
+        message.error(data.changeUserRole.errors?.join(', ') || t('users.messages.roleUpdateFailed'));
       }
     },
     onError: (error) => {
-      message.error('Error updating user role: ' + error.message);
+      message.error(t('users.messages.roleUpdateError') + ': ' + error.message);
     }
   });
 
@@ -71,7 +73,7 @@ const Users = () => {
 
   const columns = [
     {
-      title: 'User',
+      title: t('users.table.user'),
       dataIndex: 'username',
       key: 'username',
       render: (text, record) => (
@@ -89,12 +91,12 @@ const Users = () => {
       )
     },
     {
-      title: 'Email',
+      title: t('users.table.email'),
       dataIndex: 'email',
       key: 'email'
     },
     {
-      title: 'Role',
+      title: t('users.table.role'),
       dataIndex: 'profile',
       key: 'role',
       render: (profile) => (
@@ -104,23 +106,23 @@ const Users = () => {
       )
     },
     {
-      title: 'Status',
+      title: t('users.table.status'),
       dataIndex: 'isActive',
       key: 'isActive',
       render: (isActive) => (
         <Tag color={isActive ? 'green' : 'red'}>
-          {isActive ? 'Active' : 'Inactive'}
+          {isActive ? t('users.table.active') : t('users.table.inactive')}
         </Tag>
       )
     },
     {
-      title: 'Joined',
+      title: t('users.table.joinDate'),
       dataIndex: 'dateJoined',
       key: 'dateJoined',
       render: (date) => formatDate(date)
     },
     {
-      title: 'Actions',
+      title: t('users.table.actions'),
       key: 'actions',
       render: (_, record) => (
         <Space>
@@ -130,7 +132,7 @@ const Users = () => {
             icon={<EditOutlined />}
             onClick={() => handleRoleChange(record)}
           >
-            Change Role
+            {t('users.actions.changeRole')}
           </Button>
         </Space>
       )
@@ -138,16 +140,16 @@ const Users = () => {
   ];
 
   const roleOptions = [
-    { value: USER_ROLES.READER, label: 'Reader' },
-    { value: USER_ROLES.WRITER, label: 'Writer' },
-    { value: USER_ROLES.MANAGER, label: 'Manager' }
+    { value: USER_ROLES.READER, label: t('users.roles.reader') },
+    { value: USER_ROLES.WRITER, label: t('users.roles.writer') },
+    { value: USER_ROLES.MANAGER, label: t('users.roles.manager') }
     // Admin role is excluded for security reasons
   ];
 
   if (error) {
     return (
       <Alert
-        message="Error loading users"
+        message={t('users.messages.loadingError')}
         description={error.message}
         type="error"
         showIcon
@@ -157,19 +159,19 @@ const Users = () => {
 
   return (
     <div>
-      <h1>User Management</h1>
-      <p>Manage user roles and permissions</p>
+      <h1>{t('users.title')}</h1>
+      <p>{t('users.subtitle')}</p>
 
       <Card>
         <div style={{ marginBottom: '16px' }}>
           <Space>
             <UserOutlined />
-            <span>Total Users: {users.length}</span>
+            <span>{t('users.info.totalUsers')}: {users.length}</span>
             <span>|</span>
-            <span>Manageable Users: {nonAdminUsers.length}</span>
+            <span>{t('users.info.manageableUsers')}: {nonAdminUsers.length}</span>
           </Space>
           <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
-            Admin users are not shown in the role management table for security reasons.
+            {t('users.info.adminSecurityNote')}
           </div>
         </div>
 
@@ -183,14 +185,18 @@ const Users = () => {
             showSizeChanger: true,
             showQuickJumper: true,
             showTotal: (total, range) => 
-              `${range[0]}-${range[1]} of ${total} users`
+              t('users.pagination.showTotal', {
+                start: range[0],
+                end: range[1],
+                total
+              })
           }}
         />
       </Card>
 
       {/* Role Change Modal */}
       <Modal
-        title={`Change Role for ${selectedUser?.firstName || selectedUser?.username}`}
+        title={`${t('users.modal.changeRoleTitle')} ${selectedUser?.firstName || selectedUser?.username}`}
         open={isModalVisible}
         onCancel={() => {
           setIsModalVisible(false);
@@ -205,16 +211,16 @@ const Users = () => {
           onFinish={handleSubmit}
         >
           <div style={{ marginBottom: '16px' }}>
-            <p><strong>Current Role:</strong> {selectedUser?.profile?.role || USER_ROLES.READER}</p>
-            <p><strong>Email:</strong> {selectedUser?.email}</p>
+            <p><strong>{t('users.modal.currentRole')}:</strong> {selectedUser?.profile?.role || USER_ROLES.READER}</p>
+            <p><strong>{t('users.email')}:</strong> {selectedUser?.email}</p>
           </div>
 
           <Form.Item
-            label="New Role"
+            label={t('users.modal.newRole')}
             name="newRole"
-            rules={[{ required: true, message: 'Please select a new role' }]}
+            rules={[{ required: true, message: t('users.messages.selectRole') }]}
           >
-            <Select placeholder="Select a role">
+            <Select placeholder={t('users.messages.selectRole')}>
               {roleOptions.map(option => (
                 <Select.Option key={option.value} value={option.value}>
                   <Tag color={getRoleColor(option.value)}>
@@ -228,10 +234,10 @@ const Users = () => {
           <Form.Item>
             <Space>
               <Button type="primary" htmlType="submit" loading={changing}>
-                Update Role
+                {t('users.actions.updateRole')}
               </Button>
               <Button onClick={() => setIsModalVisible(false)}>
-                Cancel
+                {t('users.actions.cancel')}
               </Button>
             </Space>
           </Form.Item>

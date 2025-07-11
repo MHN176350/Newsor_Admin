@@ -14,21 +14,26 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, rememberMe: contextRememberMe, setRememberMe: setContextRememberMe } = useAuth();
   const { t } = useTranslation();
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/dashboard');
     }
-  }, [isAuthenticated, navigate]);
+    
+    // Initialize remember me state from context
+    setRememberMe(contextRememberMe);
+  }, [isAuthenticated, navigate, contextRememberMe]);
 
   const handleSubmit = async (values) => {
     setLoading(true);
     setError(null);
 
     try {
-      await login(values.username, values.password);
+      // Update context remember me preference
+      setContextRememberMe(rememberMe);
+      await login(values.username, values.password, rememberMe);
       navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Invalid credentials. Please try again.');

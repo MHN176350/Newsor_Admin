@@ -21,7 +21,7 @@
     "tags": "Tags",
     "users": "Users",
     "articles": "Articles",
-    "media": "Media",
+    "contact": "Contact",
     "settings": "Settings",
     "dashboard": "Dashboard",
     "name": "Name",
@@ -118,6 +118,61 @@
       "writers": "Writers",
       "managers": "Managers",
       "admins": "Admins"
+    },
+    "contact": {
+      "title": "Contact Management",
+      "subtitle": "Manage customer inquiries and contact messages",
+      "table": {
+        "date": "Date",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "service": "Service",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "new": "New",
+        "read": "Read",
+        "responded": "Responded",
+        "closed": "Closed"
+      },
+      "actions": {
+        "view": "View",
+        "sendEmail": "Send Email",
+        "close": "Close",
+        "send": "Send",
+        "viewHtmlSource": "View HTML Source"
+      },
+      "messages": {
+        "statusUpdated": "Contact status updated successfully",
+        "templateUpdated": "Email template updated successfully",
+        "emailSent": "Thank you email sent successfully",
+        "statusUpdateFailed": "Failed to update status",
+        "templateUpdateFailed": "Failed to update template",
+        "emailSendFailed": "Failed to send email",
+        "loadingError": "Error loading contacts",
+        "noTemplates": "No email templates found",
+        "selectTemplate": "Select a template to view or edit"
+      },
+      "modals": {
+        "contactDetails": "Contact Details"
+      },
+      "details": {
+        "subject": "Subject",
+        "contentPreview": "Content Preview"
+      },
+      "form": {
+        "emailSubject": "Email Subject",
+        "emailSubjectRequired": "Please enter email subject"
+      },
+      "htmlEditor": {
+        "togglePreview": "Toggle Preview",
+        "preview": "Preview",
+        "edit": "Edit",
+        "previewMode": "Preview Mode",
+        "htmlEditor": "HTML Editor"
+      }
     }
   },
   "users": {
@@ -151,7 +206,40 @@
       "deleteSuccess": "User deleted successfully!",
       "deleteConfirm": "Are you sure you want to delete this user?",
       "resetPasswordSuccess": "Password reset successfully!",
-      "resetPasswordConfirm": "Are you sure you want to reset this user's password?"
+      "resetPasswordConfirm": "Are you sure you want to reset this user's password?",
+      "roleUpdateSuccess": "User role updated successfully!",
+      "roleUpdateFailed": "Failed to update user role",
+      "roleUpdateError": "Error updating user role",
+      "loadingError": "Error loading users",
+      "selectRole": "Please select a new role"
+    },
+    "table": {
+      "user": "User",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "joinDate": "Joined",
+      "actions": "Actions",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "actions": {
+      "changeRole": "Change Role",
+      "updateRole": "Update Role",
+      "cancel": "Cancel"
+    },
+    "modal": {
+      "changeRoleTitle": "Change Role for",
+      "currentRole": "Current Role",
+      "newRole": "New Role"
+    },
+    "info": {
+      "totalUsers": "Total Users",
+      "manageableUsers": "Manageable Users",
+      "adminSecurityNote": "Admin users are not shown in the role management table for security reasons."
+    },
+    "pagination": {
+      "showTotal": "{{start}}-{{end}} of {{total}} users"
     }
   },
   "articles": {
@@ -352,11 +440,102 @@
     "maintenanceMode": "Maintenance Mode",
     "registrationEnabled": "Registration Enabled",
     "emailVerification": "Email Verification",
+    "evolusoft": {
+      "title": "EvoluSoft Homepage Text Management",
+      "subtitle": "Configure and customize all text content displayed on the EvoluSoft homepage",
+      "apiStatus": {
+        "connected": "API Connected",
+        "disconnected": "API Offline (Using localStorage)",
+        "error": "API Error",
+        "checking": "Checking API..."
+      },
+      "tabs": {
+        "companyInfo": "Company Info",
+        "visionMission": "Vision & Mission",
+        "companyValues": "Company Values",
+        "services": "Services",
+        "contactInfo": "Contact Info"
+      },
+      "sections": {
+        "heroSection": "Hero Section",
+        "aboutSection": "About Section",
+        "vision": "Vision",
+        "mission": "Mission",
+        "coreValues": "Core Values",
+        "serviceNames": "Service Names",
+        "databaseServices": "Database Services (Service 1)",
+        "applicationDevelopment": "Application Development (Service 2)",
+        "systemIntegration": "System Integration (Service 3)",
+        "contactInformation": "Contact Information"
+      },
+      "fields": {
+        "pageSlogan": "Page Slogan",
+        "pageSloganPlaceholder": "Main headline on the homepage",
+        "pageDescription": "Page Description",
+        "pageDescriptionPlaceholder": "Short description under the main headline",
+        "companyName": "Company Name",
+        "companyNamePlaceholder": "Company name",
+        "description1": "Description 1",
+        "description1Placeholder": "First company description paragraph",
+        "description2": "Description 2",
+        "description2Placeholder": "Second company description paragraph",
+        "sloganDescription": "Slogan Description",
+        "sloganDescriptionPlaceholder": "Company slogan and partnership description",
+        "visionStatement1": "Vision Statement 1",
+        "visionStatement1Placeholder": "First vision statement",
+        "visionStatement2": "Vision Statement 2",
+        "visionStatement2Placeholder": "Second vision statement",
+        "missionStatement1": "Mission Statement 1",
+        "missionStatement1Placeholder": "First mission statement",
+        "missionStatement2": "Mission Statement 2",
+        "missionStatement2Placeholder": "Second mission statement",
+        "value1": "Value 1 (Collaboration)",
+        "value1Placeholder": "Collaboration value description",
+        "value2": "Value 2 (Innovation)",
+        "value2Placeholder": "Innovation value description",
+        "value3": "Value 3 (Excellence)",
+        "value3Placeholder": "Excellence value description",
+        "value4": "Value 4 (Integrity)",
+        "value4Placeholder": "Integrity value description",
+        "value5": "Value 5 (Customer Success)",
+        "value5Placeholder": "Customer Success value description",
+        "serviceName1": "Service 1 Name",
+        "serviceName1Placeholder": "Database Services",
+        "serviceName2": "Service 2 Name",
+        "serviceName2Placeholder": "Application Development",
+        "serviceName3": "Service 3 Name",
+        "serviceName3Placeholder": "System Integration",
+        "serviceDescription": "Description {{number}}",
+        "databaseServicePlaceholder": "Database service description {{number}}",
+        "applicationDevPlaceholder": "Application development description {{number}}",
+        "systemIntegrationPlaceholder": "System integration description {{number}}",
+        "contactAddress": "Headquarters Address",
+        "contactAddressPlaceholder": "Company headquarters address",
+        "contactPhone": "Hotline Number",
+        "contactPhonePlaceholder": "Company hotline phone number",
+        "contactEmail": "Support Email",
+        "contactEmailPlaceholder": "Company support email address",
+        "workingHoursWeekday": "Working Hours (Monday-Friday)",
+        "workingHoursWeekdayPlaceholder": "Monday - Friday working hours",
+        "workingHoursWeekend": "Working Hours (Saturday)",
+        "workingHoursWeekendPlaceholder": "Saturday working hours"
+      },
+      "actions": {
+        "saveChanges": "Save Changes",
+        "resetToDefaults": "Reset to Defaults"
+      }
+    },
     "messages": {
       "saveSuccess": "Settings saved successfully!",
       "saveError": "Error saving settings. Please try again.",
       "resetSuccess": "Settings reset successfully!",
-      "resetConfirm": "Are you sure you want to reset all settings to default?"
+      "resetConfirm": "Are you sure you want to reset all settings to default?",
+      "textUpdateSuccess": "Text content updated successfully!",
+      "textUpdateError": "Failed to save changes. Please try again.",
+      "textResetSuccess": "Text content reset to defaults!",
+      "textResetError": "Failed to reset. Please try again.",
+      "configSaveError": "Failed to save configuration",
+      "configResetError": "Failed to reset configuration"
     }
   },
   "navigation": {
@@ -365,6 +544,7 @@
     "categories": "Categories",
     "tags": "Tags",
     "users": "Users",
+    "contact": "Contact",
     "media": "Media",
     "settings": "Settings",
     "profile": "Profile",
@@ -526,6 +706,89 @@
     "settings": {
       "title": "Settings",
       "subtitle": "System configuration and preferences"
+    },
+    "contact": {
+      "title": "Contact Management",
+      "subtitle": "Manage customer inquiries and contact messages",
+      "table": {
+        "date": "Date",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "service": "Service",
+        "status": "Status",
+        "actions": "Actions",
+        "view": "View",
+        "sendEmail": "Send Email"
+      },
+      "status": {
+        "new": "New",
+        "read": "Read",
+        "responded": "Responded",
+        "closed": "Closed"
+      },
+      "messages": {
+        "statusUpdateSuccess": "Contact status updated successfully",
+        "statusUpdateFailed": "Failed to update status",
+        "emailSentSuccess": "Thank you email sent successfully",
+        "emailSentFailed": "Failed to send email",
+        "templateUpdateSuccess": "Email template updated successfully",
+        "templateUpdateFailed": "Failed to update template"
+      },
+      "modal": {
+        "title": "Contact Details",
+        "close": "Close",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "date": "Date",
+        "service": "Service",
+        "message": "Message",
+        "status": "Status",
+        "notProvided": "Not provided"
+      },
+      "templates": {
+        "title": "Email Templates Management",
+        "selectTemplate": "Select template",
+        "editTemplate": "Edit Template",
+        "saveTemplate": "Save Template",
+        "cancel": "Cancel",
+        "subject": "Email Subject",
+        "content": "Email Content (HTML)",
+        "contentHelper": "Use the toolbar to format text and insert variables",
+        "availableVariables": "Available Variables",
+        "variablesHelper": "These variables will be automatically replaced with actual contact data when sending emails.",
+        "template": "Template",
+        "lastUpdated": "Last Updated",
+        "contentPreview": "Content Preview",
+        "rawHtml": "Raw HTML",
+        "viewHtmlSource": "View HTML Source",
+        "noTemplates": "No email templates found",
+        "selectToView": "Select a template to view or edit",
+        "placeholder": "Enter HTML email template content... Use the 'Template' button to insert a basic structure."
+      },
+      "htmlEditor": {
+        "bold": "Bold",
+        "italic": "Italic",
+        "underline": "Underline",
+        "heading1": "Heading 1",
+        "heading2": "Heading 2",
+        "paragraph": "Paragraph",
+        "lineBreak": "Line Break",
+        "divContainer": "Div Container",
+        "variables": "Variables",
+        "template": "Template",
+        "preview": "Preview",
+        "edit": "Edit",
+        "characters": "characters",
+        "previewMode": "Preview Mode",
+        "htmlEditor": "HTML Editor",
+        "insertVariables": "Insert Template Variables",
+        "insertTemplate": "Insert Email Template Structure"
+      },
+      "pagination": {
+        "showing": "{{start}}-{{end}} of {{total}} contacts"
+      }
     }
   },
   "news": {

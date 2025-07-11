@@ -293,6 +293,28 @@ export const TOGGLE_TAG = gql`
   }
 `;
 
+export const GET_ARTICLES_BY_TAG = gql`
+  query GetArticlesByTag($tagId: Int!) {
+    articles_by_tag(tagId: $tagId) {
+      id
+      title
+      slug
+      excerpt
+      status
+      publishedAt
+      createdAt
+      viewCount
+      featuredImage
+      author {
+        id
+        username
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
 // News/Articles queries
 export const GET_NEWS_LIST = gql`
   query GetNewsList($status: String, $categoryId: Int, $tagId: Int, $authorId: Int, $search: String) {
@@ -498,6 +520,142 @@ export const GET_SECTION_TYPES = gql`
       supportsMedia
       supportsItems
       maxInstances
+    }
+  }
+`;
+
+// Contact management queries
+export const GET_CONTACTS = gql`
+  query GetContacts($first: Int, $after: String) {
+    contacts(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          name
+          email
+          phone
+          requestService
+          requestContent
+          status
+          createdAt
+          respondedAt
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      totalCount
+    }
+  }
+`;
+
+export const CREATE_CONTACT = gql`
+  mutation CreateContact(
+    $name: String!
+    $email: String!
+    $phone: String
+    $requestService: String!
+    $requestContent: String!
+  ) {
+    createContact(
+      name: $name
+      email: $email
+      phone: $phone
+      requestService: $requestService
+      requestContent: $requestContent
+    ) {
+      success
+      contact {
+        id
+        name
+        email
+        phone
+        requestService
+        requestContent
+        status
+        createdAt
+      }
+      errors
+    }
+  }
+`;
+
+export const UPDATE_CONTACT_STATUS = gql`
+  mutation UpdateContactStatus($id: ID!, $status: String!) {
+    updateContactStatus(id: $id, status: $status) {
+      success
+      contact {
+        id
+        status
+        respondedAt
+      }
+      errors
+    }
+  }
+`;
+
+export const GET_EMAIL_TEMPLATE = gql`
+  query GetEmailTemplate($name: String!) {
+    emailTemplate(name: $name) {
+      id
+      name
+      subject
+      content
+      variables
+      updatedAt
+    }
+  }
+`;
+
+export const GET_EMAIL_TEMPLATES = gql`
+  query GetEmailTemplates($templateType: String) {
+    emailTemplates(templateType: $templateType) {
+      id
+      name
+      templateType
+      subject
+      content
+      variables
+      isActive
+      updatedAt
+    }
+  }
+`;
+
+export const UPDATE_EMAIL_TEMPLATE = gql`
+  mutation UpdateEmailTemplate(
+    $name: String!
+    $subject: String!
+    $content: String!
+  ) {
+    updateEmailTemplate(
+      name: $name
+      subject: $subject
+      content: $content
+    ) {
+      success
+      emailTemplate {
+        id
+        name
+        subject
+        content
+        variables
+        updatedAt
+      }
+      errors
+    }
+  }
+`;
+
+export const SEND_THANK_YOU_EMAIL = gql`
+  mutation SendThankYouEmail($contactId: ID!, $templateId: ID) {
+    sendThankYouEmail(contactId: $contactId, templateId: $templateId) {
+      success
+      message
+      errors
     }
   }
 `;

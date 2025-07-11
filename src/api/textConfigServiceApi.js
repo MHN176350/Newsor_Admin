@@ -1,8 +1,7 @@
-// Service for managing EvoluSoft homepage text configuration via API
+// Service for managing EvoluSoft homepage text configuration via Django API (Admin)
 class TextConfigService {
   constructor() {
-    this.apiUrl = 'http://localhost:8080/api/config';
-    this.storageKey = 'evolusoftTexts'; // Keep for backward compatibility
+    this.apiUrl = 'http://localhost:8000/api/text-config';
     this.defaultTexts = {
       // Hero Section
       pageSlogan: 'Innovate together, Succeed Together',
@@ -85,30 +84,16 @@ class TextConfigService {
     };
   }
 
-  // Get all text configurations from API
+  // Get all text configurations from Django API
   async getTexts() {
     try {
       const response = await fetch(this.apiUrl);
       if (response.ok) {
-        const texts = await response.json();
-        return { ...this.defaultTexts, ...texts };
+        const result = await response.json();
+        return result.data || this.defaultTexts;
       } else {
-        return this.getTextsFromStorage();
+        return this.defaultTexts;
       }
-    } catch (error) {
-      return this.getTextsFromStorage();
-    }
-  }
-
-  // Fallback to localStorage
-  getTextsFromStorage() {
-    try {
-      const saved = localStorage.getItem(this.storageKey);
-      if (saved) {
-        const parsedTexts = JSON.parse(saved);
-        return { ...this.defaultTexts, ...parsedTexts };
-      }
-      return this.defaultTexts;
     } catch (error) {
       return this.defaultTexts;
     }
@@ -120,11 +105,10 @@ class TextConfigService {
     return this.defaultTexts[key] || '';
   }
 
-  // Save text configurations to API
+  // Save text configurations to Django API
   async saveTexts(texts) {
     try {
-      // Save to API first
-      const response = await fetch(this.apiUrl, {
+      const response = await fetch(`${this.apiUrl}/update/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -133,51 +117,36 @@ class TextConfigService {
       });
 
       if (response.ok) {
-        // Also save to localStorage as backup
-        localStorage.setItem(this.storageKey, JSON.stringify(texts));
-        
         return true;
       } else {
-        throw new Error('API save failed');
-      }
-    } catch (error) {
-      // Fallback to localStorage
-      try {
-        localStorage.setItem(this.storageKey, JSON.stringify(texts));
-        return true;
-      } catch (storageError) {
         return false;
       }
+    } catch (error) {
+      return false;
     }
   }
 
   // Reset to default texts
   async resetTexts() {
     try {
-      const response = await fetch(`${this.apiUrl}/reset`, {
+      const response = await fetch(`${this.apiUrl}/reset/`, {
         method: 'POST',
       });
 
       if (response.ok) {
-        localStorage.removeItem(this.storageKey);
         return true;
       } else {
-        throw new Error('API reset failed');
-      }
-    } catch (error) {
-      try {
-        localStorage.removeItem(this.storageKey);
-        return true;
-      } catch (storageError) {
         return false;
       }
+    } catch (error) {
+      return false;
     }
   }
 
-  // Check if API server is available
+  // Check if Django API server is available
   async checkApiHealth() {
     try {
-      const response = await fetch('http://localhost:8080/api/health');
+      const response = await fetch('http://localhost:8000/api/health/');
       return response.ok;
     } catch (error) {
       return false;
@@ -200,5 +169,6 @@ class TextConfigService {
   }
 }
 
-export const textConfigService = new TextConfigService();
+const textConfigService = new TextConfigService();
+export { textConfigService };
 export default textConfigService;

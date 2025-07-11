@@ -9,7 +9,7 @@ import {
   TagsOutlined,
   TagOutlined,
   UserOutlined,
-  PictureOutlined,
+  ContactsOutlined,
   SettingOutlined,
   LogoutOutlined,
   BellOutlined,
@@ -60,9 +60,9 @@ const Layout = () => {
       label: t('navigation.users'),
     },
     {
-      key: '/media',
-      icon: <PictureOutlined />,
-      label: t('navigation.media'),
+      key: '/contact',
+      icon: <ContactsOutlined />,
+      label: t('navigation.contact'),
     },
     {
       key: '/settings',

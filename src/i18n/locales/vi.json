@@ -74,9 +74,9 @@
     }
   },
   "admin": {
-    "title": "Bảng điều khiển Quản trị",
+    "title": "Trang Quản trị",
     "subtitle": "Quản lý nền tảng tin tức hiệu quả",
-    "welcomeTitle": "Chào mừng đến với Bảng điều khiển Quản trị",
+    "welcomeTitle": "Chào mừng trở lại trang quản trị",
     "welcomeSubtitle": "Đây là những gì đang xảy ra với nền tảng của bạn.",
     "adminChip": "Quyền Quản trị",
     "accessDenied": "Truy cập bị từ chối",
@@ -118,6 +118,61 @@
       "writers": "Tác giả",
       "managers": "Quản lý",
       "admins": "Quản trị viên"
+    },
+    "contact": {
+      "title": "Quản lý Liên hệ",
+      "subtitle": "Quản lý các yêu cầu và tin nhắn liên hệ của khách hàng",
+      "table": {
+        "date": "Ngày",
+        "name": "Tên",
+        "email": "Email",
+        "phone": "Điện thoại",
+        "service": "Dịch vụ",
+        "status": "Trạng thái",
+        "actions": "Thao tác"
+      },
+      "status": {
+        "new": "Mới",
+        "read": "Đã đọc",
+        "responded": "Đã phản hồi",
+        "closed": "Đã đóng"
+      },
+      "actions": {
+        "view": "Xem",
+        "sendEmail": "Gửi Email",
+        "close": "Đóng",
+        "send": "Gửi",
+        "viewHtmlSource": "Xem Mã HTML"
+      },
+      "messages": {
+        "statusUpdated": "Cập nhật trạng thái liên hệ thành công",
+        "templateUpdated": "Cập nhật mẫu email thành công",
+        "emailSent": "Gửi email cảm ơn thành công",
+        "statusUpdateFailed": "Không thể cập nhật trạng thái",
+        "templateUpdateFailed": "Không thể cập nhật mẫu",
+        "emailSendFailed": "Không thể gửi email",
+        "loadingError": "Lỗi khi tải danh sách liên hệ",
+        "noTemplates": "Không tìm thấy mẫu email",
+        "selectTemplate": "Chọn một mẫu để xem hoặc chỉnh sửa"
+      },
+      "modals": {
+        "contactDetails": "Chi tiết Liên hệ"
+      },
+      "details": {
+        "subject": "Chủ đề",
+        "contentPreview": "Xem trước Nội dung"
+      },
+      "form": {
+        "emailSubject": "Chủ đề Email",
+        "emailSubjectRequired": "Vui lòng nhập chủ đề email"
+      },
+      "htmlEditor": {
+        "togglePreview": "Chuyển đổi Xem trước",
+        "preview": "Xem trước",
+        "edit": "Chỉnh sửa",
+        "previewMode": "Chế độ Xem trước",
+        "htmlEditor": "Trình chỉnh sửa HTML"
+      }
     }
   },
   "users": {
@@ -151,7 +206,40 @@
       "deleteSuccess": "Xóa người dùng thành công!",
       "deleteConfirm": "Bạn có chắc chắn muốn xóa người dùng này?",
       "resetPasswordSuccess": "Đặt lại mật khẩu thành công!",
-      "resetPasswordConfirm": "Bạn có chắc chắn muốn đặt lại mật khẩu của người dùng này?"
+      "resetPasswordConfirm": "Bạn có chắc chắn muốn đặt lại mật khẩu của người dùng này?",
+      "roleUpdateSuccess": "Cập nhật vai trò người dùng thành công!",
+      "roleUpdateFailed": "Không thể cập nhật vai trò người dùng",
+      "roleUpdateError": "Lỗi khi cập nhật vai trò người dùng",
+      "loadingError": "Lỗi khi tải danh sách người dùng",
+      "selectRole": "Vui lòng chọn một vai trò mới"
+    },
+    "table": {
+      "user": "Người dùng",
+      "email": "Email",
+      "role": "Vai trò",
+      "status": "Trạng thái",
+      "joinDate": "Ngày tham gia",
+      "actions": "Thao tác",
+      "active": "Hoạt động",
+      "inactive": "Không hoạt động"
+    },
+    "actions": {
+      "changeRole": "Thay đổi Vai trò",
+      "updateRole": "Cập nhật Vai trò",
+      "cancel": "Hủy"
+    },
+    "modal": {
+      "changeRoleTitle": "Thay đổi Vai trò cho",
+      "currentRole": "Vai trò hiện tại",
+      "newRole": "Vai trò mới"
+    },
+    "info": {
+      "totalUsers": "Tổng số Người dùng",
+      "manageableUsers": "Người dùng có thể quản lý",
+      "adminSecurityNote": "Người dùng quản trị không hiển thị trong bảng quản lý vai trò vì lý do bảo mật."
+    },
+    "pagination": {
+      "showTotal": "{{start}}-{{end}} của {{total}} người dùng"
     }
   },
   "articles": {
@@ -385,11 +473,102 @@
     "maintenanceMode": "Chế độ Bảo trì",
     "registrationEnabled": "Kích hoạt Đăng ký",
     "emailVerification": "Xác minh Email",
+    "evolusoft": {
+      "title": "Quản lý Văn bản Trang chủ EvoluSoft",
+      "subtitle": "Cấu hình và tùy chỉnh tất cả nội dung văn bản hiển thị trên trang chủ EvoluSoft",
+      "apiStatus": {
+        "connected": "API Đã Kết nối",
+        "disconnected": "API Ngoại tuyến (Sử dụng localStorage)",
+        "error": "Lỗi API",
+        "checking": "Đang kiểm tra API..."
+      },
+      "tabs": {
+        "companyInfo": "Thông tin Công ty",
+        "visionMission": "Tầm nhìn & Sứ mệnh",
+        "companyValues": "Giá trị Công ty",
+        "services": "Dịch vụ",
+        "contactInfo": "Thông tin Liên hệ"
+      },
+      "sections": {
+        "heroSection": "Phần Hero",
+        "aboutSection": "Phần Giới thiệu",
+        "vision": "Tầm nhìn",
+        "mission": "Sứ mệnh",
+        "coreValues": "Giá trị Cốt lõi",
+        "serviceNames": "Tên Dịch vụ",
+        "databaseServices": "Dịch vụ Cơ sở dữ liệu (Dịch vụ 1)",
+        "applicationDevelopment": "Phát triển Ứng dụng (Dịch vụ 2)",
+        "systemIntegration": "Tích hợp Hệ thống (Dịch vụ 3)",
+        "contactInformation": "Thông tin Liên hệ"
+      },
+      "fields": {
+        "pageSlogan": "Khẩu hiệu Trang",
+        "pageSloganPlaceholder": "Tiêu đề chính trên trang chủ",
+        "pageDescription": "Mô tả Trang",
+        "pageDescriptionPlaceholder": "Mô tả ngắn dưới tiêu đề chính",
+        "companyName": "Tên Công ty",
+        "companyNamePlaceholder": "Tên công ty",
+        "description1": "Mô tả 1",
+        "description1Placeholder": "Đoạn mô tả công ty đầu tiên",
+        "description2": "Mô tả 2",
+        "description2Placeholder": "Đoạn mô tả công ty thứ hai",
+        "sloganDescription": "Mô tả Khẩu hiệu",
+        "sloganDescriptionPlaceholder": "Khẩu hiệu công ty và mô tả đối tác",
+        "visionStatement1": "Tuyên bố Tầm nhìn 1",
+        "visionStatement1Placeholder": "Tuyên bố tầm nhìn đầu tiên",
+        "visionStatement2": "Tuyên bố Tầm nhìn 2",
+        "visionStatement2Placeholder": "Tuyên bố tầm nhìn thứ hai",
+        "missionStatement1": "Tuyên bố Sứ mệnh 1",
+        "missionStatement1Placeholder": "Tuyên bố sứ mệnh đầu tiên",
+        "missionStatement2": "Tuyên bố Sứ mệnh 2",
+        "missionStatement2Placeholder": "Tuyên bố sứ mệnh thứ hai",
+        "value1": "Giá trị 1 (Hợp tác)",
+        "value1Placeholder": "Mô tả giá trị hợp tác",
+        "value2": "Giá trị 2 (Đổi mới)",
+        "value2Placeholder": "Mô tả giá trị đổi mới",
+        "value3": "Giá trị 3 (Xuất sắc)",
+        "value3Placeholder": "Mô tả giá trị xuất sắc",
+        "value4": "Giá trị 4 (Chính trực)",
+        "value4Placeholder": "Mô tả giá trị chính trực",
+        "value5": "Giá trị 5 (Thành công Khách hàng)",
+        "value5Placeholder": "Mô tả giá trị thành công khách hàng",
+        "serviceName1": "Tên Dịch vụ 1",
+        "serviceName1Placeholder": "Dịch vụ Cơ sở dữ liệu",
+        "serviceName2": "Tên Dịch vụ 2",
+        "serviceName2Placeholder": "Phát triển Ứng dụng",
+        "serviceName3": "Tên Dịch vụ 3",
+        "serviceName3Placeholder": "Tích hợp Hệ thống",
+        "serviceDescription": "Mô tả {{number}}",
+        "databaseServicePlaceholder": "Mô tả dịch vụ cơ sở dữ liệu {{number}}",
+        "applicationDevPlaceholder": "Mô tả phát triển ứng dụng {{number}}",
+        "systemIntegrationPlaceholder": "Mô tả tích hợp hệ thống {{number}}",
+        "contactAddress": "Địa chỉ Trụ sở",
+        "contactAddressPlaceholder": "Địa chỉ trụ sở công ty",
+        "contactPhone": "Số Hotline",
+        "contactPhonePlaceholder": "Số điện thoại hotline công ty",
+        "contactEmail": "Email Hỗ trợ",
+        "contactEmailPlaceholder": "Địa chỉ email hỗ trợ công ty",
+        "workingHoursWeekday": "Giờ làm việc (Thứ Hai-Thứ Sáu)",
+        "workingHoursWeekdayPlaceholder": "Giờ làm việc Thứ Hai - Thứ Sáu",
+        "workingHoursWeekend": "Giờ làm việc (Thứ Bảy)",
+        "workingHoursWeekendPlaceholder": "Giờ làm việc Thứ Bảy"
+      },
+      "actions": {
+        "saveChanges": "Lưu Thay đổi",
+        "resetToDefaults": "Đặt lại về Mặc định"
+      }
+    },
     "messages": {
       "saveSuccess": "Lưu cài đặt thành công!",
       "saveError": "Lỗi khi lưu cài đặt. Vui lòng thử lại.",
       "resetSuccess": "Đặt lại cài đặt thành công!",
-      "resetConfirm": "Bạn có chắc chắn muốn đặt lại tất cả cài đặt về mặc định?"
+      "resetConfirm": "Bạn có chắc chắn muốn đặt lại tất cả cài đặt về mặc định?",
+      "textUpdateSuccess": "Cập nhật nội dung văn bản thành công!",
+      "textUpdateError": "Không thể lưu thay đổi. Vui lòng thử lại.",
+      "textResetSuccess": "Đặt lại nội dung văn bản về mặc định!",
+      "textResetError": "Không thể đặt lại. Vui lòng thử lại.",
+      "configSaveError": "Không thể lưu cấu hình",
+      "configResetError": "Không thể đặt lại cấu hình"
     }
   },
   "navigation": {
@@ -398,6 +577,7 @@
     "categories": "Danh mục",
     "tags": "Thẻ",
     "users": "Người dùng",
+    "contact": "Liên hệ",
     "media": "Phương tiện",
     "settings": "Cài đặt",
     "profile": "Hồ sơ",
@@ -565,6 +745,89 @@
     "settings": {
       "title": "Cài đặt",
       "subtitle": "Cài đặt hệ thống"
+    },
+    "contact": {
+      "title": "Quản lý Liên hệ",
+      "subtitle": "Quản lý các yêu cầu và tin nhắn liên hệ từ khách hàng",
+      "table": {
+        "date": "Ngày",
+        "name": "Tên",
+        "email": "Email",
+        "phone": "Điện thoại",
+        "service": "Dịch vụ",
+        "status": "Trạng thái",
+        "actions": "Hành động",
+        "view": "Xem",
+        "sendEmail": "Gửi Email"
+      },
+      "status": {
+        "new": "Mới",
+        "read": "Đã đọc",
+        "responded": "Đã phản hồi",
+        "closed": "Đã đóng"
+      },
+      "messages": {
+        "statusUpdateSuccess": "Cập nhật trạng thái liên hệ thành công",
+        "statusUpdateFailed": "Không thể cập nhật trạng thái",
+        "emailSentSuccess": "Gửi email cảm ơn thành công",
+        "emailSentFailed": "Không thể gửi email",
+        "templateUpdateSuccess": "Cập nhật mẫu email thành công",
+        "templateUpdateFailed": "Không thể cập nhật mẫu email"
+      },
+      "modal": {
+        "title": "Chi tiết Liên hệ",
+        "close": "Đóng",
+        "name": "Tên",
+        "email": "Email",
+        "phone": "Điện thoại",
+        "date": "Ngày",
+        "service": "Dịch vụ",
+        "message": "Tin nhắn",
+        "status": "Trạng thái",
+        "notProvided": "Không cung cấp"
+      },
+      "templates": {
+        "title": "Quản lý Mẫu Email",
+        "selectTemplate": "Chọn mẫu email",
+        "editTemplate": "Chỉnh sửa Mẫu",
+        "saveTemplate": "Lưu Mẫu",
+        "cancel": "Hủy",
+        "subject": "Tiêu đề Email",
+        "content": "Nội dung Email (HTML)",
+        "contentHelper": "Sử dụng thanh công cụ để định dạng văn bản và chèn biến",
+        "availableVariables": "Biến có sẵn",
+        "variablesHelper": "Các biến này sẽ được tự động thay thế bằng dữ liệu liên hệ thực tế khi gửi email.",
+        "template": "Mẫu",
+        "lastUpdated": "Cập nhật lần cuối",
+        "contentPreview": "Xem trước Nội dung",
+        "rawHtml": "HTML thô",
+        "viewHtmlSource": "Xem mã nguồn HTML",
+        "noTemplates": "Không tìm thấy mẫu email",
+        "selectToView": "Chọn mẫu để xem hoặc chỉnh sửa",
+        "placeholder": "Nhập nội dung mẫu email HTML... Sử dụng nút 'Mẫu' để chèn cấu trúc cơ bản."
+      },
+      "htmlEditor": {
+        "bold": "Đậm",
+        "italic": "Nghiêng",
+        "underline": "Gạch dưới",
+        "heading1": "Tiêu đề 1",
+        "heading2": "Tiêu đề 2",
+        "paragraph": "Đoạn văn",
+        "lineBreak": "Xuống dòng",
+        "divContainer": "Khối DIV",
+        "variables": "Biến",
+        "template": "Mẫu",
+        "preview": "Xem trước",
+        "edit": "Chỉnh sửa",
+        "characters": "ký tự",
+        "previewMode": "Chế độ Xem trước",
+        "htmlEditor": "Trình soạn HTML",
+        "insertVariables": "Chèn Biến Mẫu",
+        "insertTemplate": "Chèn Cấu trúc Mẫu Email"
+      },
+      "pagination": {
+        "showing": "{{start}}-{{end}} của {{total}} liên hệ"
+      }
     }
   }
 }

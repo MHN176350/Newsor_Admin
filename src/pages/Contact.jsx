@@ -55,6 +55,7 @@ const { Option } = Select;
 
 // Enhanced HTML Editor Component
 const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
+  const { t } = useTranslation(); // Add translation hook here
   const [currentValue, setCurrentValue] = useState(value || '');
   const [showPreview, setShowPreview] = useState(false);
 
@@ -346,7 +347,8 @@ const Contact = () => {
   // Fetch specific email template
   const { data: templateData, loading: templateLoading, refetch: refetchTemplate } = useQuery(GET_EMAIL_TEMPLATE, {
     variables: { name: 'default_thank_you' },
-    skip: !editingTemplate
+    skip: !editingTemplate,
+    errorPolicy: 'all' // Allow partial data even if there are errors
   });
 
   // Update contact status mutation
@@ -578,7 +580,7 @@ const Contact = () => {
 
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Card title="Contact Messages" loading={contactsLoading}>
+          <Card title={t('admin.contact.table.title')} loading={contactsLoading}>
             <Table
               columns={contactColumns}
               dataSource={contacts}
@@ -598,11 +600,11 @@ const Contact = () => {
           <Card 
             title={
               <Space>
-                <span>Email Templates Management</span>
+                <span>{t('admin.contact.template.management')}</span>
                 {emailTemplates.length > 0 && (
                   <Select
                     style={{ width: 200 }}
-                    placeholder="Select template"
+                    placeholder={t('admin.contact.template.selectTemplate')}
                     value={selectedTemplate?.id}
                     onChange={(value) => {
                       const template = emailTemplates.find(t => t.id === value);
@@ -648,11 +650,11 @@ const Contact = () => {
                   loading={updatingTemplate}
                   disabled={!selectedTemplate && emailTemplates.length === 0}
                 >
-                  {editingTemplate ? 'Save Template' : 'Edit Template'}
+                  {editingTemplate ? t('admin.contact.actions.save') : t('admin.contact.actions.editTemplate')}
                 </Button>
                 {editingTemplate && (
                   <Button onClick={() => setEditingTemplate(false)}>
-                    Cancel
+                    {t('admin.contact.actions.cancel')}
                   </Button>
                 )}
               </Space>
@@ -686,20 +688,13 @@ const Contact = () => {
                 <Row gutter={16}>
                   <Col span={24}>
                     <Form.Item
-                      label={
-                        <Space>
-                          <span>Email Content (HTML)</span>
-                          <Text type="secondary" style={{ fontSize: '12px' }}>
-                            Use the toolbar to format text and insert variables
-                          </Text>
-                        </Space>
-                      }
+                      label={t('admin.contact.form.emailContent')}
                       name="content"
-                      rules={[{ required: true, message: 'Please enter email content' }]}
+                      rules={[{ required: true, message: t('admin.contact.form.emailContentRequired') }]}
                     >
                       <FormHTMLEditor
                         rows={15}
-                        placeholder="Enter HTML email template content... Use the 'Template' button to insert a basic structure."
+                        placeholder={t('admin.contact.form.emailContentPlaceholder')}
                       />
                     </Form.Item>
                   </Col>
@@ -707,7 +702,7 @@ const Contact = () => {
 
                 <Row gutter={16}>
                   <Col span={24}>
-                    <Card size="small" title="Available Variables" style={{ marginBottom: '16px' }}>
+                    <Card size="small" title={t('admin.contact.template.availableVariables')} style={{ marginBottom: '16px' }}>
                       <Space wrap>
                         <Tag>{'{{ name }}'}</Tag>
                         <Tag>{'{{ email }}'}</Tag>
@@ -718,7 +713,7 @@ const Contact = () => {
                       </Space>
                       <div style={{ marginTop: '8px' }}>
                         <Text type="secondary" style={{ fontSize: '12px' }}>
-                          These variables will be automatically replaced with actual contact data when sending emails.
+                          {t('admin.contact.template.variablesDescription')}
                         </Text>
                       </div>
                     </Card>
@@ -734,7 +729,7 @@ const Contact = () => {
                       size="large"
                       icon={<SaveOutlined />}
                     >
-                      Save Template
+                      {t('admin.contact.actions.saveTemplate')}
                     </Button>
                     <Button 
                       onClick={() => {
@@ -743,7 +738,7 @@ const Contact = () => {
                       }}
                       size="large"
                     >
-                      Cancel
+                      {t('admin.contact.actions.cancel')}
                     </Button>
                   </Space>
                 </Form.Item>

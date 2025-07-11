@@ -757,8 +757,33 @@
         "service": "Dịch vụ",
         "status": "Trạng thái",
         "actions": "Hành động",
+        "title": "Tin nhắn Liên hệ",
         "view": "Xem",
         "sendEmail": "Gửi Email"
+      },
+      "form": {
+        "emailSubject": "Tiêu đề Email",
+        "emailSubjectRequired": "Vui lòng nhập tiêu đề email",
+        "emailContent": "Nội dung Email (HTML)",
+        "emailContentRequired": "Vui lòng nhập nội dung email",
+        "emailContentPlaceholder": "Nhập nội dung mẫu email HTML... Sử dụng nút 'Mẫu' để chèn cấu trúc cơ bản."
+      },
+      "template": {
+        "management": "Quản lý Mẫu Email",
+        "selectTemplate": "Chọn mẫu email",
+        "availableVariables": "Biến có sẵn",
+        "variablesDescription": "Các biến này sẽ được tự động thay thế bằng dữ liệu liên hệ thực tế khi gửi email."
+      },
+      "actions": {
+        "view": "Xem",
+        "sendEmail": "Gửi Email",
+        "send": "Gửi",
+        "close": "Đóng",
+        "save": "Lưu Mẫu",
+        "saveTemplate": "Lưu Mẫu",
+        "editTemplate": "Chỉnh sửa Mẫu",
+        "cancel": "Hủy",
+        "viewHtmlSource": "Xem mã nguồn HTML"
       },
       "status": {
         "new": "Mới",
@@ -767,23 +792,32 @@
         "closed": "Đã đóng"
       },
       "messages": {
-        "statusUpdateSuccess": "Cập nhật trạng thái liên hệ thành công",
+        "statusUpdated": "Cập nhật trạng thái liên hệ thành công",
         "statusUpdateFailed": "Không thể cập nhật trạng thái",
-        "emailSentSuccess": "Gửi email cảm ơn thành công",
-        "emailSentFailed": "Không thể gửi email",
-        "templateUpdateSuccess": "Cập nhật mẫu email thành công",
-        "templateUpdateFailed": "Không thể cập nhật mẫu email"
+        "emailSent": "Gửi email cảm ơn thành công",
+        "emailSendFailed": "Không thể gửi email",
+        "templateUpdated": "Cập nhật mẫu email thành công",
+        "templateUpdateFailed": "Không thể cập nhật mẫu email",
+        "loadingError": "Lỗi khi tải liên hệ",
+        "noTemplates": "Không tìm thấy mẫu email",
+        "selectTemplate": "Chọn mẫu để xem hoặc chỉnh sửa"
       },
       "modal": {
         "title": "Chi tiết Liên hệ",
-        "close": "Đóng",
+        "close": "Đóng"
+      },
+      "modals": {
+        "contactDetails": "Chi tiết Liên hệ"
+      },
+      "details": {
+        "subject": "Tiêu đề",
+        "contentPreview": "Xem trước Nội dung",
         "name": "Tên",
         "email": "Email",
         "phone": "Điện thoại",
         "date": "Ngày",
         "service": "Dịch vụ",
         "message": "Tin nhắn",
-        "status": "Trạng thái",
         "notProvided": "Không cung cấp"
       },
       "templates": {
@@ -823,7 +857,8 @@
         "previewMode": "Chế độ Xem trước",
         "htmlEditor": "Trình soạn HTML",
         "insertVariables": "Chèn Biến Mẫu",
-        "insertTemplate": "Chèn Cấu trúc Mẫu Email"
+        "insertTemplate": "Chèn Cấu trúc Mẫu Email",
+        "togglePreview": "Chuyển đổi Xem trước"
       },
       "pagination": {
         "showing": "{{start}}-{{end}} của {{total}} liên hệ"

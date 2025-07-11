@@ -718,8 +718,33 @@
         "service": "Service",
         "status": "Status",
         "actions": "Actions",
+        "title": "Contact Messages",
         "view": "View",
         "sendEmail": "Send Email"
+      },
+      "form": {
+        "emailSubject": "Email Subject",
+        "emailSubjectRequired": "Please enter email subject",
+        "emailContent": "Email Content (HTML)",
+        "emailContentRequired": "Please enter email content",
+        "emailContentPlaceholder": "Enter HTML email template content... Use the 'Template' button to insert a basic structure."
+      },
+      "template": {
+        "management": "Email Templates Management",
+        "selectTemplate": "Select template",
+        "availableVariables": "Available Variables",
+        "variablesDescription": "These variables will be automatically replaced with actual contact data when sending emails."
+      },
+      "actions": {
+        "view": "View",
+        "sendEmail": "Send Email",
+        "send": "Send",
+        "close": "Close",
+        "save": "Save Template",
+        "saveTemplate": "Save Template",
+        "editTemplate": "Edit Template",
+        "cancel": "Cancel",
+        "viewHtmlSource": "View HTML Source"
       },
       "status": {
         "new": "New",
@@ -728,23 +753,33 @@
         "closed": "Closed"
       },
       "messages": {
-        "statusUpdateSuccess": "Contact status updated successfully",
+        "statusUpdated": "Contact status updated successfully",
         "statusUpdateFailed": "Failed to update status",
-        "emailSentSuccess": "Thank you email sent successfully",
-        "emailSentFailed": "Failed to send email",
-        "templateUpdateSuccess": "Email template updated successfully",
-        "templateUpdateFailed": "Failed to update template"
+        "emailSent": "Thank you email sent successfully",
+        "emailSendFailed": "Failed to send email",
+        "templateUpdated": "Email template updated successfully",
+        "templateUpdateFailed": "Failed to update template",
+        "loadingError": "Error loading contacts",
+        "noTemplates": "No email templates found",
+        "selectTemplate": "Select a template to view or edit"
       },
       "modal": {
         "title": "Contact Details",
-        "close": "Close",
+        "close": "Close"
+      },
+      "modals": {
+        "contactDetails": "Contact Details"
+      },
+      "details": {
+        "subject": "Subject",
+        "contentPreview": "Content Preview"
+      },
         "name": "Name",
         "email": "Email",
         "phone": "Phone",
         "date": "Date",
         "service": "Service",
         "message": "Message",
-        "status": "Status",
         "notProvided": "Not provided"
       },
       "templates": {
@@ -790,8 +825,5 @@
         "showing": "{{start}}-{{end}} of {{total}} contacts"
       }
     }
-  },
-  "news": {
-    "of": "of"
   }
-}
+

@@ -733,7 +733,22 @@
         "management": "Email Templates Management",
         "selectTemplate": "Select template",
         "availableVariables": "Available Variables",
-        "variablesDescription": "These variables will be automatically replaced with actual contact data when sending emails."
+        "variablesDescription": "These variables will be automatically replaced with actual contact data when sending emails.",
+        "title": "Email Templates Management",
+        "editTemplate": "Edit Template",
+        "saveTemplate": "Save Template",
+        "cancel": "Cancel",
+        "subject": "Email Subject",
+        "content": "Email Content (HTML)",
+        "contentHelper": "Use the toolbar to format text and insert variables",
+        "template": "Template",
+        "lastUpdated": "Last Updated",
+        "contentPreview": "Content Preview",
+        "rawHtml": "Raw HTML",
+        "viewHtmlSource": "View HTML Source",
+        "noTemplates": "No email templates found",
+        "selectToView": "Select a template to view or edit",
+        "placeholder": "Enter HTML email template content... Use the 'Template' button to insert a basic structure."
       },
       "actions": {
         "view": "View",
@@ -826,4 +841,5 @@
       }
     }
   }
+  
 

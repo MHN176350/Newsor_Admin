@@ -772,7 +772,22 @@
         "management": "Quản lý Mẫu Email",
         "selectTemplate": "Chọn mẫu email",
         "availableVariables": "Biến có sẵn",
-        "variablesDescription": "Các biến này sẽ được tự động thay thế bằng dữ liệu liên hệ thực tế khi gửi email."
+        "variablesDescription": "Các biến này sẽ được tự động thay thế bằng dữ liệu liên hệ thực tế khi gửi email.",
+        "title": "Quản lý Mẫu Email",
+        "editTemplate": "Chỉnh sửa Mẫu",
+        "saveTemplate": "Lưu Mẫu",
+        "cancel": "Hủy",
+        "subject": "Tiêu đề Email",
+        "content": "Nội dung Email (HTML)",
+        "contentHelper": "Sử dụng thanh công cụ để định dạng văn bản và chèn biến",
+        "template": "Mẫu",
+        "lastUpdated": "Cập nhật lần cuối",
+        "contentPreview": "Xem trước Nội dung",
+        "rawHtml": "HTML thô",
+        "viewHtmlSource": "Xem mã nguồn HTML",
+        "noTemplates": "Không tìm thấy mẫu email",
+        "selectToView": "Chọn mẫu để xem hoặc chỉnh sửa",
+        "placeholder": "Nhập nội dung mẫu email HTML... Sử dụng nút 'Mẫu' để chèn cấu trúc cơ bản."
       },
       "actions": {
         "view": "Xem",

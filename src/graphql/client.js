@@ -8,13 +8,13 @@ import { split } from '@apollo/client/link/core';
 
 // HTTP link for regular queries and mutations
 const httpLink = createHttpLink({
-  uri: import.meta.env.VITE_GRAPHQL_URL || 'http://localhost:8000/graphql/',
+  uri: import.meta.env.VITE_GRAPHQL_URL || 'http://192.168.1.36:8000/graphql/',
 });
 
 // WebSocket link for subscriptions
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: import.meta.env.VITE_GRAPHQL_WS_URL || 'ws://localhost:8000/graphql/',
+    url: import.meta.env.VITE_GRAPHQL_WS_URL || 'ws://192.168.1.36:8000/graphql/',
     connectionParams: () => {
       const token = localStorage.getItem('token');
       return token ? { Authorization: `Bearer ${token}` } : {};

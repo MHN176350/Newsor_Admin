@@ -129,7 +129,10 @@
         "phone": "Phone",
         "service": "Service",
         "status": "Status",
-        "actions": "Actions"
+        "actions": "Actions",
+        "title": "Contact Messages",
+        "view": "View",
+        "sendEmail": "Send Email"
       },
       "status": {
         "new": "New",
@@ -140,8 +143,12 @@
       "actions": {
         "view": "View",
         "sendEmail": "Send Email",
-        "close": "Close",
         "send": "Send",
+        "close": "Close",
+        "save": "Save Template",
+        "saveTemplate": "Save Template",
+        "editTemplate": "Edit Template",
+        "cancel": "Cancel",
         "viewHtmlSource": "View HTML Source"
       },
       "messages": {
@@ -164,14 +171,30 @@
       },
       "form": {
         "emailSubject": "Email Subject",
-        "emailSubjectRequired": "Please enter email subject"
+        "emailSubjectRequired": "Please enter email subject",
+        "emailContent": "Email Content (HTML)",
+        "emailContentRequired": "Please enter email content",
+        "emailContentPlaceholder": "Enter HTML email template content... Use the 'Template' button to insert a basic structure."
       },
       "htmlEditor": {
-        "togglePreview": "Toggle Preview",
+        "bold": "Bold",
+        "italic": "Italic", 
+        "underline": "Underline",
+        "heading1": "Heading 1",
+        "heading2": "Heading 2",
+        "paragraph": "Paragraph",
+        "lineBreak": "Line Break",
+        "divContainer": "Div Container",
+        "variables": "Variables",
+        "template": "Template",
         "preview": "Preview",
         "edit": "Edit",
+        "characters": "characters",
         "previewMode": "Preview Mode",
-        "htmlEditor": "HTML Editor"
+        "htmlEditor": "HTML Editor",
+        "insertVariables": "Insert Template Variables",
+        "insertTemplate": "Insert Email Template Structure",
+        "togglePreview": "Toggle Preview"
       }
     }
   },
@@ -706,140 +729,6 @@
     "settings": {
       "title": "Settings",
       "subtitle": "System configuration and preferences"
-    },
-    "contact": {
-      "title": "Contact Management",
-      "subtitle": "Manage customer inquiries and contact messages",
-      "table": {
-        "date": "Date",
-        "name": "Name",
-        "email": "Email",
-        "phone": "Phone",
-        "service": "Service",
-        "status": "Status",
-        "actions": "Actions",
-        "title": "Contact Messages",
-        "view": "View",
-        "sendEmail": "Send Email"
-      },
-      "form": {
-        "emailSubject": "Email Subject",
-        "emailSubjectRequired": "Please enter email subject",
-        "emailContent": "Email Content (HTML)",
-        "emailContentRequired": "Please enter email content",
-        "emailContentPlaceholder": "Enter HTML email template content... Use the 'Template' button to insert a basic structure."
-      },
-      "template": {
-        "management": "Email Templates Management",
-        "selectTemplate": "Select template",
-        "availableVariables": "Available Variables",
-        "variablesDescription": "These variables will be automatically replaced with actual contact data when sending emails.",
-        "title": "Email Templates Management",
-        "editTemplate": "Edit Template",
-        "saveTemplate": "Save Template",
-        "cancel": "Cancel",
-        "subject": "Email Subject",
-        "content": "Email Content (HTML)",
-        "contentHelper": "Use the toolbar to format text and insert variables",
-        "template": "Template",
-        "lastUpdated": "Last Updated",
-        "contentPreview": "Content Preview",
-        "rawHtml": "Raw HTML",
-        "viewHtmlSource": "View HTML Source",
-        "noTemplates": "No email templates found",
-        "selectToView": "Select a template to view or edit",
-        "placeholder": "Enter HTML email template content... Use the 'Template' button to insert a basic structure."
-      },
-      "actions": {
-        "view": "View",
-        "sendEmail": "Send Email",
-        "send": "Send",
-        "close": "Close",
-        "save": "Save Template",
-        "saveTemplate": "Save Template",
-        "editTemplate": "Edit Template",
-        "cancel": "Cancel",
-        "viewHtmlSource": "View HTML Source"
-      },
-      "status": {
-        "new": "New",
-        "read": "Read",
-        "responded": "Responded",
-        "closed": "Closed"
-      },
-      "messages": {
-        "statusUpdated": "Contact status updated successfully",
-        "statusUpdateFailed": "Failed to update status",
-        "emailSent": "Thank you email sent successfully",
-        "emailSendFailed": "Failed to send email",
-        "templateUpdated": "Email template updated successfully",
-        "templateUpdateFailed": "Failed to update template",
-        "loadingError": "Error loading contacts",
-        "noTemplates": "No email templates found",
-        "selectTemplate": "Select a template to view or edit"
-      },
-      "modal": {
-        "title": "Contact Details",
-        "close": "Close"
-      },
-      "modals": {
-        "contactDetails": "Contact Details"
-      },
-      "details": {
-        "subject": "Subject",
-        "contentPreview": "Content Preview"
-      },
-        "name": "Name",
-        "email": "Email",
-        "phone": "Phone",
-        "date": "Date",
-        "service": "Service",
-        "message": "Message",
-        "notProvided": "Not provided"
-      },
-      "templates": {
-        "title": "Email Templates Management",
-        "selectTemplate": "Select template",
-        "editTemplate": "Edit Template",
-        "saveTemplate": "Save Template",
-        "cancel": "Cancel",
-        "subject": "Email Subject",
-        "content": "Email Content (HTML)",
-        "contentHelper": "Use the toolbar to format text and insert variables",
-        "availableVariables": "Available Variables",
-        "variablesHelper": "These variables will be automatically replaced with actual contact data when sending emails.",
-        "template": "Template",
-        "lastUpdated": "Last Updated",
-        "contentPreview": "Content Preview",
-        "rawHtml": "Raw HTML",
-        "viewHtmlSource": "View HTML Source",
-        "noTemplates": "No email templates found",
-        "selectToView": "Select a template to view or edit",
-        "placeholder": "Enter HTML email template content... Use the 'Template' button to insert a basic structure."
-      },
-      "htmlEditor": {
-        "bold": "Bold",
-        "italic": "Italic",
-        "underline": "Underline",
-        "heading1": "Heading 1",
-        "heading2": "Heading 2",
-        "paragraph": "Paragraph",
-        "lineBreak": "Line Break",
-        "divContainer": "Div Container",
-        "variables": "Variables",
-        "template": "Template",
-        "preview": "Preview",
-        "edit": "Edit",
-        "characters": "characters",
-        "previewMode": "Preview Mode",
-        "htmlEditor": "HTML Editor",
-        "insertVariables": "Insert Template Variables",
-        "insertTemplate": "Insert Email Template Structure"
-      },
-      "pagination": {
-        "showing": "{{start}}-{{end}} of {{total}} contacts"
-      }
     }
   }
-  
-
+}

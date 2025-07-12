@@ -100,3 +100,27 @@ export const UPDATE_NEWS = gql`
     }
   }
 `;
+// Notification Mutations
+export const MARK_NOTIFICATION_AS_READ = gql`
+  mutation MarkNotificationAsRead($notificationId: Int!) {
+    markNotificationAsRead(notificationId: $notificationId) {
+      success
+      notification {
+        id
+        isRead
+        readAt
+      }
+      errors
+    }
+  }
+`;
+
+export const MARK_ALL_NOTIFICATIONS_AS_READ = gql`
+  mutation MarkAllNotificationsAsRead {
+    markAllNotificationsAsRead {
+      success
+      count
+      errors
+    }
+  }
+`;

@@ -659,3 +659,43 @@ export const SEND_THANK_YOU_EMAIL = gql`
     }
   }
 `;
+
+// Subscriptions
+export const NOTIFICATION_SUBSCRIPTION = gql`
+  subscription OnNotificationAdded {
+    notificationAdded {
+      id
+      message
+      notificationType
+      createdAt
+      article {
+        slug
+      }
+    }
+  }
+`;
+
+export const GET_UNREAD_NOTIFICATIONS = gql`
+  query GetUnreadNotifications {
+    unreadNotifications {
+      id
+      title
+      message
+      notificationType
+      isRead
+      readAt
+      createdAt
+      sender {
+        id
+        username
+        firstName
+        lastName
+      }
+      article {
+        id
+        title
+        slug
+      }
+    }
+  }
+`;

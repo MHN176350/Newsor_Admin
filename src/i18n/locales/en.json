@@ -134,6 +134,10 @@
         "view": "View",
         "sendEmail": "Send Email"
       },
+      "template": {
+        "management": "Email Template Management",
+        "selectTemplate": "Select Template"
+      },
       "status": {
         "new": "New",
         "read": "Read",

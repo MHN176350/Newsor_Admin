@@ -17,6 +17,7 @@ import {
 } from '@ant-design/icons';
 import { useAuth } from '../store/AuthContext';
 import { useTranslation } from 'react-i18next';
+import NotificationBell from './NotificationBell';
 
 const { Header, Sider, Content } = AntLayout;
 
@@ -193,11 +194,11 @@ const Layout = () => {
                 </Button>
               </Dropdown>
               
-              <Button 
-                type="text" 
-                icon={<BellOutlined />}
-                style={{ color: 'var(--text-primary)' }}
-              />
+              {user?.profile?.role && ['admin'].includes(user.profile.role.toLowerCase()) && (
+
+                <NotificationBell />
+
+              )}
               
               <Dropdown
                 menu={{ 

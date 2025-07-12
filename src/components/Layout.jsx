@@ -132,11 +132,11 @@ const Layout = () => {
 
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
       }}>
         <Spin size="large" />
       </div>
@@ -149,9 +149,9 @@ const Layout = () => {
 
   return (
     <AntLayout className="admin-layout">
-      <Sider 
-        trigger={null} 
-        collapsible 
+      <Sider
+        trigger={null}
+        collapsible
         collapsed={collapsed}
         className="admin-sider"
         width={256}
@@ -185,23 +185,25 @@ const Layout = () => {
                 placement="bottomRight"
                 trigger={['click']}
               >
-                <Button 
-                  type="text" 
+                <Button
+                  type="text"
                   icon={<GlobalOutlined />}
                   style={{ color: 'var(--text-primary)' }}
                 >
                   {i18n.language?.toUpperCase() || 'EN'}
                 </Button>
               </Dropdown>
-              
+
               {user?.profile?.role && ['admin'].includes(user.profile.role.toLowerCase()) && (
 
-                <NotificationBell />
+                <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                  <NotificationBell />
+                </div>
 
               )}
-              
+
               <Dropdown
-                menu={{ 
+                menu={{
                   items: userMenuItems,
                   onClick: handleUserMenuClick
                 }}
@@ -209,7 +211,7 @@ const Layout = () => {
                 trigger={['click']}
               >
                 <div className="user-info" style={{ cursor: 'pointer' }}>
-                  <Avatar 
+                  <Avatar
                     className="user-avatar"
                     size="small"
                     src={user?.profile?.avatarUrl || '/default-avatar.svg'}

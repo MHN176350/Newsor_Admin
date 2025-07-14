@@ -102,11 +102,6 @@ const Layout = () => {
       label: t('navigation.profile'),
     },
     {
-      key: 'settings',
-      icon: <SettingOutlined />,
-      label: t('navigation.settings'),
-    },
-    {
       type: 'divider',
     },
     {

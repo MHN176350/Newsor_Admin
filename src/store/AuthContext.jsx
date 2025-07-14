@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_CURRENT_USER, LOGIN_USER } from '../graphql/queries';
+import { UPDATE_USER_PROFILE } from '../graphql/mutations'; // Đảm bảo đã có mutation này
 import { message } from 'antd';
 
 const AuthContext = createContext();
@@ -29,9 +30,9 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem(TOKEN_KEY);
     const storedRememberMe = localStorage.getItem(REMEMBER_ME_KEY) === 'true';
     const storedUserData = localStorage.getItem(USER_DATA_KEY);
-    
+
     setRememberMe(storedRememberMe);
-    
+
     if (!token) {
       setLoading(false);
       setIsAuthenticated(false);
@@ -58,20 +59,19 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem(USER_DATA_KEY);
     localStorage.removeItem(REMEMBER_ME_KEY);
   };
-
   // Check for existing token and validate user
-  const { data: userData, loading: userLoading, error: userError } = useQuery(GET_CURRENT_USER, {
+const { data: userData, loading: userLoading, error: userError, refetch: refetchUser } = useQuery(GET_CURRENT_USER, {
     skip: !localStorage.getItem(TOKEN_KEY),
     onCompleted: (data) => {
       if (data.me) {
         setUser(data.me);
         setIsAuthenticated(true);
-        
+
         // Store user data if remember me is enabled
         if (rememberMe) {
           localStorage.setItem(USER_DATA_KEY, JSON.stringify(data.me));
         }
-        
+
         // Check if user has admin/manager role
         const userRole = data.me.profile?.role?.toLowerCase();
         if (!['admin', 'manager'].includes(userRole)) {
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem(TOKEN_KEY, token);
         setUser(user);
         setIsAuthenticated(true);
-        
+
         // Store user data and remember preference if remember me is enabled
         if (rememberMe) {
           localStorage.setItem(USER_DATA_KEY, JSON.stringify(user));
@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }) => {
           // If not remembering, clear any stored data
           clearStoredData();
         }
-        
+
         // Check if user has admin/manager role
         const userRole = user.profile?.role?.toLowerCase();
         if (!['admin', 'manager'].includes(userRole)) {
@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }) => {
           logout();
           return;
         }
-        
+
         message.success('Login successful!');
       }
     },
@@ -121,6 +121,8 @@ export const AuthProvider = ({ children }) => {
       message.error(error.message || 'Login failed. Please check your credentials.');
     }
   });
+
+  const [updateProfileMutation] = useMutation(UPDATE_USER_PROFILE);
 
   const login = async (username, password, remember = false) => {
     try {
@@ -145,6 +147,24 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
+
+  // Refetch user and update context state
+  const refetchAndUpdateUser = async () => {
+    const { data } = await refetchUser();
+    if (data?.me) setUser(data.me);
+  };
+
+  const updateProfile = async (profileInput) => {
+    try {
+      const { data } = await updateProfileMutation({
+        variables: { ...profileInput }
+      });
+      return data.updateUserProfile;
+    } catch (error) {
+      return { success: false, errors: [error.message] };
+    }
+  };
+
   const value = {
     user,
     login,
@@ -153,7 +173,9 @@ export const AuthProvider = ({ children }) => {
     loading: loading || userLoading,
     userRole: user?.profile?.role,
     rememberMe,
-    setRememberMe
+    setRememberMe,
+    updateProfile,
+    refetchUser: refetchAndUpdateUser,
   };
 
   return (

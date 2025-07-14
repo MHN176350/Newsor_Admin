@@ -197,3 +197,51 @@ export const SEND_THANK_YOU_EMAIL = gql`
     }
   }
 `;
+export const CHANGE_PASSWORD = gql`
+  mutation ChangePassword(
+    $currentPassword: String!
+    $newPassword: String!
+  ) {
+    changePassword(
+      currentPassword: $currentPassword
+      newPassword: $newPassword
+    ) {
+      success
+      errors
+    }
+  }
+`;
+
+export const UPDATE_USER_PROFILE = gql`
+  mutation UpdateUserProfile(
+    $firstName: String
+    $lastName: String
+    $email: String
+    $bio: String
+    $phone: String
+    $dateOfBirth: Date
+  ) {
+    updateUserProfile(
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      bio: $bio
+      phone: $phone
+      dateOfBirth: $dateOfBirth
+    ) {
+      success
+      errors
+      profile {
+        id
+        role
+        bio
+        phone
+        dateOfBirth
+        avatarUrl
+        isVerified
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;

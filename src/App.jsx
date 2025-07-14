@@ -14,6 +14,7 @@ import Tags from './pages/Tags';
 import Users from './pages/Users';
 import Contact from './pages/Contact';
 import Settings from './pages/Settings';
+import ProfilePage from './pages/ProfilePage';
 import CreateArticle from './pages/CreateArticle';
 import './i18n';
 import './App.css';
@@ -55,6 +56,8 @@ function App() {
                     <Route path="contact" element={<Contact />} />
                     <Route path="media" element={<Contact />} />
                     <Route path="settings" element={<Settings />} />
+                    <Route path="profile" element={<ProfilePage />} />
+                    {/* Nested route for creating an article */}
                    <Route path="create-article" element={<CreateArticle />} />
                   </Route>
                 </Routes>

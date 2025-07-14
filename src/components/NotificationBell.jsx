@@ -1,16 +1,27 @@
-import { Box, IconButton, Badge, Menu, MenuItem, Typography, Divider, Button, Stack } from '@mui/joy';
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
+import { 
+  Button, Badge, Dropdown, Menu, Typography, Divider, Space, List, Avatar, 
+  Spin, Empty
+} from 'antd';
+import { 
+  BellOutlined, 
+  CheckOutlined, 
+  EditOutlined, 
+  DeleteOutlined,
+  FileTextOutlined,
+  RocketOutlined,
+  CloseOutlined
+} from '@ant-design/icons';
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
-import { Notifications as NotificationsIcon, MarkEmailRead } from '@mui/icons-material';
 import { GET_UNREAD_NOTIFICATIONS, NOTIFICATION_SUBSCRIPTION } from '../graphql/queries';
 import { MARK_NOTIFICATION_AS_READ, MARK_ALL_NOTIFICATIONS_AS_READ } from '../graphql/mutations';
-// import { formatDateTime } from '../constants';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 
+const { Text, Title } = Typography;
+
 export default function NotificationBell() {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
 
@@ -23,12 +34,12 @@ export default function NotificationBell() {
   // Real-time subscription for new notifications
   const { data: subscriptionData } = useSubscription(NOTIFICATION_SUBSCRIPTION, {
     skip: !isAuthenticated,
-    onData: ({ data }) => {
+    onData: useCallback(({ data }) => {
       if (data?.data?.notificationAdded) {
         // Refetch notifications when new one arrives
         refetch();
       }
-    },
+    }, [refetch]),
   });
 
   const [markAsRead] = useMutation(MARK_NOTIFICATION_AS_READ, {
@@ -56,26 +67,22 @@ export default function NotificationBell() {
       return '';
     }
   };
+
   const notifications = notificationsData?.unreadNotifications || [];
   const notificationCount = notifications.length;
 
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleOpenChange = (flag) => {
+    setOpen(flag);
   };
 
   const handleNotificationClick = (notification) => {
     // Optimistically navigate and close while mutation runs in the background
     navigate(`/review/article/${notification.article.slug}`);
-    handleClose();
+    setOpen(false);
     try {
       markAsRead({
         variables: {
-          notificationId: parseInt
-            (notification.id)
+          notificationId: parseInt(notification.id)
         },
       });
     } catch (error) {
@@ -86,7 +93,7 @@ export default function NotificationBell() {
   const handleMarkAllAsRead = async () => {
     try {
       await markAllAsRead();
-      handleClose();
+      setOpen(false);
     } catch (error) {
       console.error('Error marking all notifications as read:', error);
     }
@@ -95,87 +102,114 @@ export default function NotificationBell() {
   const getNotificationIcon = (type) => {
     switch (type) {
       case 'article_submitted':
-        return '📝';
+        return <FileTextOutlined style={{ color: '#1890ff' }} />;
       case 'article_approved':
-        return '✅';
+        return <CheckOutlined style={{ color: '#52c41a' }} />;
       case 'article_rejected':
-        return '❌';
+        return <CloseOutlined style={{ color: '#ff4d4f' }} />;
       case 'article_published':
-        return '🚀';
+        return <RocketOutlined style={{ color: '#722ed1' }} />;
       default:
-        return '📢';
+        return <BellOutlined style={{ color: '#faad14' }} />;
     }
   };
 
-  return (
-    <>
-      <IconButton
-        variant="plain"
-        color="neutral"
-        onClick={handleClick}
-        sx={{ position: 'relative' }}
-      >
-        <Badge badgeContent={notificationCount} color="danger" max={99}>
-          <NotificationsIcon />
-        </Badge>
-      </IconButton>
-
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        placement="bottom-end"
-        sx={{
-          minWidth: 350,
-          maxWidth: 400,
-          p: 1
-        }}
-      >
-        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 1 }}>
-          <Typography level="title-md">Notifications</Typography>
+  const menuItems = useMemo(() => [
+    {
+      key: 'header',
+      type: 'group',
+      label: (
+        <div style={{ 
+          padding: '12px 16px', 
+          borderBottom: '1px solid #f0f0f0',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <Title level={5} style={{ margin: 0 }}>Notifications</Title>
           {notifications.length > 0 && (
             <Button
-              size="sm"
-              variant="plain"
-              startDecorator={<MarkEmailRead />}
+              type="text"
+              size="small"
+              icon={<CheckOutlined />}
               onClick={handleMarkAllAsRead}
             >
               Mark all as read
             </Button>
           )}
-        </Stack>
-        <Divider />
+        </div>
+      )
+    },
+    ...(loading && !notifications.length ? [{
+      key: 'loading',
+      label: (
+        <div style={{ padding: '20px', textAlign: 'center' }}>
+          <Spin />
+          <Text style={{ marginLeft: 8 }}>Loading...</Text>
+        </div>
+      ),
+      disabled: true
+    }] : []),
+    ...(!loading && notifications.length === 0 ? [{
+      key: 'empty',
+      label: (
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description="No unread notifications"
+          style={{ padding: '20px' }}
+        />
+      ),
+      disabled: true
+    }] : []),
+    ...notifications.map((notification) => ({
+      key: notification.id,
+      label: (
+        <div style={{ 
+          cursor: 'pointer',
+          padding: '12px 16px',
+          borderBottom: '1px solid #f0f0f0'
+        }}>
+          <Space>
+            <Avatar icon={getNotificationIcon(notification.notificationType)} />
+            <div>
+              <Text style={{ fontSize: '14px', lineHeight: '1.4' }}>
+                {notification.message}
+              </Text>
+              <br />
+              <Text type="secondary" style={{ fontSize: '12px' }}>
+                {formatDateTime(notification.createdAt)}
+              </Text>
+            </div>
+          </Space>
+        </div>
+      ),
+      onClick: () => handleNotificationClick(notification)
+    }))
+  ], [notifications, loading, handleMarkAllAsRead, handleNotificationClick]);
 
-        {loading && !notifications.length && (
-          <MenuItem>
-            <Typography>Loading...</Typography>
-          </MenuItem>
-        )}
-
-        {!loading && notifications.length === 0 && (
-          <MenuItem>
-            <Typography>No unread notifications</Typography>
-          </MenuItem>
-        )}
-
-        {notifications.map((notification) => (
-          <MenuItem
-            key={notification.id}
-            onClick={() => handleNotificationClick(notification)}
-            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', whiteSpace: 'normal', my: 0.5 }}
-          >
-            <Stack direction="row" spacing={1.5} alignItems="center">
-              <Typography>{getNotificationIcon(notification.notificationType)}</Typography>
-              <Box>
-                <Typography level="body-sm" sx={{ wordBreak: 'break-word' }}>
-                  {notification.message}
-                </Typography>
-                <Typography level="body-xs">{formatDateTime(notification.createdAt)}</Typography>
-              </Box>
-            </Stack>
-          </MenuItem>
-        ))}
-      </Menu>
-    </>
+  return (
+    <Dropdown
+      menu={{ items: menuItems, style: { width: 350, maxHeight: 400, overflow: 'auto' } }}
+      trigger={['click']}
+      open={open}
+      onOpenChange={handleOpenChange}
+      placement="bottomRight"
+    >
+      <Button
+        type="text"
+        icon={
+          <Badge count={notificationCount} size="small">
+            <BellOutlined style={{ fontSize: '18px' }} />
+          </Badge>
+        }
+        style={{ 
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '40px',
+          width: '40px'
+        }}
+      />
+    </Dropdown>
   );
 }

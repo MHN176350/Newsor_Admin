@@ -142,7 +142,48 @@
         "sendEmail": "Gửi Email",
         "close": "Đóng",
         "send": "Gửi",
-        "viewHtmlSource": "Xem Mã HTML"
+        "viewHtmlSource": "Xem Mã HTML",
+        "save": "Lưu mẫu",
+        "saveTemplate": "Lưu mẫu",
+        "editTemplate": "Chỉnh sửa mẫu",
+        "cancel": "Hủy",
+        "createTemplate": "Tạo mẫu",
+        "deleteTemplate": "Xóa mẫu",
+        "sendReply": "Gửi phản hồi"
+      },
+      "template": {
+        "management": "Quản lý mẫu email",
+        "selectTemplate": "Chọn mẫu",
+        "name": "Tên mẫu",
+        "nameRequired": "Tên mẫu là bắt buộc",
+        "nameMinLength": "Tên mẫu phải có ít nhất 3 ký tự",
+        "nameMaxLength": "Tên mẫu không được vượt quá 50 ký tự",
+        "namePlaceholder": "Nhập tên mẫu...",
+        "availableVariables": "Biến khả dụng",
+        "variablesDescription": "Bạn có thể sử dụng các biến này trong nội dung mẫu. Chúng sẽ được thay thế bằng dữ liệu liên hệ thực khi gửi email.",
+        "manage": "Quản lý mẫu",
+        "created": "Đã tạo",
+        "noTemplates": "Không có mẫu nào"
+      },
+      "modal": {
+        "replyTitle": "Phản hồi liên hệ"
+      },
+      "realtime": {
+        "title": "Thông báo thời gian thực",
+        "enabled": "BẬT",
+        "disabled": "TẮT",
+        "status": {
+          "connected": "Đã kết nối cập nhật thời gian thực",
+          "disconnected": "Ngắt kết nối cập nhật thời gian thực",
+          "live": "Trực tiếp"
+        },
+        "stats": {
+          "newToday": "Mới hôm nay",
+          "pendingReply": "Chờ phản hồi",
+          "repliedToday": "Đã phản hồi hôm nay",
+          "totalContacts": "Tổng liên hệ"
+        },
+        "recentNotifications": "Thông báo gần đây"
       },
       "messages": {
         "statusUpdated": "Cập nhật trạng thái liên hệ thành công",
@@ -163,8 +204,20 @@
         "contentPreview": "Xem trước Nội dung"
       },
       "form": {
-        "emailSubject": "Chủ đề Email",
-        "emailSubjectRequired": "Vui lòng nhập chủ đề email"
+        "name": "Tên",
+        "email": "Email",
+        "phone": "Điện thoại",
+        "subject": "Tiêu đề",
+        "message": "Tin nhắn",
+        "originalMessage": "Tin nhắn gốc",
+        "emailSubject": "Tiêu đề email",
+        "emailContent": "Nội dung email",
+        "emailSubjectRequired": "Vui lòng nhập tiêu đề email",
+        "emailContentRequired": "Vui lòng nhập nội dung email",
+        "emailContentPlaceholder": "Nhập phản hồi của bạn tại đây...",
+        "selectTemplate": "Chọn mẫu",
+        "selectTemplatePlaceholder": "Chọn một mẫu email",
+        "notProvided": "Không cung cấp"
       },
       "htmlEditor": {
         "togglePreview": "Chuyển đổi Xem trước",

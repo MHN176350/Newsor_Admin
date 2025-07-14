@@ -136,7 +136,17 @@
       },
       "template": {
         "management": "Email Template Management",
-        "selectTemplate": "Select Template"
+        "selectTemplate": "Select Template",
+        "name": "Template Name",
+        "nameRequired": "Template name is required",
+        "nameMinLength": "Template name must be at least 3 characters",
+        "nameMaxLength": "Template name cannot exceed 50 characters",
+        "namePlaceholder": "Enter template name...",
+        "availableVariables": "Available Variables",
+        "variablesDescription": "You can use these variables in your template content. They will be replaced with actual contact data when sending emails.",
+        "manage": "Manage Templates",
+        "created": "Created",
+        "noTemplates": "No templates available"
       },
       "status": {
         "new": "New",
@@ -153,7 +163,46 @@
         "saveTemplate": "Save Template",
         "editTemplate": "Edit Template",
         "cancel": "Cancel",
-        "viewHtmlSource": "View HTML Source"
+        "viewHtmlSource": "View HTML Source",
+        "createTemplate": "Create Template",
+        "deleteTemplate": "Delete Template",
+        "sendReply": "Send Reply"
+      },
+      "modal": {
+        "replyTitle": "Reply to Contact"
+      },
+      "realtime": {
+        "title": "Real-time Notifications",
+        "enabled": "ON",
+        "disabled": "OFF",
+        "status": {
+          "connected": "Connected to real-time updates",
+          "disconnected": "Disconnected from real-time updates",
+          "live": "Live"
+        },
+        "stats": {
+          "newToday": "New Today",
+          "pendingReply": "Pending Reply",
+          "repliedToday": "Replied Today",
+          "totalContacts": "Total Contacts"
+        },
+        "recentNotifications": "Recent Notifications"
+      },
+      "form": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "subject": "Subject",
+        "message": "Message",
+        "originalMessage": "Original Message",
+        "emailSubject": "Email Subject",
+        "emailContent": "Email Content",
+        "emailSubjectRequired": "Please enter email subject",
+        "emailContentRequired": "Please enter email content",
+        "emailContentPlaceholder": "Enter your reply message here...",
+        "selectTemplate": "Select Template",
+        "selectTemplatePlaceholder": "Choose an email template",
+        "notProvided": "Not provided"
       },
       "messages": {
         "statusUpdated": "Contact status updated successfully",
@@ -172,13 +221,6 @@
       "details": {
         "subject": "Subject",
         "contentPreview": "Content Preview"
-      },
-      "form": {
-        "emailSubject": "Email Subject",
-        "emailSubjectRequired": "Please enter email subject",
-        "emailContent": "Email Content (HTML)",
-        "emailContentRequired": "Please enter email content",
-        "emailContentPlaceholder": "Enter HTML email template content... Use the 'Template' button to insert a basic structure."
       },
       "htmlEditor": {
         "bold": "Bold",

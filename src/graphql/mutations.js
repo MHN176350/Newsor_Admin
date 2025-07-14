@@ -124,3 +124,82 @@ export const MARK_ALL_NOTIFICATIONS_AS_READ = gql`
     }
   }
 `;
+
+// Email Template Mutations
+export const CREATE_EMAIL_TEMPLATE = gql`
+  mutation CreateEmailTemplate($name: String!, $subject: String!, $content: String!, $variables: [String]) {
+    createEmailTemplate(
+      name: $name
+      subject: $subject
+      content: $content
+      variables: $variables
+    ) {
+      emailTemplate {
+        id
+        name
+        subject
+        content
+        variables
+        createdAt
+        updatedAt
+      }
+      success
+      errors
+    }
+  }
+`;
+
+export const DELETE_EMAIL_TEMPLATE = gql`
+  mutation DeleteEmailTemplate($id: ID!) {
+    deleteEmailTemplate(id: $id) {
+      success
+      errors
+    }
+  }
+`;
+
+export const UPDATE_EMAIL_TEMPLATE = gql`
+  mutation UpdateEmailTemplate($name: String!, $subject: String!, $content: String!, $variables: [String]) {
+    updateEmailTemplate(
+      name: $name
+      subject: $subject
+      content: $content
+      variables: $variables
+    ) {
+      emailTemplate {
+        id
+        name
+        subject
+        content
+        variables
+        updatedAt
+      }
+      success
+      errors
+    }
+  }
+`;
+
+export const UPDATE_CONTACT_STATUS = gql`
+  mutation UpdateContactStatus($id: Int!, $status: String!) {
+    updateContactStatus(id: $id, status: $status) {
+      contact {
+        id
+        status
+        updatedAt
+      }
+      success
+      errors
+    }
+  }
+`;
+
+export const SEND_THANK_YOU_EMAIL = gql`
+  mutation SendThankYouEmail($contactId: ID!, $templateId: ID) {
+    sendThankYouEmail(contactId: $contactId, templateId: $templateId) {
+      success
+      message
+      errors
+    }
+  }
+`;

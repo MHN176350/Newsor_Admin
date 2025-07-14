@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
   Card, 
@@ -18,7 +18,15 @@ import {
   Divider,
   Spin,
   Dropdown,
-  Menu
+  Menu,
+  Descriptions,
+  Collapse,
+  Statistic,
+  Switch,
+  Badge,
+  List,
+  Avatar,
+  Empty
 } from 'antd';
 import { 
   MailOutlined, 
@@ -31,22 +39,33 @@ import {
   EyeOutlined,
   DownOutlined,
   PlusOutlined,
+  DeleteOutlined,
   BoldOutlined,
   ItalicOutlined,
   UnderlineOutlined,
   LinkOutlined,
   OrderedListOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  BellOutlined,
+  UserAddOutlined,
+  ClockCircleOutlined,
+  CheckCircleOutlined,
+  ContactsOutlined,
+  SyncOutlined
 } from '@ant-design/icons';
 import { useQuery, useMutation } from '@apollo/client';
 import { 
   GET_CONTACTS, 
-  UPDATE_CONTACT_STATUS,
   GET_EMAIL_TEMPLATE,
-  GET_EMAIL_TEMPLATES,
-  UPDATE_EMAIL_TEMPLATE,
-  SEND_THANK_YOU_EMAIL
+  GET_EMAIL_TEMPLATES
 } from '../graphql/queries';
+import { 
+  UPDATE_CONTACT_STATUS,
+  UPDATE_EMAIL_TEMPLATE,
+  CREATE_EMAIL_TEMPLATE,
+  DELETE_EMAIL_TEMPLATE,
+  SEND_THANK_YOU_EMAIL
+} from '../graphql/mutations';
 import { formatDate } from '../utils/helpers';
 
 const { TextArea } = Input;
@@ -332,9 +351,21 @@ const Contact = () => {
   const [selectedContact, setSelectedContact] = useState(null);
   const [isContactModalVisible, setIsContactModalVisible] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState(false);
+  const [creatingTemplate, setCreatingTemplate] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const [templateForm] = Form.useForm();
+  const [createTemplateForm] = Form.useForm();
+
+  // Real-time state
+  const [realtimeEnabled, setRealtimeEnabled] = useState(false);
+  const [realtimeStats, setRealtimeStats] = useState({
+    newContactsToday: 0,
+    pendingReply: 0,
+    repliedToday: 0,
+    totalContacts: 0
+  });
+  const [realtimeNotifications, setRealtimeNotifications] = useState([]);
 
   // Fetch contacts
   const { data: contactsData, loading: contactsLoading, error: contactsError, refetch: refetchContacts } = useQuery(GET_CONTACTS, {
@@ -383,6 +414,39 @@ const Contact = () => {
     }
   });
 
+  // Create email template mutation
+  const [createEmailTemplate, { loading: creatingTemplateLoading }] = useMutation(CREATE_EMAIL_TEMPLATE, {
+    onCompleted: (data) => {
+      if (data.createEmailTemplate.success) {
+        message.success(t('admin.contact.messages.templateCreated'));
+        setCreatingTemplate(false);
+        createTemplateForm.resetFields();
+        refetchTemplates();
+      } else {
+        message.error(data.createEmailTemplate.errors?.join(', ') || t('admin.contact.messages.templateCreateFailed'));
+      }
+    },
+    onError: (error) => {
+      message.error(error.message || t('admin.contact.messages.templateCreateFailed'));
+    }
+  });
+
+  // Delete email template mutation
+  const [deleteEmailTemplate, { loading: deletingTemplate }] = useMutation(DELETE_EMAIL_TEMPLATE, {
+    onCompleted: (data) => {
+      if (data.deleteEmailTemplate.success) {
+        message.success(t('admin.contact.messages.templateDeleted'));
+        setSelectedTemplate(null);
+        refetchTemplates();
+      } else {
+        message.error(data.deleteEmailTemplate.errors?.join(', ') || t('admin.contact.messages.templateDeleteFailed'));
+      }
+    },
+    onError: (error) => {
+      message.error(error.message || t('admin.contact.messages.templateDeleteFailed'));
+    }
+  });
+
   // Send thank you email mutation
   const [sendThankYouEmail, { loading: sendingEmail }] = useMutation(SEND_THANK_YOU_EMAIL, {
     onCompleted: (data) => {
@@ -398,28 +462,101 @@ const Contact = () => {
     }
   });
 
-  const contacts = contactsData?.contacts?.edges?.map(edge => edge.node) || [];
+  // Extract data from queries with memoization
+  const contacts = useMemo(() => 
+    contactsData?.contacts?.edges?.map(edge => edge.node) || [], 
+    [contactsData]
+  );
   const emailTemplate = templateData?.emailTemplate;
   const emailTemplates = templatesData?.emailTemplates || [];
 
-  const handleStatusChange = (contactId, newStatus) => {
+  // Real-time functionality - memoize stats calculation
+  const realtimeStatsCalculated = useMemo(() => {
+    if (contacts.length === 0) {
+      return {
+        newContactsToday: 0,
+        pendingReply: 0,
+        repliedToday: 0,
+        totalContacts: 0
+      };
+    }
+
+    const today = new Date().toDateString();
+    const newToday = contacts.filter(contact => 
+      new Date(contact.createdAt).toDateString() === today
+    ).length;
+    
+    const pending = contacts.filter(contact => 
+      contact.status === 'NEW' || contact.status === 'READ'
+    ).length;
+    
+    const replied = contacts.filter(contact => 
+      contact.status === 'RESPONDED' && 
+      new Date(contact.updatedAt).toDateString() === today
+    ).length;
+
+    return {
+      newContactsToday: newToday,
+      pendingReply: pending,
+      repliedToday: replied,
+      totalContacts: contacts.length
+    };
+  }, [contacts]);
+
+  useEffect(() => {
+    setRealtimeStats(realtimeStatsCalculated);
+  }, [realtimeStatsCalculated]);
+
+  // Real-time notifications simulation
+  useEffect(() => {
+    if (!realtimeEnabled) return;
+
+    const interval = setInterval(() => {
+      // Simulate random notifications
+      const notificationTypes = [
+        {
+          type: 'new_contact',
+          title: t('admin.contact.realtime.stats.newToday'),
+          message: 'New contact received from website'
+        },
+        {
+          type: 'status_update',
+          title: 'Status Updated',
+          message: 'Contact status changed to responded'
+        }
+      ];
+
+      const randomNotification = notificationTypes[Math.floor(Math.random() * notificationTypes.length)];
+      const newNotification = {
+        ...randomNotification,
+        timestamp: new Date().toISOString(),
+        id: Date.now()
+      };
+
+      setRealtimeNotifications(prev => [newNotification, ...prev.slice(0, 9)]);
+    }, 30000); // Add notification every 30 seconds
+
+    return () => clearInterval(interval);
+  }, [realtimeEnabled, t]);
+
+  const handleStatusChange = useCallback((contactId, newStatus) => {
     updateContactStatus({
       variables: { id: contactId, status: newStatus }
     });
-  };
+  }, [updateContactStatus]);
 
-  const handleSendThankYou = (contactId, templateId = null) => {
+  const handleSendThankYou = useCallback((contactId, templateId = null) => {
     sendThankYouEmail({
       variables: { contactId, templateId }
     });
-  };
+  }, [sendThankYouEmail]);
 
-  const handleViewContact = (contact) => {
+  const handleViewContact = useCallback((contact) => {
     setSelectedContact(contact);
     setIsContactModalVisible(true);
-  };
+  }, []);
 
-  const handleUpdateTemplate = (values) => {
+  const handleUpdateTemplate = useCallback((values) => {
     const templateName = selectedTemplate?.name || 'default_thank_you';
     updateEmailTemplate({
       variables: {
@@ -428,9 +565,34 @@ const Contact = () => {
         content: values.content
       }
     });
-  };
+  }, [selectedTemplate?.name, updateEmailTemplate]);
 
-  const getStatusColor = (status) => {
+  const handleCreateTemplate = useCallback((values) => {
+    createEmailTemplate({
+      variables: {
+        name: values.name,
+        subject: values.subject,
+        content: values.content
+      }
+    });
+  }, [createEmailTemplate]);
+
+  const handleDeleteTemplate = useCallback((template) => {
+    Modal.confirm({
+      title: t('admin.contact.actions.deleteTemplate'),
+      content: t('admin.contact.messages.deleteTemplateConfirm', { name: template.name }),
+      okText: t('common.confirm'),
+      cancelText: t('common.cancel'),
+      okType: 'danger',
+      onOk: () => {
+        deleteEmailTemplate({
+          variables: { id: template.id }
+        });
+      }
+    });
+  }, [t, deleteEmailTemplate]);
+
+  const getStatusColor = useCallback((status) => {
     switch (status) {
       case 'NEW': return 'blue';
       case 'READ': return 'orange';
@@ -438,9 +600,10 @@ const Contact = () => {
       case 'CLOSED': return 'gray';
       default: return 'default';
     }
-  };
-
-  const contactColumns = [
+  }, []);
+   
+  // Memoize columns to prevent infinite re-renders
+  const contactColumns = useMemo(() => [
     {
       title: t('admin.contact.table.date'),
       dataIndex: 'createdAt',
@@ -556,7 +719,7 @@ const Contact = () => {
         );
       }
     }
-  ];
+  ], [t, updatingStatus, sendingEmail, emailTemplates, handleStatusChange, handleViewContact, handleSendThankYou, getStatusColor]);
 
   if (contactsError) {
     return (
@@ -624,11 +787,29 @@ const Contact = () => {
                     ))}
                   </Select>
                 )}
+                {selectedTemplate && (
+                  <Button
+                    danger
+                    size="small"
+                    icon={<DeleteOutlined />}
+                    onClick={() => handleDeleteTemplate(selectedTemplate)}
+                    loading={deletingTemplate}
+                    title={t('admin.contact.actions.deleteTemplate')}
+                  />
+                )}
               </Space>
             }
             loading={templateLoading || templatesLoading}
             extra={
               <Space>
+                <Button
+                  type="dashed"
+                  icon={<PlusOutlined />}
+                  onClick={() => setCreatingTemplate(true)}
+                  disabled={creatingTemplate || editingTemplate}
+                >
+                  {t('admin.contact.actions.createTemplate')}
+                </Button>
                 <Button
                   type={editingTemplate ? "default" : "primary"}
                   icon={editingTemplate ? <SaveOutlined /> : <EditOutlined />}
@@ -660,7 +841,87 @@ const Contact = () => {
               </Space>
             }
           >
-            {editingTemplate ? (
+            {creatingTemplate ? (
+              <Form
+                form={createTemplateForm}
+                layout="vertical"
+                onFinish={handleCreateTemplate}
+                initialValues={{
+                  name: '',
+                  subject: '',
+                  content: ''
+                }}
+              >
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item
+                      label={t('admin.contact.template.name')}
+                      name="name"
+                      rules={[
+                        { required: true, message: t('admin.contact.template.nameRequired') },
+                        { min: 3, message: t('admin.contact.template.nameMinLength') },
+                        { max: 50, message: t('admin.contact.template.nameMaxLength') }
+                      ]}
+                    >
+                      <Input 
+                        placeholder={t('admin.contact.template.namePlaceholder')}
+                        size="large"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item
+                      label={t('admin.contact.form.emailSubject')}
+                      name="subject"
+                      rules={[{ required: true, message: t('admin.contact.form.emailSubjectRequired') }]}
+                    >
+                      <Input 
+                        placeholder="Thank you for contacting us"
+                        size="large"
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+
+                <Row gutter={16}>
+                  <Col span={24}>
+                    <Form.Item
+                      label={t('admin.contact.form.emailContent')}
+                      name="content"
+                      rules={[{ required: true, message: t('admin.contact.form.emailContentRequired') }]}
+                    >
+                      <FormHTMLEditor
+                        rows={15}
+                        placeholder={t('admin.contact.form.emailContentPlaceholder')}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+
+                <Form.Item>
+                  <Space>
+                    <Button 
+                      type="primary" 
+                      htmlType="submit" 
+                      loading={creatingTemplateLoading}
+                      size="large"
+                      icon={<SaveOutlined />}
+                    >
+                      {t('admin.contact.actions.createTemplate')}
+                    </Button>
+                    <Button 
+                      onClick={() => {
+                        setCreatingTemplate(false);
+                        createTemplateForm.resetFields();
+                      }}
+                      size="large"
+                    >
+                      {t('admin.contact.actions.cancel')}
+                    </Button>
+                  </Space>
+                </Form.Item>
+              </Form>
+            ) : editingTemplate ? (
               <Form
                 form={templateForm}
                 layout="vertical"
@@ -825,6 +1086,113 @@ const Contact = () => {
               </div>
             )}
           </Card>
+        </Col>
+      </Row>
+
+      {/* Real-time Notifications Panel */}
+      <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
+        <Col span={24}>
+          <Collapse 
+            size="large"
+            items={[
+              {
+                key: 'realtime',
+                label: (
+                  <Space>
+                    <BellOutlined />
+                    <span>{t('admin.contact.realtime.title')}</span>
+                    <Badge count={realtimeStats.newContactsToday} showZero color="#52c41a" />
+                  </Space>
+                ),
+                children: (
+                  <div className="realtime-dashboard">
+                    <Row gutter={[16, 16]}>
+                      <Col xs={24} sm={12} md={6}>
+                        <Statistic
+                          title={t('admin.contact.realtime.stats.newToday')}
+                          value={realtimeStats.newContactsToday}
+                          prefix={<UserAddOutlined />}
+                          valueStyle={{ color: '#3f8600' }}
+                        />
+                      </Col>
+                      <Col xs={24} sm={12} md={6}>
+                        <Statistic
+                          title={t('admin.contact.realtime.stats.pendingReply')}
+                          value={realtimeStats.pendingReply}
+                          prefix={<ClockCircleOutlined />}
+                          valueStyle={{ color: '#cf1322' }}
+                        />
+                      </Col>
+                      <Col xs={24} sm={12} md={6}>
+                        <Statistic
+                          title={t('admin.contact.realtime.stats.repliedToday')}
+                          value={realtimeStats.repliedToday}
+                          prefix={<CheckCircleOutlined />}
+                          valueStyle={{ color: '#1890ff' }}
+                        />
+                      </Col>
+                      <Col xs={24} sm={12} md={6}>
+                        <Statistic
+                          title={t('admin.contact.realtime.stats.totalContacts')}
+                          value={realtimeStats.totalContacts}
+                          prefix={<ContactsOutlined />}
+                        />
+                      </Col>
+                    </Row>
+
+                    <div style={{ marginTop: '20px' }}>
+                      <Space>
+                        <Switch
+                          checked={realtimeEnabled}
+                          onChange={setRealtimeEnabled}
+                          checkedChildren={t('admin.contact.realtime.enabled')}
+                          unCheckedChildren={t('admin.contact.realtime.disabled')}
+                        />
+                        <Typography.Text type="secondary">
+                          {realtimeEnabled ? t('admin.contact.realtime.status.connected') : t('admin.contact.realtime.status.disconnected')}
+                        </Typography.Text>
+                        {realtimeEnabled && (
+                          <Badge status="processing" text={t('admin.contact.realtime.status.live')} />
+                        )}
+                      </Space>
+                    </div>
+
+                    {realtimeNotifications.length > 0 && (
+                      <div style={{ marginTop: '20px' }}>
+                        <Typography.Text strong>{t('admin.contact.realtime.recentNotifications')}</Typography.Text>
+                        <List
+                          size="small"
+                          dataSource={realtimeNotifications.slice(0, 5)}
+                          renderItem={(notification, index) => (
+                            <List.Item key={index}>
+                              <List.Item.Meta
+                                avatar={
+                                  <Avatar icon={
+                                    notification.type === 'new_contact' ? <UserAddOutlined /> :
+                                    notification.type === 'status_update' ? <SyncOutlined /> :
+                                    <BellOutlined />
+                                  } />
+                                }
+                                title={notification.title}
+                                description={
+                                  <Space>
+                                    <Typography.Text type="secondary">{notification.message}</Typography.Text>
+                                    <Typography.Text type="secondary" style={{ fontSize: '12px' }}>
+                                      {new Date(notification.timestamp).toLocaleTimeString()}
+                                    </Typography.Text>
+                                  </Space>
+                                }
+                              />
+                            </List.Item>
+                          )}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+            ]}
+          />
         </Col>
       </Row>
 

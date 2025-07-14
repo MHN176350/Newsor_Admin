@@ -26,7 +26,8 @@ import {
   Badge,
   List,
   Avatar,
-  Empty
+  Empty,
+  App
 } from 'antd';
 import { 
   MailOutlined, 
@@ -348,6 +349,7 @@ FormHTMLEditor.displayName = 'FormHTMLEditor';
 
 const Contact = () => {
   const { t } = useTranslation();
+  const { modal } = App.useApp();
   const [selectedContact, setSelectedContact] = useState(null);
   const [isContactModalVisible, setIsContactModalVisible] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState(false);
@@ -487,12 +489,12 @@ const Contact = () => {
     ).length;
     
     const pending = contacts.filter(contact => 
-      contact.status === 'NEW' || contact.status === 'READ'
+      contact.status === 'new' || contact.status === 'in_progress'
     ).length;
     
     const replied = contacts.filter(contact => 
-      contact.status === 'RESPONDED' && 
-      new Date(contact.updatedAt).toDateString() === today
+      contact.status === 'resolved' && 
+      contact.respondedAt && new Date(contact.respondedAt).toDateString() === today
     ).length;
 
     return {
@@ -541,7 +543,7 @@ const Contact = () => {
 
   const handleStatusChange = useCallback((contactId, newStatus) => {
     updateContactStatus({
-      variables: { id: contactId, status: newStatus }
+      variables: { id: parseInt(contactId, 10), status: newStatus }
     });
   }, [updateContactStatus]);
 
@@ -578,7 +580,7 @@ const Contact = () => {
   }, [createEmailTemplate]);
 
   const handleDeleteTemplate = useCallback((template) => {
-    Modal.confirm({
+    modal.confirm({
       title: t('admin.contact.actions.deleteTemplate'),
       content: t('admin.contact.messages.deleteTemplateConfirm', { name: template.name }),
       okText: t('common.confirm'),
@@ -590,14 +592,14 @@ const Contact = () => {
         });
       }
     });
-  }, [t, deleteEmailTemplate]);
+  }, [t, deleteEmailTemplate, modal]);
 
   const getStatusColor = useCallback((status) => {
     switch (status) {
-      case 'NEW': return 'blue';
-      case 'READ': return 'orange';
-      case 'RESPONDED': return 'green';
-      case 'CLOSED': return 'gray';
+      case 'new': return 'blue';
+      case 'in_progress': return 'orange';
+      case 'resolved': return 'green';
+      case 'closed': return 'gray';
       default: return 'default';
     }
   }, []);
@@ -666,17 +668,17 @@ const Contact = () => {
           loading={updatingStatus}
           style={{ width: 120 }}
         >
-          <Option value="NEW">
-            <Tag color={getStatusColor('NEW')}>{t('admin.contact.status.new')}</Tag>
+          <Option value="new">
+            <Tag color={getStatusColor('new')}>{t('admin.contact.status.new')}</Tag>
           </Option>
-          <Option value="READ">
-            <Tag color={getStatusColor('READ')}>{t('admin.contact.status.read')}</Tag>
+          <Option value="in_progress">
+            <Tag color={getStatusColor('in_progress')}>{t('admin.contact.status.read')}</Tag>
           </Option>
-          <Option value="RESPONDED">
-            <Tag color={getStatusColor('RESPONDED')}>{t('admin.contact.status.responded')}</Tag>
+          <Option value="resolved">
+            <Tag color={getStatusColor('resolved')}>{t('admin.contact.status.responded')}</Tag>
           </Option>
-          <Option value="CLOSED">
-            <Tag color={getStatusColor('CLOSED')}>{t('admin.contact.status.closed')}</Tag>
+          <Option value="closed">
+            <Tag color={getStatusColor('closed')}>{t('admin.contact.status.closed')}</Tag>
           </Option>
         </Select>
       )

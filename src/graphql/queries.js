@@ -296,7 +296,7 @@ export const TOGGLE_TAG = gql`
 
 export const GET_ARTICLES_BY_TAG = gql`
   query GetArticlesByTag($tagId: Int!) {
-    articles_by_tag(tagId: $tagId) {
+    articlesByTag(tagId: $tagId) {
       id
       title
       slug
@@ -305,7 +305,7 @@ export const GET_ARTICLES_BY_TAG = gql`
       publishedAt
       createdAt
       viewCount
-      featuredImage
+      featuredImageUrl
       author {
         id
         username

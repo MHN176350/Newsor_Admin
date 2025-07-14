@@ -263,7 +263,12 @@
         "emailSendFailed": "Failed to send email",
         "loadingError": "Error loading contacts",
         "noTemplates": "No email templates found",
-        "selectTemplate": "Select a template to view or edit"
+        "selectTemplate": "Select a template to view or edit",
+        "templateCreated": "Email template created successfully",
+        "templateCreateFailed": "Failed to create email template",
+        "templateDeleted": "Email template deleted successfully",
+        "templateDeleteFailed": "Failed to delete email template",
+        "deleteTemplateConfirm": "Are you sure you want to delete template {{name}}? This action cannot be undone."
       },
       "modals": {
         "contactDetails": "Contact Details"

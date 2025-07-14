@@ -244,7 +244,12 @@
         "emailSendFailed": "Không thể gửi email",
         "loadingError": "Lỗi khi tải danh sách liên hệ",
         "noTemplates": "Không tìm thấy mẫu email",
-        "selectTemplate": "Chọn một mẫu để xem hoặc chỉnh sửa"
+        "selectTemplate": "Chọn một mẫu để xem hoặc chỉnh sửa",
+        "templateCreated": "Tạo mẫu email thành công",
+        "templateCreateFailed": "Không thể tạo mẫu email",
+        "templateDeleted": "Xóa mẫu email thành công",
+        "templateDeleteFailed": "Không thể xóa mẫu email",
+        "deleteTemplateConfirm": "Bạn có chắc chắn muốn xóa mẫu {{name}}? Hành động này không thể hoàn tác."
       },
       "modals": {
         "contactDetails": "Chi tiết Liên hệ"

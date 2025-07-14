@@ -180,7 +180,7 @@ export const UPDATE_CONTACT_STATUS = gql`
       contact {
         id
         status
-        updatedAt
+        respondedAt
       }
       success
       errors
@@ -190,7 +190,7 @@ export const UPDATE_CONTACT_STATUS = gql`
 
 export const SEND_THANK_YOU_EMAIL = gql`
   mutation SendThankYouEmail($contactId: ID!, $templateId: ID) {
-    sendThankYouEmail(contactId: $contactId, templateId: $templateId) {
+    sendThankYouEmail(contact_id: $contactId, template_id: $templateId) {
       success
       message
       errors

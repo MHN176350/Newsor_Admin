@@ -199,7 +199,7 @@ const Tags = () => {
   };
 
   const renderArticlesList = (tagId) => {
-    const articles = articlesData?.articles_by_tag || [];
+    const articles = articlesData?.articlesByTag || [];
     
     if (articlesLoading) {
       return <div style={{ padding: '16px', textAlign: 'center' }}>Loading articles...</div>;
@@ -221,9 +221,9 @@ const Tags = () => {
             <List.Item>
               <List.Item.Meta
                 avatar={
-                  article.featuredImage ? (
+                  article.featuredImageUrl ? (
                     <Avatar 
-                      src={article.featuredImage} 
+                      src={article.featuredImageUrl} 
                       shape="square" 
                       size={40}
                     />

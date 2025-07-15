@@ -7,6 +7,8 @@ import apolloClient from './graphql/client';
 import { AuthProvider } from './store/AuthContext';
 import Layout from './components/Layout';
 import Login from './pages/Login';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import Articles from './pages/Articles';
 import Categories from './pages/Categories';
@@ -46,6 +48,8 @@ function App() {
                 <Toaster position="top-right" />
                 <Routes>
                   <Route path="/login" element={<Login />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Navigate to="/dashboard" replace />} />
                     <Route path="dashboard" element={<Dashboard />} />

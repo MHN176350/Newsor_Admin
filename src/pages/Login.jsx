@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Card, Alert, Typography, Space, Checkbox, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 import { useTranslation } from 'react-i18next';
 import '../styles/admin-theme.css';
@@ -129,7 +129,9 @@ const Login = () => {
                       {t('auth.login.rememberMe')}
                     </Checkbox>
                     <Button type="link" className="forgot-password">
-                      {t('auth.login.forgotPassword')}
+                      <Link to="/forgot-password" style={{ color: 'inherit', textDecoration: 'none' }}>
+                        {t('auth.login.forgotPassword')}
+                      </Link>
                     </Button>
                   </div>
                 </Form.Item>

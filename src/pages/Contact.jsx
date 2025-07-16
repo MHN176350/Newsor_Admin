@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { 
-  Card, 
-  Table, 
-  Button, 
-  Modal, 
-  Form, 
-  Input, 
-  message, 
+import {
+  Card,
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  message,
   Space,
   Alert,
   Tag,
@@ -29,9 +29,9 @@ import {
   Empty,
   App
 } from 'antd';
-import { 
-  MailOutlined, 
-  PhoneOutlined, 
+import {
+  MailOutlined,
+  PhoneOutlined,
   UserOutlined,
   MessageOutlined,
   EditOutlined,
@@ -55,12 +55,12 @@ import {
   SyncOutlined
 } from '@ant-design/icons';
 import { useQuery, useMutation } from '@apollo/client';
-import { 
-  GET_CONTACTS, 
+import {
+  GET_CONTACTS,
   GET_EMAIL_TEMPLATE,
   GET_EMAIL_TEMPLATES
 } from '../graphql/queries';
-import { 
+import {
   UPDATE_CONTACT_STATUS,
   UPDATE_EMAIL_TEMPLATE,
   CREATE_EMAIL_TEMPLATE,
@@ -86,10 +86,10 @@ const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selectedText = currentValue.substring(start, end);
-    
+
     let newText;
     let cursorPosition;
-    
+
     if (selectedText) {
       newText = currentValue.substring(0, start) + openTag + selectedText + (closeTag || openTag) + currentValue.substring(end);
       cursorPosition = start + openTag.length + selectedText.length + (closeTag || openTag).length;
@@ -97,10 +97,10 @@ const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
       newText = currentValue.substring(0, start) + openTag + (closeTag || '') + currentValue.substring(end);
       cursorPosition = start + openTag.length;
     }
-    
+
     setCurrentValue(newText);
     onChange && onChange(newText);
-    
+
     // Set cursor position
     setTimeout(() => {
       textarea.focus();
@@ -166,9 +166,9 @@ const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
   return (
     <div style={{ border: '1px solid #d9d9d9', borderRadius: '6px' }}>
       {/* Toolbar */}
-      <div style={{ 
-        padding: '8px 12px', 
-        borderBottom: '1px solid #d9d9d9', 
+      <div style={{
+        padding: '8px 12px',
+        borderBottom: '1px solid #d9d9d9',
         backgroundColor: '#fafafa',
         display: 'flex',
         flexWrap: 'wrap',
@@ -178,69 +178,69 @@ const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
       }}>
         <Space wrap>
           {/* Text Formatting */}
-          <Button 
-            size="small" 
-            icon={<BoldOutlined />} 
+          <Button
+            size="small"
+            icon={<BoldOutlined />}
             onClick={() => insertHtmlTag('<strong>', '</strong>')}
             title="Bold"
           />
-          <Button 
-            size="small" 
-            icon={<ItalicOutlined />} 
+          <Button
+            size="small"
+            icon={<ItalicOutlined />}
             onClick={() => insertHtmlTag('<em>', '</em>')}
             title="Italic"
           />
-          <Button 
-            size="small" 
-            icon={<UnderlineOutlined />} 
+          <Button
+            size="small"
+            icon={<UnderlineOutlined />}
             onClick={() => insertHtmlTag('<u>', '</u>')}
             title="Underline"
           />
-          
+
           <Divider type="vertical" />
-          
+
           {/* Structure Elements */}
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             onClick={() => insertHtmlTag('<h1>', '</h1>')}
             title="Heading 1"
           >
             H1
           </Button>
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             onClick={() => insertHtmlTag('<h2>', '</h2>')}
             title="Heading 2"
           >
             H2
           </Button>
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             onClick={() => insertHtmlTag('<p>', '</p>')}
             title="Paragraph"
           >
             P
           </Button>
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             onClick={() => insertHtmlTag('<br/>', '')}
             title="Line Break"
           >
             BR
           </Button>
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             onClick={() => insertHtmlTag('<div>', '</div>')}
             title="Div Container"
           >
             DIV
           </Button>
-          
+
           <Divider type="vertical" />
-          
+
           {/* Template Variables */}
           <Dropdown
-            overlay={
+            menu={
               <Menu onClick={({ key }) => insertVariable(key)}>
                 <Menu.Item key="name">{'{{ name }}'}</Menu.Item>
                 <Menu.Item key="email">{'{{ email }}'}</Menu.Item>
@@ -255,10 +255,10 @@ const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
               Variables <DownOutlined />
             </Button>
           </Dropdown>
-          
+
           {/* Quick Template */}
-          <Button 
-            size="small" 
+          <Button
+            size="small"
             type="dashed"
             onClick={insertEmailStructure}
             title="Insert Email Template Structure"
@@ -266,10 +266,10 @@ const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
             Template
           </Button>
         </Space>
-        
+
         {/* Preview Toggle */}
-        <Button 
-          size="small" 
+        <Button
+          size="small"
           type={showPreview ? "primary" : "default"}
           onClick={() => setShowPreview(!showPreview)}
           title={t('admin.contact.htmlEditor.togglePreview')}
@@ -277,16 +277,16 @@ const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
           {showPreview ? t('admin.contact.htmlEditor.edit') : t('admin.contact.htmlEditor.preview')}
         </Button>
       </div>
-      
+
       {/* Editor or Preview */}
       {showPreview ? (
-        <div style={{ 
-          padding: '20px', 
+        <div style={{
+          padding: '20px',
           minHeight: `${rows * 20}px`,
           backgroundColor: '#f9f9f9',
           borderRadius: '0 0 6px 6px'
         }}>
-          <div style={{ 
+          <div style={{
             backgroundColor: 'white',
             padding: '20px',
             borderRadius: '6px',
@@ -302,7 +302,7 @@ const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
           onChange={handleChange}
           placeholder={placeholder}
           rows={rows}
-          style={{ 
+          style={{
             border: 'none',
             resize: 'vertical',
             fontFamily: 'Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace',
@@ -311,11 +311,11 @@ const HTMLEditor = ({ value, onChange, placeholder, rows = 12 }) => {
           }}
         />
       )}
-      
+
       {/* Status Bar */}
-      <div style={{ 
-        padding: '6px 12px', 
-        borderTop: '1px solid #d9d9d9', 
+      <div style={{
+        padding: '6px 12px',
+        borderTop: '1px solid #d9d9d9',
         backgroundColor: '#fafafa',
         fontSize: '11px',
         color: '#666',
@@ -465,8 +465,8 @@ const Contact = () => {
   });
 
   // Extract data from queries with memoization
-  const contacts = useMemo(() => 
-    contactsData?.contacts?.edges?.map(edge => edge.node) || [], 
+  const contacts = useMemo(() =>
+    contactsData?.contacts?.edges?.map(edge => edge.node) || [],
     [contactsData]
   );
   const emailTemplate = templateData?.emailTemplate;
@@ -484,17 +484,17 @@ const Contact = () => {
     }
 
     const today = new Date().toDateString();
-    const newToday = contacts.filter(contact => 
+    const newToday = contacts.filter(contact =>
       new Date(contact.createdAt).toDateString() === today
     ).length;
-    
-    const pending = contacts.filter(contact => 
-      contact.status === 'new' || contact.status === 'in_progress'
+
+    const pending = contacts.filter(contact =>
+      contact.status === 'NEW' || contact.status === 'READ'
     ).length;
-    
-    const replied = contacts.filter(contact => 
-      contact.status === 'resolved' && 
-      contact.respondedAt && new Date(contact.respondedAt).toDateString() === today
+
+    const replied = contacts.filter(contact =>
+      contact.status === 'RESPONDED' &&
+      new Date(contact.updatedAt).toDateString() === today
     ).length;
 
     return {
@@ -603,7 +603,7 @@ const Contact = () => {
       default: return 'default';
     }
   }, []);
-   
+
   // Memoize columns to prevent infinite re-renders
   const contactColumns = useMemo(() => [
     {
@@ -687,15 +687,13 @@ const Contact = () => {
       title: t('admin.contact.table.actions'),
       key: 'actions',
       render: (_, record) => {
-        const emailTemplateMenu = (
-          <Menu onClick={({ key }) => handleSendThankYou(record.id, key)}>
-            {emailTemplates.map(template => (
-              <Menu.Item key={template.id}>
-                {template.name} - {template.subject}
-              </Menu.Item>
-            ))}
-          </Menu>
-        );
+        const emailTemplateMenu = {
+          onClick: ({ key }) => handleSendThankYou(record.id, key),
+          items: emailTemplates.map(template => ({
+            key: template.id,
+            label: `${template.name} - ${template.subject}`,
+          })),
+        };
 
         return (
           <Space>
@@ -707,7 +705,7 @@ const Contact = () => {
             >
               {t('admin.contact.actions.view')}
             </Button>
-            <Dropdown overlay={emailTemplateMenu} disabled={sendingEmail || emailTemplates.length === 0}>
+            <Dropdown menu={emailTemplateMenu} disabled={sendingEmail || emailTemplates.length === 0}>
               <Button
                 type="default"
                 size="small"
@@ -754,7 +752,7 @@ const Contact = () => {
                 pageSize: 10,
                 showSizeChanger: true,
                 showQuickJumper: true,
-                showTotal: (total, range) => 
+                showTotal: (total, range) =>
                   `${range[0]}-${range[1]} of ${total} contacts`
               }}
             />
@@ -762,7 +760,7 @@ const Contact = () => {
         </Col>
 
         <Col span={24}>
-          <Card 
+          <Card
             title={
               <Space>
                 <span>{t('admin.contact.template.management')}</span>
@@ -865,7 +863,7 @@ const Contact = () => {
                         { max: 50, message: t('admin.contact.template.nameMaxLength') }
                       ]}
                     >
-                      <Input 
+                      <Input
                         placeholder={t('admin.contact.template.namePlaceholder')}
                         size="large"
                       />
@@ -877,7 +875,7 @@ const Contact = () => {
                       name="subject"
                       rules={[{ required: true, message: t('admin.contact.form.emailSubjectRequired') }]}
                     >
-                      <Input 
+                      <Input
                         placeholder="Thank you for contacting us"
                         size="large"
                       />
@@ -902,16 +900,16 @@ const Contact = () => {
 
                 <Form.Item>
                   <Space>
-                    <Button 
-                      type="primary" 
-                      htmlType="submit" 
+                    <Button
+                      type="primary"
+                      htmlType="submit"
                       loading={creatingTemplateLoading}
                       size="large"
                       icon={<SaveOutlined />}
                     >
                       {t('admin.contact.actions.createTemplate')}
                     </Button>
-                    <Button 
+                    <Button
                       onClick={() => {
                         setCreatingTemplate(false);
                         createTemplateForm.resetFields();
@@ -940,7 +938,7 @@ const Contact = () => {
                       name="subject"
                       rules={[{ required: true, message: t('admin.contact.form.emailSubjectRequired') }]}
                     >
-                      <Input 
+                      <Input
                         placeholder="Thank you for contacting us"
                         size="large"
                       />
@@ -985,16 +983,16 @@ const Contact = () => {
 
                 <Form.Item>
                   <Space>
-                    <Button 
-                      type="primary" 
-                      htmlType="submit" 
+                    <Button
+                      type="primary"
+                      htmlType="submit"
                       loading={updatingTemplate}
                       size="large"
                       icon={<SaveOutlined />}
                     >
                       {t('admin.contact.actions.saveTemplate')}
                     </Button>
-                    <Button 
+                    <Button
                       onClick={() => {
                         setEditingTemplate(false);
                         templateForm.resetFields();
@@ -1032,14 +1030,14 @@ const Contact = () => {
                       <Col span={24}>
                         <div>
                           <Text strong>{t('admin.contact.details.contentPreview')}: </Text>
-                          <div style={{ 
-                            background: '#f9f9f9', 
-                            padding: '20px', 
+                          <div style={{
+                            background: '#f9f9f9',
+                            padding: '20px',
                             borderRadius: '6px',
                             marginTop: '8px',
                             border: '1px solid #e0e0e0'
                           }}>
-                            <div style={{ 
+                            <div style={{
                               backgroundColor: 'white',
                               padding: '20px',
                               borderRadius: '6px',
@@ -1059,10 +1057,10 @@ const Contact = () => {
                             <summary style={{ cursor: 'pointer', color: '#1890ff' }}>
                               {t('admin.contact.actions.viewHtmlSource')}
                             </summary>
-                            <div style={{ 
-                              whiteSpace: 'pre-wrap', 
-                              background: '#f5f5f5', 
-                              padding: '12px', 
+                            <div style={{
+                              whiteSpace: 'pre-wrap',
+                              background: '#f5f5f5',
+                              padding: '12px',
                               borderRadius: '6px',
                               marginTop: '8px',
                               maxHeight: '200px',
@@ -1094,7 +1092,7 @@ const Contact = () => {
       {/* Real-time Notifications Panel */}
       <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
         <Col span={24}>
-          <Collapse 
+          <Collapse
             size="large"
             items={[
               {
@@ -1171,8 +1169,8 @@ const Contact = () => {
                                 avatar={
                                   <Avatar icon={
                                     notification.type === 'new_contact' ? <UserAddOutlined /> :
-                                    notification.type === 'status_update' ? <SyncOutlined /> :
-                                    <BellOutlined />
+                                      notification.type === 'status_update' ? <SyncOutlined /> :
+                                        <BellOutlined />
                                   } />
                                 }
                                 title={notification.title}
@@ -1210,24 +1208,22 @@ const Contact = () => {
           <Button key="close" onClick={() => setIsContactModalVisible(false)}>
             {t('admin.contact.actions.close')}
           </Button>,
-          <Dropdown 
-            key="send" 
-            overlay={
-              <Menu onClick={({ key }) => {
+          <Dropdown
+            key="send"
+            menu={{
+              onClick: ({ key }) => {
                 handleSendThankYou(selectedContact.id, key);
                 setIsContactModalVisible(false);
-              }}>
-                {emailTemplates.map(template => (
-                  <Menu.Item key={template.id}>
-                    {t('admin.contact.actions.send')}: {template.subject}
-                  </Menu.Item>
-                ))}
-              </Menu>
-            }
+              },
+              items: emailTemplates.map(template => ({
+                key: template.id,
+                label: `${t('admin.contact.actions.send')}: ${template.subject}`,
+              })),
+            }}
             disabled={sendingEmail || emailTemplates.length === 0}
           >
-            <Button 
-              type="primary" 
+            <Button
+              type="primary"
               icon={<SendOutlined />}
               loading={sendingEmail}
             >
@@ -1262,10 +1258,10 @@ const Contact = () => {
               </Col>
               <Col span={24}>
                 <Text strong>Message:</Text><br />
-                <div style={{ 
-                  whiteSpace: 'pre-wrap', 
-                  background: '#f9f9f9', 
-                  padding: '12px', 
+                <div style={{
+                  whiteSpace: 'pre-wrap',
+                  background: '#f9f9f9',
+                  padding: '12px',
                   borderRadius: '6px',
                   marginTop: '8px'
                 }}>

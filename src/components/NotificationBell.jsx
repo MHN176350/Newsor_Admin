@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { 
-  Button, Badge, Dropdown, Menu, Typography, Divider, Space, List, Avatar, 
+import {
+  Button, Badge, Dropdown, Menu, Typography, Divider, Space, List, Avatar,
   Spin, Empty
 } from 'antd';
-import { 
-  BellOutlined, 
-  CheckOutlined, 
-  EditOutlined, 
+import {
+  BellOutlined,
+  CheckOutlined,
+  EditOutlined,
   DeleteOutlined,
   FileTextOutlined,
   RocketOutlined,
@@ -29,18 +29,19 @@ export default function NotificationBell() {
   const { data: notificationsData, loading, refetch } = useQuery(GET_UNREAD_NOTIFICATIONS, {
     fetchPolicy: 'cache-and-network',
     skip: !isAuthenticated,
+    // pollInterval: 5000, // Poll every 5 seconds
+
   });
 
-  // Real-time subscription for new notifications
-  const { data: subscriptionData } = useSubscription(NOTIFICATION_SUBSCRIPTION, {
+  useSubscription(NOTIFICATION_SUBSCRIPTION, {
     skip: !isAuthenticated,
     onData: useCallback(({ data }) => {
       if (data?.data?.notificationAdded) {
-        // Refetch notifications when new one arrives
         refetch();
       }
     }, [refetch]),
   });
+
 
   const [markAsRead] = useMutation(MARK_NOTIFICATION_AS_READ, {
     refetchQueries: [{ query: GET_UNREAD_NOTIFICATIONS }],
@@ -119,8 +120,8 @@ export default function NotificationBell() {
       key: 'header',
       type: 'group',
       label: (
-        <div style={{ 
-          padding: '12px 16px', 
+        <div style={{
+          padding: '12px 16px',
           borderBottom: '1px solid #f0f0f0',
           display: 'flex',
           justifyContent: 'space-between',
@@ -164,7 +165,7 @@ export default function NotificationBell() {
     ...notifications.map((notification) => ({
       key: notification.id,
       label: (
-        <div style={{ 
+        <div style={{
           cursor: 'pointer',
           padding: '12px 16px',
           borderBottom: '1px solid #f0f0f0'
@@ -202,7 +203,7 @@ export default function NotificationBell() {
             <BellOutlined style={{ fontSize: '18px' }} />
           </Badge>
         }
-        style={{ 
+        style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

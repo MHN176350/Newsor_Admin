@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_CURRENT_USER, LOGIN_USER } from '../graphql/queries';
 import { UPDATE_USER_PROFILE } from '../graphql/mutations'; // Đảm bảo đã có mutation này
-import { message } from 'antd';
+import { message as antdMessage } from 'antd';
 
 const AuthContext = createContext();
 
@@ -24,6 +24,9 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+
+  // Use antd message hook
+  const [messageApi, contextHolder] = antdMessage.useMessage();
 
   // Initialize authentication state from storage
   useEffect(() => {
@@ -75,7 +78,7 @@ const { data: userData, loading: userLoading, error: userError, refetch: refetch
         // Check if user has admin/manager role
         const userRole = data.me.profile?.role?.toLowerCase();
         if (!['admin', 'manager'].includes(userRole)) {
-          message.error('Access denied. Admin or Manager role required.');
+          messageApi.error('Access denied. Admin or Manager role required.');
           logout();
         }
       }
@@ -108,17 +111,17 @@ const { data: userData, loading: userLoading, error: userError, refetch: refetch
         // Check if user has admin/manager role
         const userRole = user.profile?.role?.toLowerCase();
         if (!['admin', 'manager'].includes(userRole)) {
-          message.error('Access denied. Admin or Manager role required.');
+      messageApi.error('Access denied. Admin or Manager role required.');
           logout();
           return;
         }
 
-        message.success('Login successful!');
+        messageApi.success('Login successful!');
       }
     },
     onError: (error) => {
       console.error('Login error:', error);
-      message.error(error.message || 'Login failed. Please check your credentials.');
+      messageApi.error(error.message || 'Login failed. Please check your credentials.');
     }
   });
 
@@ -179,8 +182,11 @@ const { data: userData, loading: userLoading, error: userError, refetch: refetch
   };
 
   return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
+    <>
+      {contextHolder}
+      <AuthContext.Provider value={value}>
+        {children}
+      </AuthContext.Provider>
+    </>
   );
 };

@@ -471,7 +471,7 @@ const Articles = () => {
           </div>
         }
         style={{ marginBottom: '24px', marginTop: '24px' }}
-        bodyStyle={{ padding: '20px' }}
+        styles={{ body: { padding: '20px' } }}
       >
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'stretch' }}>
           <div style={{ flex: 2, minWidth: '320px' }}>
@@ -571,7 +571,7 @@ const Articles = () => {
           boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
           overflow: 'hidden'
         }}
-        bodyStyle={{ padding: 0 }}
+        styles={{ body: { padding: '0' } }}
       >
         <Tabs 
           activeKey={viewMode} 

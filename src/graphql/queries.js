@@ -668,10 +668,6 @@ export const NOTIFICATION_SUBSCRIPTION = gql`
       id
       message
       notificationType
-      createdAt
-      article {
-        slug
-      }
     }
   }
 `;

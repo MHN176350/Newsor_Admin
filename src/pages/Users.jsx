@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  Card, 
-  Table, 
-  Tag, 
-  Button, 
-  Modal, 
-  Form, 
-  Select, 
-  message, 
+import {
+  Card,
+  Table,
+  Tag,
+  Button,
+  Modal,
+  Form,
+  Select,
+  message,
   Space,
   Alert,
   Spin
@@ -17,16 +17,18 @@ import { useQuery, useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import { GET_USERS, CHANGE_USER_ROLE } from '../graphql/queries';
 import { getRoleColor, formatDate, USER_ROLES } from '../utils/helpers';
+import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
 
   // Fetch users
   const { data, loading, error, refetch } = useQuery(GET_USERS);
-  
+
   // Change user role mutation
   const [changeUserRole, { loading: changing }] = useMutation(CHANGE_USER_ROLE, {
     onCompleted: (data) => {
@@ -46,9 +48,9 @@ const Users = () => {
   });
 
   const users = data?.users || [];
-  
+
   // Filter out admin users from the role change table for security
-  const nonAdminUsers = users.filter(user => 
+  const nonAdminUsers = users.filter(user =>
     user.profile?.role?.toLowerCase() !== USER_ROLES.ADMIN.toLowerCase()
   );
 
@@ -79,7 +81,7 @@ const Users = () => {
       render: (text, record) => (
         <div>
           <div style={{ fontWeight: 'bold' }}>
-            {record.firstName || record.lastName 
+            {record.firstName || record.lastName
               ? `${record.firstName} ${record.lastName}`.trim()
               : record.username
             }
@@ -159,9 +161,19 @@ const Users = () => {
 
   return (
     <div>
-      <h1>{t('users.title')}</h1>
-      <p>{t('users.subtitle')}</p>
-
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <div>
+          <h1>{t('users.title')}</h1>
+          <p>{t('users.subtitle')}</p>
+        </div>
+        <Button
+          type="primary"
+          style={{ borderRadius: '8px', fontWeight: 600, minWidth: 160 }}
+          onClick={() => navigate('/register')}
+        >
+          + New User
+        </Button>
+      </div>
       <Card>
         <div style={{ marginBottom: '16px' }}>
           <Space>
@@ -184,7 +196,7 @@ const Users = () => {
             pageSize: 10,
             showSizeChanger: true,
             showQuickJumper: true,
-            showTotal: (total, range) => 
+            showTotal: (total, range) =>
               t('users.pagination.showTotal', {
                 start: range[0],
                 end: range[1],

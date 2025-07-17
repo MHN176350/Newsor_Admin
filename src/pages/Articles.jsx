@@ -442,7 +442,8 @@ const Articles = () => {
   }
 
   return (
-    <div style={{ padding: '0', maxWidth: '100%' }}>
+    <div style={{ padding: '0', maxWidth: '100%', overflowX: 'auto' }}>
+      <div style={{minWidth: '1000px'}}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <div>
           <Title level={2} style={{ margin: 0, color: '#1a1a1a' }}>
@@ -699,6 +700,7 @@ const Articles = () => {
           </Form.Item>
         </Form>
       </Modal>
+    </div>
     </div>
   );
 };

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { 
-  Card, 
-  Table, 
-  Button, 
-  Modal, 
-  Form, 
-  Input, 
-  message, 
+import {
+  Card,
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  message,
   Space,
   Alert,
   Popconfirm,
@@ -18,9 +18,9 @@ import {
   Avatar,
   Typography
 } from 'antd';
-import { 
-  EditOutlined, 
-  DeleteOutlined, 
+import {
+  EditOutlined,
+  DeleteOutlined,
   PlusOutlined,
   TagOutlined,
   CaretRightOutlined,
@@ -29,10 +29,10 @@ import {
   UserOutlined
 } from '@ant-design/icons';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
-import { 
-  GET_ADMIN_TAGS, 
-  CREATE_TAG, 
-  UPDATE_TAG, 
+import {
+  GET_ADMIN_TAGS,
+  CREATE_TAG,
+  UPDATE_TAG,
   DELETE_TAG,
   TOGGLE_TAG,
   GET_ARTICLES_BY_TAG
@@ -176,7 +176,7 @@ const Tags = () => {
   const handleExpandRow = async (record) => {
     const tagId = record.id;
     const newExpandedRows = new Set(expandedRows);
-    
+
     if (expandedRows.has(tagId)) {
       // Collapse row
       newExpandedRows.delete(tagId);
@@ -194,21 +194,21 @@ const Tags = () => {
         }
       }
     }
-    
+
     setExpandedRows(newExpandedRows);
   };
 
   const renderArticlesList = (tagId) => {
     const articles = articlesData?.articlesByTag || [];
-    
+
     if (articlesLoading) {
       return <div style={{ padding: '16px', textAlign: 'center' }}>Loading articles...</div>;
     }
-    
+
     if (articles.length === 0) {
       return <div style={{ padding: '16px', textAlign: 'center' }}>No articles found</div>;
     }
-    
+
     return (
       <div style={{ padding: '16px', backgroundColor: '#fafafa' }}>
         <Text strong style={{ marginBottom: '12px', display: 'block' }}>
@@ -222,15 +222,15 @@ const Tags = () => {
               <List.Item.Meta
                 avatar={
                   article.featuredImageUrl ? (
-                    <Avatar 
-                      src={article.featuredImageUrl} 
-                      shape="square" 
+                    <Avatar
+                      src={article.featuredImageUrl}
+                      shape="square"
                       size={40}
                     />
                   ) : (
-                    <Avatar 
-                      icon={<EyeOutlined />} 
-                      shape="square" 
+                    <Avatar
+                      icon={<EyeOutlined />}
+                      shape="square"
                       size={40}
                       style={{ backgroundColor: '#f0f0f0', color: '#999' }}
                     />
@@ -254,8 +254,8 @@ const Tags = () => {
                       <Space size={4}>
                         <UserOutlined style={{ color: '#999' }} />
                         <Text type="secondary" style={{ fontSize: '12px' }}>
-                          {article.author?.firstName && article.author?.lastName 
-                            ? `${article.author.firstName} ${article.author.lastName}` 
+                          {article.author?.firstName && article.author?.lastName
+                            ? `${article.author.firstName} ${article.author.lastName}`
                             : article.author?.username || 'Unknown'}
                         </Text>
                       </Space>
@@ -274,8 +274,8 @@ const Tags = () => {
                     </Space>
                     {article.excerpt && (
                       <Text type="secondary" style={{ fontSize: '12px' }}>
-                        {article.excerpt.length > 100 
-                          ? article.excerpt.substring(0, 100) + '...' 
+                        {article.excerpt.length > 100
+                          ? article.excerpt.substring(0, 100) + '...'
                           : article.excerpt}
                       </Text>
                     )}
@@ -297,19 +297,19 @@ const Tags = () => {
       render: (_, record) => {
         const hasArticles = record.articleCount > 0;
         const isExpanded = expandedRows.has(record.id);
-        
+
         return (
           <Button
             type="text"
             size="small"
             disabled={!hasArticles}
             icon={
-              <CaretRightOutlined 
-                style={{ 
+              <CaretRightOutlined
+                style={{
                   transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
                   transition: 'transform 0.2s',
                   color: hasArticles ? '#1890ff' : '#d9d9d9'
-                }} 
+                }}
               />
             }
             onClick={() => handleExpandRow(record)}
@@ -403,91 +403,93 @@ const Tags = () => {
   }
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <div>
-          <h1>{t('pages.tags.title')}</h1>
-          <p>{t('pages.tags.subtitle')}</p>
-        </div>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={handleCreate}
-        >
-          {t('pages.tags.createButton')}
-        </Button>
-      </div>
-
-      <Card>
-        <Table
-          columns={columns}
-          dataSource={tags}
-          rowKey="id"
-          loading={loading}
-          pagination={{
-            pageSize: 10,
-            showSizeChanger: true,
-            showQuickJumper: true,
-            showTotal: (total, range) => 
-              t('pages.tags.table.pagination', { start: range[0], end: range[1], total })
-          }}
-          expandable={{
-            expandedRowRender: (record) => renderArticlesList(record.id),
-            expandedRowKeys: Array.from(expandedRows),
-            onExpand: (expanded, record) => {
-              // This is handled by our custom expand button
-            },
-            showExpandColumn: false, // We have our own expand column
-            expandRowByClick: false
-          }}
-        />
-      </Card>
-
-      {/* Create/Edit Modal */}
-      <Modal
-        title={modalType === 'create' ? t('pages.tags.modal.createTitle') : t('pages.tags.modal.editTitle')}
-        open={isModalVisible}
-        onCancel={() => {
-          setIsModalVisible(false);
-          setSelectedTag(null);
-          form.resetFields();
-        }}
-        footer={null}
-      >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
-        >
-          <Form.Item
-            label={t('pages.tags.form.nameLabel')}
-            name="name"
-            rules={[
-              { required: true, message: t('pages.tags.form.nameRequired') },
-              { min: 2, message: t('pages.tags.form.nameMinLength') },
-              { max: 30, message: t('pages.tags.form.nameMaxLength') },
-              { pattern: /^[a-zA-Z0-9\s-]+$/, message: t('pages.tags.form.namePattern') }
-            ]}
+    <div style={{ overflowX: 'auto' }}>
+      <div style={{ minWidth: '800px' }}> 
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div>
+            <h1>{t('pages.tags.title')}</h1>
+            <p>{t('pages.tags.subtitle')}</p>
+          </div>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={handleCreate}
           >
-            <Input placeholder={t('pages.tags.form.namePlaceholder')} />
-          </Form.Item>
+            {t('pages.tags.createButton')}
+          </Button>
+        </div>
 
-          <Form.Item>
-            <Space>
-              <Button 
-                type="primary" 
-                htmlType="submit" 
-                loading={creating || updating}
-              >
-                {modalType === 'create' ? t('pages.tags.form.createButton') : t('pages.tags.form.updateButton')}
-              </Button>
-              <Button onClick={() => setIsModalVisible(false)}>
-                {t('common.cancel')}
-              </Button>
-            </Space>
-          </Form.Item>
-        </Form>
-      </Modal>
+        <Card>
+          <Table
+            columns={columns}
+            dataSource={tags}
+            rowKey="id"
+            loading={loading}
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) =>
+                t('pages.tags.table.pagination', { start: range[0], end: range[1], total })
+            }}
+            expandable={{
+              expandedRowRender: (record) => renderArticlesList(record.id),
+              expandedRowKeys: Array.from(expandedRows),
+              onExpand: (expanded, record) => {
+                // This is handled by our custom expand button
+              },
+              showExpandColumn: false, // We have our own expand column
+              expandRowByClick: false
+            }}
+          />
+        </Card>
+
+        {/* Create/Edit Modal */}
+        <Modal
+          title={modalType === 'create' ? t('pages.tags.modal.createTitle') : t('pages.tags.modal.editTitle')}
+          open={isModalVisible}
+          onCancel={() => {
+            setIsModalVisible(false);
+            setSelectedTag(null);
+            form.resetFields();
+          }}
+          footer={null}
+        >
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleSubmit}
+          >
+            <Form.Item
+              label={t('pages.tags.form.nameLabel')}
+              name="name"
+              rules={[
+                { required: true, message: t('pages.tags.form.nameRequired') },
+                { min: 2, message: t('pages.tags.form.nameMinLength') },
+                { max: 30, message: t('pages.tags.form.nameMaxLength') },
+                { pattern: /^[a-zA-Z0-9\s-]+$/, message: t('pages.tags.form.namePattern') }
+              ]}
+            >
+              <Input placeholder={t('pages.tags.form.namePlaceholder')} />
+            </Form.Item>
+
+            <Form.Item>
+              <Space>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={creating || updating}
+                >
+                  {modalType === 'create' ? t('pages.tags.form.createButton') : t('pages.tags.form.updateButton')}
+                </Button>
+                <Button onClick={() => setIsModalVisible(false)}>
+                  {t('common.cancel')}
+                </Button>
+              </Space>
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
     </div>
   );
 };

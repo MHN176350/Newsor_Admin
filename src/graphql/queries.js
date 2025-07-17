@@ -359,13 +359,6 @@ export const UPDATE_NEWS_STATUS = gql`
   mutation UpdateNewsStatus($id: Int!, $status: String!) {
     updateNewsStatus(id: $id, status: $status) {
       success
-      news {
-        id
-        title
-        status
-        publishedAt
-        updatedAt
-      }
       errors
     }
   }

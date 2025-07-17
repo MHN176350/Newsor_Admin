@@ -69,7 +69,7 @@ export default function CreateArticle() {
     onCompleted: (data) => {
       if (data?.createNews?.success) {
         // Navigate after successful creation
-        navigate('/my-articles', { 
+        navigate('/articles', { 
           state: { 
             message: t('createArticle.successCreate') 
           }
@@ -81,7 +81,7 @@ export default function CreateArticle() {
     onCompleted: (data) => {
       if (data?.updateNews?.success) {
         // Navigate after successful update
-        navigate('/my-articles', { 
+        navigate('/articles', { 
           state: { 
             message: t('createArticle.successUpdate') 
           }
@@ -156,7 +156,7 @@ export default function CreateArticle() {
           <Typography.Text style={{ display: 'block', marginBottom: 24, color: '#666' }}>
             {t('createArticle.articleNotFoundMessage')}
           </Typography.Text>
-          <Button onClick={() => navigate('/my-articles')}>
+          <Button onClick={() => navigate('/articles')}>
             {t('createArticle.backToMyArticles')}
           </Button>
         </div>
@@ -173,7 +173,7 @@ export default function CreateArticle() {
           <Typography.Text style={{ display: 'block', marginBottom: 24, color: '#666' }}>
             {t('createArticle.canOnlyEditOwn')}
           </Typography.Text>
-          <Button onClick={() => navigate('/my-articles')}>
+          <Button onClick={() => navigate('/articles')}>
             {t('createArticle.backToMyArticles')}
           </Button>
         </div>
@@ -193,7 +193,7 @@ export default function CreateArticle() {
           <Typography.Text style={{ display: 'block', marginBottom: 24, color: '#666' }}>
             {t('createArticle.currentStatus')}: {article.status}
           </Typography.Text>
-          <Button onClick={() => navigate('/my-articles')}>
+          <Button onClick={() => navigate('/articles')}>
             {t('createArticle.backToMyArticles')}
           </Button>
         </div>

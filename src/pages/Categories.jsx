@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
-import { 
-  Card, 
-  Table, 
-  Button, 
-  Modal, 
-  Form, 
-  Input, 
-  message, 
+import {
+  Card,
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  message,
   Space,
   Alert,
   Popconfirm
 } from 'antd';
-import { 
-  EditOutlined, 
-  DeleteOutlined, 
+import {
+  EditOutlined,
+  DeleteOutlined,
   PlusOutlined,
-  FolderOutlined 
+  FolderOutlined
 } from '@ant-design/icons';
 import { useQuery, useMutation } from '@apollo/client';
-import { 
-  GET_CATEGORIES, 
-  CREATE_CATEGORY, 
-  UPDATE_CATEGORY, 
-  DELETE_CATEGORY 
+import {
+  GET_CATEGORIES,
+  CREATE_CATEGORY,
+  UPDATE_CATEGORY,
+  DELETE_CATEGORY
 } from '../graphql/queries';
 import { formatDate } from '../utils/helpers';
 import { useTranslation } from 'react-i18next';
@@ -208,98 +208,100 @@ const Categories = () => {
   }
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <div>
-          <h1>{t('pages.categories.title')}</h1>
-          <p>{t('pages.categories.subtitle')}</p>
+    <div style={{ overflow: 'auto', maxWidth: '100%' }}>
+      <div style={{ minWidth: '800px'}}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div>
+            <h1>{t('pages.categories.title')}</h1>
+            <p>{t('pages.categories.subtitle')}</p>
+          </div>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={handleCreate}
+          >
+            {t('pages.categories.createCategory')}
+          </Button>
         </div>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={handleCreate}
-        >
-          {t('pages.categories.createCategory')}
-        </Button>
-      </div>
 
-      <Card>
-        <Table
-          columns={columns}
-          dataSource={categories}
-          rowKey="id"
-          loading={loading}
-          pagination={{
-            pageSize: 10,
-            showSizeChanger: true,
-            showQuickJumper: true,
-            showTotal: (total, range) => 
-              t('pages.categories.pagination.showTotal', { 
-                range0: range[0], 
-                range1: range[1], 
-                total 
-              })
+        <Card>
+          <Table
+            columns={columns}
+            dataSource={categories}
+            rowKey="id"
+            loading={loading}
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) =>
+                t('pages.categories.pagination.showTotal', {
+                  range0: range[0],
+                  range1: range[1],
+                  total
+                })
+            }}
+          />
+        </Card>
+
+        {/* Create/Edit Modal */}
+        <Modal
+          title={modalType === 'create' ? t('pages.categories.createCategory') : t('pages.categories.editCategory')}
+          open={isModalVisible}
+          onCancel={() => {
+            setIsModalVisible(false);
+            setSelectedCategory(null);
+            form.resetFields();
           }}
-        />
-      </Card>
-
-      {/* Create/Edit Modal */}
-      <Modal
-        title={modalType === 'create' ? t('pages.categories.createCategory') : t('pages.categories.editCategory')}
-        open={isModalVisible}
-        onCancel={() => {
-          setIsModalVisible(false);
-          setSelectedCategory(null);
-          form.resetFields();
-        }}
-        footer={null}
-      >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
+          footer={null}
         >
-          <Form.Item
-            label={t('pages.categories.form.nameLabel')}
-            name="name"
-            rules={[
-              { required: true, message: t('pages.categories.form.nameRequired') },
-              { min: 2, message: t('pages.categories.form.nameMinLength') },
-              { max: 50, message: t('pages.categories.form.nameMaxLength') }
-            ]}
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleSubmit}
           >
-            <Input placeholder={t('pages.categories.form.namePlaceholder')} />
-          </Form.Item>
+            <Form.Item
+              label={t('pages.categories.form.nameLabel')}
+              name="name"
+              rules={[
+                { required: true, message: t('pages.categories.form.nameRequired') },
+                { min: 2, message: t('pages.categories.form.nameMinLength') },
+                { max: 50, message: t('pages.categories.form.nameMaxLength') }
+              ]}
+            >
+              <Input placeholder={t('pages.categories.form.namePlaceholder')} />
+            </Form.Item>
 
-          <Form.Item
-            label={t('pages.categories.form.descriptionLabel')}
-            name="description"
-            rules={[
-              { max: 200, message: t('pages.categories.form.descriptionMaxLength') }
-            ]}
-          >
-            <Input.TextArea 
-              placeholder={t('pages.categories.form.descriptionPlaceholder')}
-              rows={3}
-            />
-          </Form.Item>
+            <Form.Item
+              label={t('pages.categories.form.descriptionLabel')}
+              name="description"
+              rules={[
+                { max: 200, message: t('pages.categories.form.descriptionMaxLength') }
+              ]}
+            >
+              <Input.TextArea
+                placeholder={t('pages.categories.form.descriptionPlaceholder')}
+                rows={3}
+              />
+            </Form.Item>
 
-          <Form.Item>
-            <Space>
-              <Button 
-                type="primary" 
-                htmlType="submit" 
-                loading={creating || updating}
-              >
-                {modalType === 'create' ? t('pages.categories.form.create') : t('pages.categories.form.update')}
-              </Button>
-              <Button onClick={() => setIsModalVisible(false)}>
-                {t('pages.categories.form.cancel')}
-              </Button>
-            </Space>
-          </Form.Item>
-        </Form>
-      </Modal>
+            <Form.Item>
+              <Space>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={creating || updating}
+                >
+                  {modalType === 'create' ? t('pages.categories.form.create') : t('pages.categories.form.update')}
+                </Button>
+                <Button onClick={() => setIsModalVisible(false)}>
+                  {t('pages.categories.form.cancel')}
+                </Button>
+              </Space>
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
     </div>
   );
 };

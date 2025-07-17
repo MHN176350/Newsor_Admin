@@ -245,3 +245,30 @@ export const UPDATE_USER_PROFILE = gql`
     }
   }
 `;
+export const CREATE_USER = gql`
+  mutation CreateUser(
+    $username: String!
+    $email: String!
+    $password: String!
+    $firstName: String
+    $lastName: String
+  ) {
+    createUser(
+      username: $username
+      email: $email
+      password: $password
+      firstName: $firstName
+      lastName: $lastName
+    ) {
+      user {
+        id
+        username
+        email
+        firstName
+        lastName
+      }
+      success
+      errors
+    }
+  }
+`;

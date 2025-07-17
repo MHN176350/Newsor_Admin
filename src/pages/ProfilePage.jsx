@@ -66,7 +66,7 @@ export default function ProfilePage() {
 
             setFormData({
                 firstName: user.firstName || '',
-                lastName: user.lastName || '', 
+                lastName: user.lastName || '',
                 email: user.email || '',
                 bio: user.profile.bio || '',
                 phone: user.profile.phone || '',
@@ -361,10 +361,12 @@ export default function ProfilePage() {
                                                 width: '100%',
                                                 padding: '12px',
                                                 borderRadius: '8px',
-                                                border: '1px solid var(--joy-palette-divider)',
+                                                border: '1px solid #ccc',
                                                 fontFamily: 'inherit',
-                                                fontSize: '14px',
+                                                fontSize: 'inherit',
                                                 resize: 'vertical',
+                                                color: '#aaa',
+                                                opacity: 1,
                                                 backgroundColor: editing ? 'transparent' : 'var(--joy-palette-background-level1)',
                                             }}
                                         />

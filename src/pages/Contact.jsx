@@ -733,7 +733,7 @@ const Contact = () => {
   }
 
   return (
-    <div>
+    <div style={{ overflowX: 'auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <div>
           <Title level={2}>{t('admin.contact.title')}</Title>
@@ -741,7 +741,7 @@ const Contact = () => {
         </div>
       </div>
 
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]} style={{ minWidth: '1000px' }}>
         <Col span={24}>
           <Card title={t('admin.contact.table.title')} loading={contactsLoading}>
             <Table

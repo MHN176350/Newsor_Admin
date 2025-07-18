@@ -141,6 +141,7 @@ const { data: userData, loading: userLoading, error: userError, refetch: refetch
 
   const logout = () => {
     localStorage.removeItem(TOKEN_KEY);
+    localStorage.clear();
     // Only clear user data and remember preference if user didn't want to be remembered
     if (!rememberMe) {
       clearStoredData();

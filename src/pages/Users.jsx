@@ -170,7 +170,8 @@ const Users = () => {
   }
 
   return (
-    <div>
+    <div style={{overflow: 'auto', maxWidth: '100%'}}>
+<div style={{ minWidth: '1000px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <div>
           <h1>{t('users.title')}</h1>
@@ -265,6 +266,7 @@ const Users = () => {
           </Form.Item>
         </Form>
       </Modal>
+    </div>
     </div>
   );
 };

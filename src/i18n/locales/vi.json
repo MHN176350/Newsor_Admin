@@ -404,7 +404,9 @@
       "deleteSuccess": "Xóa bài viết thành công!",
       "deleteConfirm": "Bạn có chắc chắn muốn xóa bài viết này?",
       "publishSuccess": "Xuất bản bài viết thành công!",
-      "archiveSuccess": "Lưu trữ bài viết thành công!"
+      "archiveSuccess": "Lưu trữ bài viết thành công!",
+      "categoryTree": "Cây Danh mục",
+      "tableView": "Xem Bảng"
     },
     "createTitle": "Tạo bài viết mới",
     "editTitle": "Chỉnh sửa bài viết",

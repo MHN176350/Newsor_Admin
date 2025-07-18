@@ -9,7 +9,7 @@ export const ROLE_PERMISSIONS = {
     actions: ['create', 'read', 'update', 'delete'],
   },
   manager: {
-    pages: ['/dashboard', '/articles', '/categories', '/tags'],
+    pages: ['/dashboard', '/articles', '/categories', '/tags', '/contact'],
     actions: ['create', 'read', 'update', 'delete'],
   },
   writer: {

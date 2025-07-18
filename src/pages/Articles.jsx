@@ -589,7 +589,7 @@ const Articles = () => {
               label: (
                 <span style={{ fontSize: '14px', fontWeight: '500' }}>
                   <FolderOutlined />
-                  {t('articles.categoryTree')}
+                  {t('articles.messages.categoryTree')}
                 </span>
               ),
               children: (
@@ -619,7 +619,7 @@ const Articles = () => {
               label: (
                 <span style={{ fontSize: '14px', fontWeight: '500' }}>
                   <FileTextOutlined />
-                  {t('articles.tableView')}
+                  {t('articles.messages.tableView')}
                 </span>
               ),
               children: (

@@ -34,43 +34,57 @@ const Layout = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const menuItems = [
+  // Define all available menu items
+  const allMenuItems = [
     {
       key: '/dashboard',
       icon: <DashboardOutlined />,
       label: t('navigation.dashboard'),
+      roles: ['admin', 'manager'], // Both admin and manager can access
     },
     {
       key: '/articles',
       icon: <FileTextOutlined />,
       label: t('navigation.articles'),
+      roles: ['admin', 'manager'], // Both admin and manager can access
     },
     {
       key: '/categories',
       icon: <TagsOutlined />,
       label: t('navigation.categories'),
+      roles: ['admin', 'manager'], // Both admin and manager can access
     },
     {
       key: '/tags',
       icon: <TagOutlined />,
       label: t('navigation.tags'),
+      roles: ['admin', 'manager'], // Both admin and manager can access
     },
     {
       key: '/users',
       icon: <UserOutlined />,
       label: t('navigation.users'),
+      roles: ['admin'], // Only admin can access
     },
     {
       key: '/contact',
       icon: <ContactsOutlined />,
       label: t('navigation.contact'),
+      roles: ['admin', 'manager'], // Both admin and manager can access
     },
     {
       key: '/settings',
       icon: <SettingOutlined />,
       label: t('navigation.settings'),
+      roles: ['admin'], // Only admin can access
     },
   ];
+
+  // Filter menu items based on user role
+  const menuItems = allMenuItems.filter(item => {
+    const userRole = user?.profile?.role?.toLowerCase();
+    return item.roles.includes(userRole);
+  });
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -189,7 +203,7 @@ const Layout = () => {
                 </Button>
               </Dropdown>
 
-              {user?.profile?.role && ['admin'].includes(user.profile.role.toLowerCase()) && (
+              {user?.profile?.role && ['admin', 'manager'].includes(user.profile.role.toLowerCase()) && (
 
                 <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                   <NotificationBell />

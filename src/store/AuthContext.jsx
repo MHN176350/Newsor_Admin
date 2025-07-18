@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import React, { createContext, useContext, useState, useEffect, use } from 'react';
+import { useQuery, useMutation, useApolloClient } from '@apollo/client';
 import { GET_CURRENT_USER, LOGIN_USER } from '../graphql/queries';
 import { UPDATE_USER_PROFILE } from '../graphql/mutations'; // Đảm bảo đã có mutation này
 import { message as antdMessage } from 'antd';
@@ -24,6 +24,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const client = useApolloClient();
 
   // Use antd message hook
   const [messageApi, contextHolder] = antdMessage.useMessage();
@@ -92,7 +93,7 @@ const { data: userData, loading: userLoading, error: userError, refetch: refetch
   });
 
   const [loginMutation] = useMutation(LOGIN_USER, {
-    onCompleted: (data) => {
+    onCompleted: async (data) => {
       if (data.tokenAuth.token) {
         const { token, user } = data.tokenAuth;
         localStorage.setItem(TOKEN_KEY, token);
@@ -106,6 +107,13 @@ const { data: userData, loading: userLoading, error: userError, refetch: refetch
         } else {
           // If not remembering, clear any stored data
           clearStoredData();
+        }
+
+        // Force refetch user data to ensure fresh data in cache
+        try {
+          await refetchUser();
+        } catch (error) {
+          console.error('Error refetching user data:', error);
         }
 
         // Check if user has admin/manager role
@@ -139,16 +147,27 @@ const { data: userData, loading: userLoading, error: userError, refetch: refetch
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    // Clear localStorage
     localStorage.removeItem(TOKEN_KEY);
-    localStorage.clear();
-    // Only clear user data and remember preference if user didn't want to be remembered
-    if (!rememberMe) {
-      clearStoredData();
+    localStorage.removeItem(USER_DATA_KEY);
+    
+
+    // Clear Apollo Client cache to prevent stale user data
+    try {
+      await apolloClient.clearStore();
+    } catch (error) {
+      console.error('Error clearing Apollo cache:', error);
     }
+    if(client){
+      client.resetStore();
+    }
+    
+    // Reset state
     setUser(null);
     setIsAuthenticated(false);
     setLoading(false);
+    
   };
 
 

@@ -2,6 +2,7 @@
   "common": {
     "admin": "Admin",
     "back": "Back",
+    "goBack": "Go Back",
     "cancel": "Cancel",
     "save": "Save",
     "edit": "Edit",
@@ -165,7 +166,8 @@
       "reader": "Reader",
       "writer": "Writer",
       "manager": "Manager",
-      "admin": "Admin"
+      "admin": "Admin",
+      "unknown": "Unknown"
     },
     "modal": {
       "changeRoleTitle": "Change Role for",

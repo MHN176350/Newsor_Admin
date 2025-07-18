@@ -2,6 +2,7 @@
   "common": {
     "admin": "Quản trị",
     "back": "Quay lại",
+    "goBack": "Quay Lại",
     "cancel": "Hủy",
     "save": "Lưu",
     "edit": "Chỉnh sửa",
@@ -165,7 +166,8 @@
       "reader": "Độc giả",
       "writer": "Tác giả",
       "manager": "Quản lý",
-      "admin": "Quản trị viên"
+      "admin": "Quản trị viên",
+      "unknown": "Không xác định"
     },
     "modal": {
       "changeRoleTitle": "Thay đổi Vai trò cho",

@@ -18,11 +18,14 @@ import { useTranslation } from 'react-i18next';
 import { GET_USERS, CHANGE_USER_ROLE } from '../graphql/queries';
 import { getRoleColor, formatDate, USER_ROLES } from '../utils/helpers';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../store/AuthContext';
+import { canManageUsers } from '../utils/permissions';
 
 const Users = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
@@ -138,14 +141,16 @@ const Users = () => {
       key: 'actions',
       render: (_, record) => (
         <Space>
-          <Button
-            type="primary"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => handleRoleChange(record)}
-          >
-            {t('users.actions.changeRole')}
-          </Button>
+          {canManageUsers(user?.profile?.role) && (
+            <Button
+              type="primary"
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => handleRoleChange(record)}
+            >
+              {t('users.actions.changeRole')}
+            </Button>
+          )}
         </Space>
       )
     }
@@ -177,13 +182,15 @@ const Users = () => {
           <h1>{t('users.title')}</h1>
           <p>{t('users.subtitle')}</p>
         </div>
-        <Button
-          type="primary"
-          style={{ borderRadius: '8px', fontWeight: 600, minWidth: 160 }}
-          onClick={() => navigate('/register')}
-        >
-          + {t('users.newUser')}
-        </Button>
+        {canManageUsers(user?.profile?.role) && (
+          <Button
+            type="primary"
+            style={{ borderRadius: '8px', fontWeight: 600, minWidth: 160 }}
+            onClick={() => navigate('/register')}
+          >
+            + {t('users.newUser')}
+          </Button>
+        )}
       </div>
       <Card>
         <div style={{ marginBottom: '16px' }}>

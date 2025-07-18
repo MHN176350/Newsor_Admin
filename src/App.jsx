@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import apolloClient from './graphql/client';
 import { AuthProvider } from './store/AuthContext';
 import Layout from './components/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
@@ -57,15 +58,28 @@ function App() {
                     <Route path="articles" element={<Articles />} />
                     <Route path="categories" element={<Categories />} />
                     <Route path="tags" element={<Tags />} />
-                    <Route path="users" element={<Users />} />
-                    <Route path="contact" element={<Contact />} />
+                    <Route path='contact' element={<Contact />} />
                     <Route path="media" element={<Contact />} />
-                    <Route path="settings" element={<Settings />} />
+                    <Route path="users" element={
+                      <ProtectedRoute requiredPermission="/users">
+                        <Users />
+                      </ProtectedRoute>
+                    } />
+                    
+                    <Route path="settings" element={
+                      <ProtectedRoute requiredPermission="/settings">
+                        <Settings />
+                      </ProtectedRoute>
+                    } />
                     <Route path="profile" element={<ProfilePage />} />
                     {/* Nested route for creating an article */}
                     <Route path="create-article" element={<CreateArticle />} />
-                    {/* Nested route for creating a user */}
-                    <Route path="register" element={<RegisterModal />} />
+                    {/* Nested route for creating a user - admin only */}
+                    <Route path="register" element={
+                      <ProtectedRoute requiredPermission="/users">
+                        <RegisterModal />
+                      </ProtectedRoute>
+                    } />
                   </Route>
                 </Routes>
               </div>

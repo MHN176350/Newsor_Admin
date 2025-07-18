@@ -132,7 +132,7 @@ const ForgotPassword = () => {
                         type="text" 
                         icon={<ArrowLeftOutlined />}
                         className="back-to-login"
-                        block
+                        blockd
                       >
                         Back to Login
                       </Button>

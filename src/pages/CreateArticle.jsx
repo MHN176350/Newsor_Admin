@@ -250,13 +250,13 @@ export default function CreateArticle() {
 
   // Determine form mode and modal title
   let formMode = 'create';
-  let modalTitle = t('createArticle.createTitle');
+  let modalTitle = t('pages.createArticle.createTitle');
   if (isEditing) {
     formMode = 'edit';
-    modalTitle = t('createArticle.editTitle');
+    modalTitle = t('pages.createArticle.editTitle');
   } else if (isDuplicating) {
     formMode = 'duplicate';
-    modalTitle = t('createArticle.duplicateTitle');
+    modalTitle = t('pages.createArticle.duplicateTitle');
   }
 
   return (

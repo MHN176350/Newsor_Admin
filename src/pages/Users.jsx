@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   Table,
@@ -17,14 +17,24 @@ import { useQuery, useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import { GET_USERS, CHANGE_USER_ROLE } from '../graphql/queries';
 import { getRoleColor, formatDate, USER_ROLES } from '../utils/helpers';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Users = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
+
+  // Show success message if coming from register
+  useEffect(() => {
+    if (location.state?.message) {
+      message.success(location.state.message);
+      // Clear the state so the message doesn't show again on refresh
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.state, navigate, location.pathname]);
 
   // Fetch users
   const { data, loading, error, refetch } = useQuery(GET_USERS);
@@ -171,7 +181,7 @@ const Users = () => {
           style={{ borderRadius: '8px', fontWeight: 600, minWidth: 160 }}
           onClick={() => navigate('/register')}
         >
-          + New User
+          + {t('users.newUser')}
         </Button>
       </div>
       <Card>

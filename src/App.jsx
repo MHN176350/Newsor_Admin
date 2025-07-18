@@ -18,7 +18,7 @@ import Contact from './pages/Contact';
 import Settings from './pages/Settings';
 import ProfilePage from './pages/ProfilePage';
 import CreateArticle from './pages/CreateArticle';
-import RegisterPage from './components/RegisterPage';
+import RegisterModal from './components/RegisterModal';
 import './i18n';
 import './App.css';
 import './styles/admin-theme.css';
@@ -64,7 +64,8 @@ function App() {
                     <Route path="profile" element={<ProfilePage />} />
                     {/* Nested route for creating an article */}
                     <Route path="create-article" element={<CreateArticle />} />
-                    <Route path="register" element={<RegisterPage />} />
+                    {/* Nested route for creating a user */}
+                    <Route path="register" element={<RegisterModal />} />
                   </Route>
                 </Routes>
               </div>

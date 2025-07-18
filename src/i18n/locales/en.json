@@ -48,7 +48,8 @@
     "items": "items",
     "showing": "Showing",
     "to": "to",
-    "entries": "entries"
+    "entries": "entries",
+    "reader": "Reader"
   },
   "auth": {
     "login": {
@@ -121,7 +122,87 @@
       "passwordsMismatch": "The new passwords do not match.",
       "passwordMinLength": "The new password must be at least 8 characters long.",
       "tryAgain": "Please try again."
+    },
+    "register": {
+      "title": "Create New User",
+      "subtitle": "Add a new user to the system",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "username": "Username",
+      "email": "Email Address",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "createAccount": "Create Account",
+      "creatingAccount": "Creating account...",
+      "success": "Account created successfully!",
+      "redirecting": "Redirecting to login...",
+      "failed": "Failed to create account",
+      "passwordMismatch": "Passwords do not match",
+      "cancel": "Cancel",
+      "createUser": "Create User"
     }
+  },
+  "users": {
+    "title": "User Management",
+    "subtitle": "Manage system users and their roles",
+    "newUser": "New User",
+    "table": {
+      "user": "User",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "joinDate": "Join Date",
+      "actions": "Actions",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "actions": {
+      "changeRole": "Change Role",
+      "updateRole": "Update Role",
+      "cancel": "Cancel"
+    },
+    "roles": {
+      "reader": "Reader",
+      "writer": "Writer",
+      "manager": "Manager",
+      "admin": "Admin"
+    },
+    "modal": {
+      "changeRoleTitle": "Change Role for",
+      "currentRole": "Current Role",
+      "newRole": "New Role"
+    },
+    "messages": {
+      "createSuccess": "User created successfully!",
+      "roleUpdateSuccess": "User role updated successfully",
+      "roleUpdateFailed": "Failed to update user role",
+      "roleUpdateError": "Error updating user role",
+      "selectRole": "Please select a role",
+      "loadingError": "Error loading users"
+    },
+    "info": {
+      "totalUsers": "Total Users",
+      "manageableUsers": "Manageable Users",
+      "adminSecurityNote": "Admin users are hidden from role management for security"
+    },
+    "pagination": {
+      "showTotal": "Showing {{start}} to {{end}} of {{total}} entries"
+    },
+    "register": {
+      "subtitle": "Add a new user to the system",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "username": "Username",
+      "email": "Email Address",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "createUser": "Create User",
+      "creatingAccount": "Creating account...",
+      "cancel": "Cancel",
+      "passwordMismatch": "Passwords do not match",
+      "failed": "Failed to create account"
+    },
+    "email": "Email"
   },
   "admin": {
     "title": "Admin Dashboard",
@@ -299,77 +380,9 @@
       }
     }
   },
-  "users": {
-    "title": "User Management",
-    "subtitle": "Manage platform users and their roles",
-    "createUser": "Create User",
-    "editUser": "Edit User",
-    "deleteUser": "Delete User",
-    "userDetails": "User Details",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "username": "Username",
-    "email": "Email",
-    "role": "Role",
-    "isActive": "Active",
-    "lastLogin": "Last Login",
-    "dateJoined": "Date Joined",
-    "profile": "Profile",
-    "permissions": "Permissions",
-    "changePassword": "Change Password",
-    "resetPassword": "Reset Password",
-    "roles": {
-      "admin": "Admin",
-      "manager": "Manager",
-      "writer": "Writer",
-      "reader": "Reader"
-    },
-    "messages": {
-      "createSuccess": "User created successfully!",
-      "updateSuccess": "User updated successfully!",
-      "deleteSuccess": "User deleted successfully!",
-      "deleteConfirm": "Are you sure you want to delete this user?",
-      "resetPasswordSuccess": "Password reset successfully!",
-      "resetPasswordConfirm": "Are you sure you want to reset this user's password?",
-      "roleUpdateSuccess": "User role updated successfully!",
-      "roleUpdateFailed": "Failed to update user role",
-      "roleUpdateError": "Error updating user role",
-      "loadingError": "Error loading users",
-      "selectRole": "Please select a new role"
-    },
-    "table": {
-      "user": "User",
-      "email": "Email",
-      "role": "Role",
-      "status": "Status",
-      "joinDate": "Joined",
-      "actions": "Actions",
-      "active": "Active",
-      "inactive": "Inactive"
-    },
-    "actions": {
-      "changeRole": "Change Role",
-      "updateRole": "Update Role",
-      "cancel": "Cancel"
-    },
-    "modal": {
-      "changeRoleTitle": "Change Role for",
-      "currentRole": "Current Role",
-      "newRole": "New Role"
-    },
-    "info": {
-      "totalUsers": "Total Users",
-      "manageableUsers": "Manageable Users",
-      "adminSecurityNote": "Admin users are not shown in the role management table for security reasons."
-    },
-    "pagination": {
-      "showTotal": "{{start}}-{{end}} of {{total}} users"
-    }
-  },
   "articles": {
     "title": "Article Management",
     "subtitle": "Manage news articles and content",
-    "createArticle": "Create Article",
     "editArticle": "Edit Article",
     "deleteArticle": "Delete Article",
     "articleDetails": "Article Details",
@@ -401,7 +414,9 @@
       "deleteSuccess": "Article deleted successfully!",
       "deleteConfirm": "Are you sure you want to delete this article?",
       "publishSuccess": "Article published successfully!",
-      "archiveSuccess": "Article archived successfully!"
+      "archiveSuccess": "Article archived successfully!",
+      "categoryTree": "Category Tree",
+      "tableView": "Table View"
     }
   },
   "createArticle": {
@@ -755,7 +770,8 @@
       "deleteConfirmDescription": "This action cannot be undone.",
       "yes": "Yes",
       "no": "No",
-      "articleCount": "{{count}} articles"
+      "articleCount": "{{count}} articles",
+      "search": "Search & Filter"
     },
     "tags": {
       "title": "Tag Management",
@@ -821,6 +837,28 @@
         "joinDate": "Join Date",
         "actions": "Actions"
       }
+    },
+    "createArticle": {
+      "createTitle": "Create New Article",
+      "editTitle": "Edit Article",
+      "duplicateTitle": "Duplicate Article",
+      "duplicate": "Duplicate",
+      "authRequired": "Authentication Required",
+      "signInMessage": "Please sign in to {{action}} articles.",
+      "permissionDenied": "Access Denied",
+      "writerPrivileges": "You need writer privileges to {{action}} articles.",
+      "currentRole": "Current role",
+      "loadingArticle": "Loading article...",
+      "articleNotFound": "Article Not Found",
+      "articleNotFoundMessage": "The article you're looking for doesn't exist or has been deleted.",
+      "backToMyArticles": "Back to My Articles",
+      "canOnlyEditOwn": "You can only edit your own articles.",
+      "cannotEdit": "Cannot Edit",
+      "cannotEditMessage": "Only draft and rejected articles can be edited.",
+      "currentStatus": "Current status",
+      "successCreate": "Article created successfully!",
+      "successUpdate": "Article updated successfully!",
+      "failedMessage": "Failed to {{action}} article"
     },
     "media": {
       "title": "Media Management",

@@ -48,7 +48,8 @@
     "items": "mục",
     "showing": "Hiển thị",
     "to": "đến",
-    "entries": "mục"
+    "entries": "mục",
+    "reader": "Người đọc"
   },
   "auth": {
     "login": {
@@ -121,7 +122,87 @@
       "passwordsMismatch": "Mật khẩu mới không khớp.",
       "passwordMinLength": "Mật khẩu mới phải có ít nhất 8 ký tự.",
       "tryAgain": "Vui lòng thử lại."
+    },
+    "register": {
+      "title": "Tạo Người dùng Mới",
+      "subtitle": "Thêm người dùng mới vào hệ thống",
+      "firstName": "Tên",
+      "lastName": "Họ",
+      "username": "Tên đăng nhập",
+      "email": "Địa chỉ Email",
+      "password": "Mật khẩu",
+      "confirmPassword": "Xác nhận Mật khẩu",
+      "createAccount": "Tạo Tài khoản",
+      "creatingAccount": "Đang tạo tài khoản...",
+      "success": "Tài khoản đã được tạo thành công!",
+      "redirecting": "Đang chuyển hướng đến đăng nhập...",
+      "failed": "Không thể tạo tài khoản",
+      "passwordMismatch": "Mật khẩu không khớp",
+      "cancel": "Hủy",
+      "createUser": "Tạo Người dùng"
     }
+  },
+  "users": {
+    "title": "Quản lý Người dùng",
+    "subtitle": "Quản lý người dùng hệ thống và vai trò của họ",
+    "newUser": "Người dùng Mới",
+    "table": {
+      "user": "Người dùng",
+      "email": "Email",
+      "role": "Vai trò",
+      "status": "Trạng thái",
+      "joinDate": "Ngày tham gia",
+      "actions": "Hành động",
+      "active": "Hoạt động",
+      "inactive": "Không hoạt động"
+    },
+    "actions": {
+      "changeRole": "Thay đổi Vai trò",
+      "updateRole": "Cập nhật Vai trò",
+      "cancel": "Hủy"
+    },
+    "roles": {
+      "reader": "Độc giả",
+      "writer": "Tác giả",
+      "manager": "Quản lý",
+      "admin": "Quản trị viên"
+    },
+    "modal": {
+      "changeRoleTitle": "Thay đổi Vai trò cho",
+      "currentRole": "Vai trò Hiện tại",
+      "newRole": "Vai trò Mới"
+    },
+    "messages": {
+      "createSuccess": "Tạo người dùng thành công!",
+      "roleUpdateSuccess": "Cập nhật vai trò người dùng thành công",
+      "roleUpdateFailed": "Không thể cập nhật vai trò người dùng",
+      "roleUpdateError": "Lỗi khi cập nhật vai trò người dùng",
+      "selectRole": "Vui lòng chọn một vai trò",
+      "loadingError": "Lỗi khi tải danh sách người dùng"
+    },
+    "info": {
+      "totalUsers": "Tổng số Người dùng",
+      "manageableUsers": "Người dùng Có thể Quản lý",
+      "adminSecurityNote": "Người dùng quản trị được ẩn khỏi quản lý vai trò vì lý do bảo mật"
+    },
+    "pagination": {
+      "showTotal": "Hiển thị {{start}} đến {{end}} trong tổng số {{total}} mục"
+    },
+    "register": {
+      "subtitle": "Thêm người dùng mới vào hệ thống",
+      "firstName": "Tên",
+      "lastName": "Họ",
+      "username": "Tên đăng nhập",
+      "email": "Địa chỉ Email",
+      "password": "Mật khẩu",
+      "confirmPassword": "Xác nhận Mật khẩu",
+      "createUser": "Tạo Người dùng",
+      "creatingAccount": "Đang tạo tài khoản...",
+      "cancel": "Hủy",
+      "passwordMismatch": "Mật khẩu không khớp",
+      "failed": "Không thể tạo tài khoản"
+    },
+    "email": "Email"
   },
   "admin": {
     "title": "Trang Quản trị",
@@ -283,75 +364,11 @@
       }
     }
   },
-  "users": {
-    "title": "Quản lý Người dùng",
-    "subtitle": "Quản lý người dùng nền tảng và vai trò của họ",
-    "createUser": "Tạo Người dùng",
-    "editUser": "Chỉnh sửa Người dùng",
-    "deleteUser": "Xóa Người dùng",
-    "userDetails": "Chi tiết Người dùng",
-    "firstName": "Tên",
-    "lastName": "Họ",
-    "username": "Tên đăng nhập",
-    "email": "Email",
-    "role": "Vai trò",
-    "isActive": "Hoạt động",
-    "lastLogin": "Đăng nhập lần cuối",
-    "dateJoined": "Ngày tham gia",
-    "profile": "Hồ sơ",
-    "permissions": "Quyền hạn",
-    "changePassword": "Đổi Mật khẩu",
-    "resetPassword": "Đặt lại Mật khẩu",
-    "roles": {
-      "admin": "Quản trị viên",
-      "manager": "Quản lý",
-      "writer": "Tác giả",
-      "reader": "Người đọc"
-    },
-    "messages": {
-      "createSuccess": "Tạo người dùng thành công!",
-      "updateSuccess": "Cập nhật người dùng thành công!",
-      "deleteSuccess": "Xóa người dùng thành công!",
-      "deleteConfirm": "Bạn có chắc chắn muốn xóa người dùng này?",
-      "resetPasswordSuccess": "Đặt lại mật khẩu thành công!",
-      "resetPasswordConfirm": "Bạn có chắc chắn muốn đặt lại mật khẩu của người dùng này?",
-      "roleUpdateSuccess": "Cập nhật vai trò người dùng thành công!",
-      "roleUpdateFailed": "Không thể cập nhật vai trò người dùng",
-      "roleUpdateError": "Lỗi khi cập nhật vai trò người dùng",
-      "loadingError": "Lỗi khi tải danh sách người dùng",
-      "selectRole": "Vui lòng chọn một vai trò mới"
-    },
-    "table": {
-      "user": "Người dùng",
-      "email": "Email",
-      "role": "Vai trò",
-      "status": "Trạng thái",
-      "joinDate": "Ngày tham gia",
-      "actions": "Thao tác",
-      "active": "Hoạt động",
-      "inactive": "Không hoạt động"
-    },
-    "actions": {
-      "changeRole": "Thay đổi Vai trò",
-      "updateRole": "Cập nhật Vai trò",
-      "cancel": "Hủy"
-    },
-    "modal": {
-      "changeRoleTitle": "Thay đổi Vai trò cho",
-      "currentRole": "Vai trò hiện tại",
-      "newRole": "Vai trò mới"
-    },
-    "info": {
-      "totalUsers": "Tổng số Người dùng",
-      "manageableUsers": "Người dùng có thể quản lý",
-      "adminSecurityNote": "Người dùng quản trị không hiển thị trong bảng quản lý vai trò vì lý do bảo mật."
-    },
-    "pagination": {
-      "showTotal": "{{start}}-{{end}} của {{total}} người dùng"
-    }
-  },
   "articles": {
     "title": "Quản lý Bài viết",
+    "search":"Tìm kiếm bài viết",
+    "categoryTree": "Hệ thống theo danh mục",
+    "tableView": "Bảng",
     "subtitle": "Quản lý bài viết tin tức và nội dung",
     "createArticle": "Tạo Bài viết",
     "editArticle": "Chỉnh sửa Bài viết",
@@ -778,7 +795,8 @@
       "deleteConfirmDescription": "Hành động này không thể hoàn tác.",
       "yes": "Có",
       "no": "Không",
-      "articleCount": "{{count}} bài viết"
+      "articleCount": "{{count}} bài viết",
+      "search": "Tìm kiếm & Lọc"
     },
     "tags": {
       "title": "Quản lý Thẻ",
@@ -844,6 +862,28 @@
         "joinDate": "Ngày tham gia",
         "actions": "Hành động"
       }
+    },
+    "createArticle": {
+      "createTitle": "Tạo bài viết mới",
+      "editTitle": "Chỉnh sửa bài viết",
+      "duplicateTitle": "Nhân bản bài viết",
+      "duplicate": "Nhân bản",
+      "authRequired": "Yêu cầu xác thực",
+      "signInMessage": "Vui lòng đăng nhập để {{action}} bài viết.",
+      "permissionDenied": "Truy cập bị từ chối",
+      "writerPrivileges": "Bạn cần có quyền tác giả để {{action}} bài viết.",
+      "currentRole": "Vai trò hiện tại",
+      "loadingArticle": "Đang tải bài viết...",
+      "articleNotFound": "Không tìm thấy bài viết",
+      "articleNotFoundMessage": "Bài viết bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.",
+      "backToMyArticles": "Quay lại bài viết của tôi",
+      "canOnlyEditOwn": "Bạn chỉ có thể chỉnh sửa bài viết của chính mình.",
+      "cannotEdit": "Không thể chỉnh sửa",
+      "cannotEditMessage": "Chỉ có thể chỉnh sửa bài viết ở trạng thái bản nháp hoặc bị từ chối.",
+      "currentStatus": "Trạng thái hiện tại",
+      "successCreate": "Tạo bài viết thành công!",
+      "successUpdate": "Cập nhật bài viết thành công!",
+      "failedMessage": "{{action}} bài viết thất bại"
     },
     "media": {
       "title": "Quản lý Phương tiện",

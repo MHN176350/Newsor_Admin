@@ -447,10 +447,10 @@ const Articles = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <div>
           <Title level={2} style={{ margin: 0, color: '#1a1a1a' }}>
-            Article Management
+            {t('pages.articles.title')}
           </Title>
           <Text type="secondary" style={{ fontSize: '16px', marginTop: '8px', display: 'block' }}>
-            Manage articles and their publication status across categories
+            {t('pages.articles.subtitle')}
           </Text>
         </div>
         <Button
@@ -458,7 +458,7 @@ const Articles = () => {
           style={{ borderRadius: '8px', fontWeight: 600, minWidth: 160 }}
           onClick={() => navigate('/create-article')}
         >
-          + New Article
+          + {t('pages.articles.createArticle')}
         </Button>
       </div>
 
@@ -468,7 +468,7 @@ const Articles = () => {
         title={
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <SearchOutlined />
-            <span>Search & Filter Articles</span>
+            <span>{t('pages.articles.search')}</span>
           </div>
         }
         style={{ marginBottom: '24px', marginTop: '24px' }}
@@ -589,7 +589,7 @@ const Articles = () => {
               label: (
                 <span style={{ fontSize: '14px', fontWeight: '500' }}>
                   <FolderOutlined />
-                  Category Tree View
+                  {t('articles.categoryTree')}
                 </span>
               ),
               children: (
@@ -619,7 +619,7 @@ const Articles = () => {
               label: (
                 <span style={{ fontSize: '14px', fontWeight: '500' }}>
                   <FileTextOutlined />
-                  Table View
+                  {t('articles.tableView')}
                 </span>
               ),
               children: (
